@@ -1,0 +1,44 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SeniorConnect";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    <div class="row">
+        <div class=" col-md-4 p-3">
+            <div class="card">
+                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+              <div class="card-body">
+                <h5 class="card-title">@Model.Activity.ActivityName</h5>
+                <p class="card-text">@Model.Activity.ActivityDescription</p>
+                <a href="#" class="btn btn-primary">Inschrijven</a>
+              </div>
+            </div>
+        </div>
+
+        <div class=" col-md-4 p-3">
+            <div class="card">
+                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
+                    <p class="card-text">@Model.Activity.ActivityDescription</p>
+                    <a href="#" class="btn btn-primary">Inschrijven</a>
+                </div>
+            </div>
+        </div>
+
+        <div class=" col-md-4 p-3">
+            <div class="card">
+                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
+                    <p class="card-text">@Model.Activity.ActivityDescription</p>
+                    <a href="#" class="btn btn-primary">Inschrijven</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
