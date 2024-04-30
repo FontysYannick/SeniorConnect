@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yanni\\Documents\\school\\Semester 5\\Community-board\\SeniorConnect\\src\\SeniorConnect\\SeniorConnect.csproj",
+      "projectUniqueName": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\SeniorConnect.csproj",
       "projectName": "SeniorConnect",
-      "projectPath": "C:\\Users\\yanni\\Documents\\school\\Semester 5\\Community-board\\SeniorConnect\\src\\SeniorConnect\\SeniorConnect.csproj",
+      "projectPath": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\SeniorConnect.csproj",
       "packagesPath": "C:\\Users\\yanni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yanni\\Documents\\school\\Semester 5\\Community-board\\SeniorConnect\\src\\SeniorConnect\\obj\\",
+      "outputPath": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yanni\\AppData\\Roaming\\NuGet\\NuGet.Config",
