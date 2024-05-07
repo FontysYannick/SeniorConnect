@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorConnect")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e16314031a38548fc1b443c3c4989b1fcdedaade")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorConnect")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorConnect")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

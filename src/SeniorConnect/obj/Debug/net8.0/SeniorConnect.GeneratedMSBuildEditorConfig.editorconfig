@@ -18,12 +18,28 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\yanni\Documents\school\Semester 5.2\SeniorConnect\src\SeniorConnect
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/activity/info/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWN0aXZpdHlcaW5mb1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/calendar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY2FsZW5kYXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/help/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcaGVscFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcbG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/yanni/Documents/school/Semester 5.2/SeniorConnect/src/SeniorConnect/Pages/Privacy.cshtml]

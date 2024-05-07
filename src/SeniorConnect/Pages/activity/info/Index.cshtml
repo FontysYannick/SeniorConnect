@@ -1,0 +1,62 @@
+﻿@page
+@model SeniorConnect.Pages.activity.info.IndexModel
+@{
+}
+
+
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card mb-4">
+            <a href="#!"><img class="card-img-top" src="@Model.Activity.ActivityImg" alt="..." /></a>
+            <div class="card-body">
+                <div class="small text-muted">January 1, 2024</div>
+                <h2 class="card-title">@Model.Activity.ActivityName</h2>
+                <p class="card-text">
+                    @Model.Activity.ActivityDescription
+                </p>
+                <a class="btn btn-primary" href="#!">Inschrijven</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="sticky-md-top">
+            <div class="card mb-4">
+                <div class="card-header">Organisator</div>
+                <div class="card-body">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fmeta-q.cdn.bubble.io%2Ff1512936020165x278911292087286720%2FA.png?w=64&h=64&auto=compress&dpr=1&fit=max" class="rounded float-start" alt="Avatar">
+                        <p class="mb-0">Admin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="flex-column">
+                        <div class="d-flex gap-2 mb-3">
+                            <i class="bi bi-people-fill"></i>
+                            <div>
+                                <p class="mb-0">Deelnemers</p>
+                                <p class="mb-0">50 deelnemers</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <i class="bi bi-calendar-event"></i>
+                            <div>
+                                <p class="mb-0">Datum/Tijd</p>
+                                <p class="mb-0">January 1, 2024</p>
+                                <p class="mb-0">1:30 PM t/m 3:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <p class="mb-0">Plaats</p>
+                                <p class="mb-0">Eindhoven</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

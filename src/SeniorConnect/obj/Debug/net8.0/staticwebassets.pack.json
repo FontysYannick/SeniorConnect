@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\wwwroot\\helpLogin.png",
+      "PackagePath": "staticwebassets\\helpLogin.png"
+    },
+    {
+      "Id": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\wwwroot\\js\\login.js",
+      "PackagePath": "staticwebassets\\js\\login.js"
+    },
+    {
       "Id": "C:\\Users\\yanni\\Documents\\school\\Semester 5.2\\SeniorConnect\\src\\SeniorConnect\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

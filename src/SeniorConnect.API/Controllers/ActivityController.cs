@@ -52,7 +52,7 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                int ActivityId = activity.ActivityId;
+                long ActivityId = activity.ActivityId;
                 return Ok("Add/Update an activity to the database: " + ActivityId);
             }
             catch (Exception)
