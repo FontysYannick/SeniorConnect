@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Models;
 
 namespace SeniorConnect.API.Controllers
@@ -13,7 +14,7 @@ namespace SeniorConnect.API.Controllers
         {
 			try
 			{
-                return Ok("works");
+                return Ok("Returns a list of all users");
 			}
 			catch (Exception)
 			{
@@ -37,7 +38,7 @@ namespace SeniorConnect.API.Controllers
                 if (UserId < 0)
                     ModelState.AddModelError("Invald UserId", "Invald userId was send");
 
-                return Ok("works" + UserId);
+                return Ok("shows a spesific activity: " + UserId);
             }
             catch (Exception)
             {
@@ -52,26 +53,8 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
-                return Ok("works");
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        [HttpPut]
-        [Route("User")]
-        public ActionResult UpdateUser([FromBody] User user)
-        {
-            try
-            {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
-                return Ok("works");
+                int UserId = user.UserId;
+                return Ok("Add/Update an activity to the database: " + UserId);
             }
             catch (Exception)
             {

@@ -13,7 +13,7 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                return Ok("works");
+                return Ok("Returns a list of all activitys");
             }
             catch (Exception)
             {
@@ -29,15 +29,15 @@ namespace SeniorConnect.API.Controllers
             try
             {
                 int ActivityId = -1;
-                string? rawId = Request.RouteValues["ActivityID"]?.ToString();
+                string? rawId = Request.RouteValues["ActivityId"]?.ToString();
                 if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No UserId Found", "No userId was send");
+                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was send");
                 if (!int.TryParse(rawId, out ActivityId))
-                    ModelState.AddModelError("Invald UserId", "Invald userId was send");
+                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
                 if (ActivityId < 0)
-                    ModelState.AddModelError("Invald UserId", "Invald userId was send");
+                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
 
-                return Ok("works" + ActivityId);
+                return Ok("shows a spesific activity: " + ActivityId);
             }
             catch (Exception)
             {
@@ -52,9 +52,8 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["activity"]?.ToString();
-                return Ok("works");
+                int ActivityId = activity.ActivityId;
+                return Ok("Add/Update an activity to the database: " + ActivityId);
             }
             catch (Exception)
             {
@@ -63,15 +62,22 @@ namespace SeniorConnect.API.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("Activity")]
-        public ActionResult UpdateUser([FromBody] Activity activity)
+        [HttpDelete]
+        [Route("Activity/{ActivityId}")]
+        public ActionResult DeleteActivity()
         {
             try
             {
-                int activityId = -1;
-                string? rawId = Request.RouteValues["activity"]?.ToString();
-                return Ok("works");
+                int ActivityId = -1;
+                string? rawId = Request.RouteValues["ActivityId"]?.ToString();
+                if (string.IsNullOrEmpty(rawId))
+                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was send");
+                if (!int.TryParse(rawId, out ActivityId))
+                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                if (ActivityId < 0)
+                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+
+                return Ok("Deletes a spesific activity: " + ActivityId);
             }
             catch (Exception)
             {
