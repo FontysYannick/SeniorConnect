@@ -4,40 +4,40 @@ using SeniorConnect.API.Models;
 namespace SeniorConnect.API.Controllers
 {
     [ApiController]
-    [Route("UserController")]
-    public class UserController : Controller
+    [Route("ActivityController")]
+    public class ActivityController : Controller
     {
         [HttpGet]
-        [Route("UserList")]
+        [Route("ActivityList")]
         public ActionResult GetUserList()
         {
-			try
-			{
+            try
+            {
                 return Ok("works");
-			}
-			catch (Exception)
-			{
+            }
+            catch (Exception)
+            {
 
-				throw;
-			}
+                throw;
+            }
         }
 
         [HttpGet]
-        [Route("User/{UserId}")]
+        [Route("Activity/{ActivityId}")]
         public ActionResult GetUser()
         {
             try
             {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
+                int ActivityId = -1;
+                string? rawId = Request.RouteValues["ActivityID"]?.ToString();
                 if (string.IsNullOrEmpty(rawId))
                     ModelState.AddModelError("No UserId Found", "No userId was send");
-                if (!int.TryParse(rawId, out UserId))
+                if (!int.TryParse(rawId, out ActivityId))
                     ModelState.AddModelError("Invald UserId", "Invald userId was send");
-                if (UserId < 0)
+                if (ActivityId < 0)
                     ModelState.AddModelError("Invald UserId", "Invald userId was send");
 
-                return Ok("works" + UserId);
+                return Ok("works" + ActivityId);
             }
             catch (Exception)
             {
@@ -47,13 +47,13 @@ namespace SeniorConnect.API.Controllers
         }
 
         [HttpPost]
-        [Route("User")]
-        public ActionResult PostUser([FromBody]User user)
+        [Route("Activity")]
+        public ActionResult PostUser([FromBody] Activity activity)
         {
             try
             {
                 int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
+                string? rawId = Request.RouteValues["activity"]?.ToString();
                 return Ok("works");
             }
             catch (Exception)
@@ -64,13 +64,13 @@ namespace SeniorConnect.API.Controllers
         }
 
         [HttpPut]
-        [Route("User")]
-        public ActionResult UpdateUser([FromBody] User user)
+        [Route("Activity")]
+        public ActionResult UpdateUser([FromBody] Activity activity)
         {
             try
             {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
+                int activityId = -1;
+                string? rawId = Request.RouteValues["activity"]?.ToString();
                 return Ok("works");
             }
             catch (Exception)
