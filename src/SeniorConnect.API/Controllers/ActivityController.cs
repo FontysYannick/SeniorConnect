@@ -9,11 +9,13 @@ namespace SeniorConnect.API.Controllers
     {
         [HttpGet]
         [Route("ActivityList")]
-        public ActionResult GetUserList()
+        public ActionResult GetActivityList()
         {
             try
             {
-                return Ok("Returns a list of all activitys");
+                Temp temp = new Temp();
+                List<Activity> list = temp.setActivty();
+                return Json(list);
             }
             catch (Exception)
             {
@@ -24,7 +26,7 @@ namespace SeniorConnect.API.Controllers
 
         [HttpGet]
         [Route("Activity/{ActivityId}")]
-        public ActionResult GetUser()
+        public ActionResult GetActivity()
         {
             try
             {
@@ -48,7 +50,7 @@ namespace SeniorConnect.API.Controllers
 
         [HttpPost]
         [Route("Activity")]
-        public ActionResult PostUser([FromBody] Activity activity)
+        public ActionResult PostActivity([FromBody] Activity activity)
         {
             try
             {
