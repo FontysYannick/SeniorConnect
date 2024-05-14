@@ -4,8 +4,8 @@
     {
         public int BaselistItemId { get; set; }
         public int BaselistId { get; set; }
-        public int Code { get; set; }
-        public int Description { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
 
         public BaseListItem() { }
     }

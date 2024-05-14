@@ -1,8 +1,7 @@
 ﻿@page
-@model SeniorConnect.Pages.IndexModel
+@model SeniorConnect.Pages.signup.signupModel
 @{
 }
-
 <div class="row justify-content-center">
     <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
         <div class="card border-0 shadow-sm rounded-4">
@@ -10,12 +9,24 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="mb-5">
-                            <h3>Inloggen</h3>
+                            <h3>Account maken</h3>
                         </div>
                     </div>
                 </div>
                 <form action="">
                     <div class="row gy-3 overflow-hidden">
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                                <label for="email" class="form-label">Voornaam</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                                <label for="email" class="form-label">Achternaam</label>
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
@@ -26,17 +37,24 @@
                             <div class="form-floating mb-3 d-flex align-items-center">
                                 <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
                                 <i class="bi bi-eye-slash js-toggle-password" style="cursor: pointer; margin-left: -30px;"></i>
-                                <label for="password" class="form-label">Wachtword</label>
+                                <label for="password" class="form-label">Watchwoord</label>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="d-grid">
-                                <button class="btn bsb-btn-2xl btn-primary" type="submit">Inloggen</button>
+                        <div class="col-12">
+                            <div class="form-floating mb-3 d-flex align-items-center">
+                                <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                                <i class="bi bi-eye-slash js-toggle-password" style="cursor: pointer; margin-left: -30px;"></i>
+                                <label for="password" class="form-label">Watchwoord herhalen</label>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="d-grid">
-                                <a class="btn bsb-btn-2xl btn-primary" type="submit" href="/signup">Account aanmaken</a>
+                                <button class="btn bsb-btn-2xl btn-primary" type="submit">Aanmaken</button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-grid">
+                                <a class="btn-link" href="/login">Ik heb een account</a>
                             </div>
                         </div>
                     </div>
