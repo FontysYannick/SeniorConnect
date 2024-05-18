@@ -1,77 +1,41 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData
-
-
-        ["Title"] = "SeniorConnect";
+    ViewData ["Title"] = "SeniorConnect";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <div class="row">
-        <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+        <div class=" col-md-4 p-3"> 
+            <div class="card" onclick="window.location='/activity/Activity'">
+                <img src="https://static.vecteezy.com/ti/gratis-vector/p3/4661065-ouderen-mensen-activiteiten-set-vector.jpg" class="card-img-top img-card" alt="Img" />
                 <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
+                    <h5 class="card-title">Activiteiten</h5>
+                    <p class="card-text text-truncate">Een overzicht van alle activiteiten die gepland zijn.</p>
+                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
                 </div>
             </div>
         </div>
 
         <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+            <div class="card" onclick="window.location='/activity/Activity'">
+                <img src="https://elkwelzijn.nl/wp-content/uploads/elementor/thumbs/118087896_3567965756571440_6670835949777602655_o-ovjn03hwmmeg9olm03b5w9iu9d8k3s99c4se0pnttk.jpg" class="card-img-top img-card" alt="Img" />
                 <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
+                    <h5 class="card-title">Vrijwilligerswerk</h5>
+                    <p class="card-text text-truncate">Een overzicht van het vrijwilligerswerk in onze buurt.</p>
+                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
                 </div>
             </div>
         </div>
 
         <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
+            <div class="card" onclick="window.location='/activity/Activity'">
+                <img src="https://static.vecteezy.com/ti/gratis-vector/p2/10506903-twee-oud-personen-studie-gratis-vector.jpg" class="card-img-top img-card" alt="Img" />
                 <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
-                </div>
-            </div>
-        </div>
-
-        <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
-                </div>
-            </div>
-        </div>
-
-        <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
-                </div>
-            </div>
-        </div>
-
-        <div class=" col-md-4 p-3">
-            <div class="card">
-                <img src="@Model.Activity.ActivityImg" class="card-img-top" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Activity.ActivityName</h5>
-                    <p class="card-text text-truncate">@Model.Activity.ActivityDescription</p>
-                    <a href="/activity/info" class="btn btn-primary">Inschrijven</a>
+                    <h5 class="card-title">Masterclass</h5>
+                    <p class="card-text text-truncate">Wil jij je expertise delen en anderen inspireren? Doe mee aan onze masterclass!</p>
+                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
                 </div>
             </div>
         </div>
