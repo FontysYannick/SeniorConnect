@@ -1,6 +1,10 @@
-@SeniorConnect.API_HostAddress = http://localhost:5175
+@SeniorConnect.API_HostAddress = https://localhost:7049
 
 GET {{SeniorConnect.API_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+GET {{SeniorConnect.API_HostAddress}}/UserController/UserList
 
 ###

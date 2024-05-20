@@ -1,12 +1,12 @@
-﻿namespace SeniorConnect.API.Models
+﻿namespace SeniorConnect.API.Entities
 {
-    public class BaseListItem
+    public class BaseList
     {
-        public int BaselistItemId { get; set; }
         public int BaselistId { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
 
-        public BaseListItem() { }
+
+        public BaseList() { }
     }
 }

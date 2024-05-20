@@ -1,4 +1,4 @@
-﻿using SeniorConnect.API.Models;
+﻿using SeniorConnect.API.Entities;
 
 namespace SeniorConnect.API
 {
