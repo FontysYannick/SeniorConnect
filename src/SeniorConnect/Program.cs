@@ -1,7 +1,33 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using SeniorConnect.Services;
+using System.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// sets up an HTTP client connect to API
+builder.Services.AddHttpClient("SeniorConnectAPI", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7049/");
+    client.DefaultRequestHeaders.Accept.Clear();
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
+
+// register services
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddHttpContextAccessor();
+
+
+builder.Services.AddControllersWithViews();
+
+// setup authentication services for cookie-based authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option => {
+    option.LoginPath = "/login";
+    option.LoginPath = "/logout";
+    option.ExpireTimeSpan = TimeSpan.FromDays(365);
+});
 
 var app = builder.Build();
 
@@ -21,5 +47,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+
+//default routing configuration for controller
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,4 +1,4 @@
-﻿namespace SeniorConnect.API.Models
+﻿namespace SeniorConnect.API.Entities
 {
     public class Activity
     {

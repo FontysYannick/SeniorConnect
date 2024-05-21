@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +31,18 @@
                         </li>
                     </ul>
                     <div>
-                        <a href="/login/login" class="btn btn-outline-primary" type="submit">Login</a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <p>@User.Identity.Name</p>
+                            
+                            <form asp-controller="Auth" asp-action="Logout" method="post" class="form-inline">
+                                <button type="submit" class="btn btn-outline-primary">Logout</button>
+                            </form>
+                        }
+                        else
+						{
+                            <a href="/login" class="btn btn-outline-primary" type="submit">Login</a>
+                        }
                     </div>
                 </div>
             </div>

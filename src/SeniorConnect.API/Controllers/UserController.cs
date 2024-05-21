@@ -1,15 +1,27 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using SeniorConnect.API.Models;
+using SeniorConnect.API.Entities;
+using SeniorConnect.API.Models.Users;
+using SeniorConnect.API.Service.UserService;
 
 namespace SeniorConnect.API.Controllers
 {
     [ApiController]
-    [Route("UserController")]
+    [Route("api/users")]
     public class UserController : Controller
     {
+        private readonly UserService _userService;
+
+        private readonly AuthenticationService _authenticationService;
+        public UserController(UserService userService, AuthenticationService authenticationService)
+        {
+            _userService = userService;
+            _authenticationService = authenticationService;
+        }
+
         [HttpGet]
-        [Route("UserList")]
+        [Route("list")]
         public ActionResult GetUserList()
         {
 			try
@@ -23,8 +35,7 @@ namespace SeniorConnect.API.Controllers
 			}
         }
 
-        [HttpGet]
-        [Route("User/{UserId}")]
+        [HttpGet("{user-id}")]
         public ActionResult GetUser()
         {
             try
@@ -47,20 +58,89 @@ namespace SeniorConnect.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("User")]
-        public ActionResult PostUser([FromBody]User user)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterRequest request)
         {
-            try
+            if (_userService.IsUserEmailExist(request) == true)
             {
-                long UserId = user.UserId;
-                return Ok("Add/Update an activity to the database: " + UserId);
+                return BadRequest("Gebruiker al bestaat.");
             }
-            catch (Exception)
-            {
 
-                throw;
+            //TODO: for future after user is created send email to user for verification
+            _authenticationService.CreateUser(request);
+
+            return Ok("Account is aan gemaakt.");
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginRequest request)
+        {
+            User? user = await _userService.FindUser(request);
+
+            if (user == null)
+            {
+                return BadRequest("De combinatie van e-mailadres en wachtwoord is niet geldig.");
             }
+
+            //if (user.VerifiedAt == null)
+            //{
+            //    return BadRequest("Gebruiker is niet geverifieerd!");
+            //}
+
+            if (_authenticationService.VerifyPasswordHash(request, user) == false)
+            {
+                return BadRequest("De combinatie van e-mailadres en wachtwoord is niet geldig.");
+            }
+
+            LoginResponse loginResponse = new LoginResponse
+            {
+                Token = user.VerificationToken,
+                UserName = user.Email
+            };
+
+            //TODO: after login create a session to store user keep user logged in
+            return Ok(loginResponse);
+        }
+
+        [HttpPost("verify")]
+        public async Task<IActionResult> Verify(string token)
+        {
+            bool isVerify = await _authenticationService.VerifyToken(token);
+
+            if (isVerify == false)
+            {
+                return BadRequest("Invalid token!");
+            }
+
+            return Ok("Gebruiker is geverifieerd!");
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            User? user = await _userService.FindUser(new UserLoginRequest { Email = email });
+
+            if (user == null)
+            {
+                return BadRequest("Gebruiker niet gevonden!");
+            }
+
+            _authenticationService.CreateResetPasswordToken(user);
+
+            return Ok("Een e-mail reset wachtwoord is verzonden naar uw e-mailadres.");
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(UserPasswordResetRequest resetPasswordRequest)
+        {
+            bool isResetSuccess = await _authenticationService.ResetPassword(resetPasswordRequest);
+
+            if (isResetSuccess == false)
+            {
+                return BadRequest("Invalid token");
+            }
+
+            return Ok("Uw wachtwoord is gereset.");
         }
     }
 }

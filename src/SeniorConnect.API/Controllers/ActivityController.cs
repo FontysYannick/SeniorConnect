@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SeniorConnect.API.Models;
+using SeniorConnect.API.Entities;
 
 namespace SeniorConnect.API.Controllers
 {
