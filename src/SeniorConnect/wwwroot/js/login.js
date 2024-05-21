@@ -1,4 +1,28 @@
 ﻿$(document).ready(() => {
+
+    toggleShowPassword();
+    const togglePassword = $('.js-toggle-password');
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = $('.needs-validation');
+
+
+    // Loop over them and prevent submission
+    forms.each(function () {
+        $(this).on('submit', function (event) {
+            if (!this.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                togglePassword.css({ "top": "17px", "left": "89%" });
+            }
+
+            $(this).addClass('was-validated');
+        });
+    });
+ })
+   
+
+function toggleShowPassword() {
     let ICON_PASS_TOGGLE_HIDDE = 'bi-eye-slash';
     let ICON_PASS_TOGGLE_SHOW = 'bi-eye';
 
@@ -22,4 +46,5 @@
         togglePassword.attr('class', iconClass);
         passwordInput.attr('type', 'password');
     })
-})
+
+}

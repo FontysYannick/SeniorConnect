@@ -79,7 +79,7 @@ namespace SeniorConnect.API.Controllers
 
             if (user == null)
             {
-                return BadRequest("Gebruiker niet bestaat.");
+                return BadRequest("De combinatie van e-mailadres en wachtwoord is niet geldig.");
             }
 
             //if (user.VerifiedAt == null)
@@ -92,8 +92,14 @@ namespace SeniorConnect.API.Controllers
                 return BadRequest("De combinatie van e-mailadres en wachtwoord is niet geldig.");
             }
 
+            LoginResponse loginResponse = new LoginResponse
+            {
+                Token = user.VerificationToken,
+                UserName = user.Email
+            };
+
             //TODO: after login create a session to store user keep user logged in
-            return Ok("Gebruiker is ingelogd.");
+            return Ok(loginResponse);
         }
 
         [HttpPost("verify")]
