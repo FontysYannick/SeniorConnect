@@ -12,8 +12,8 @@ using SeniorConnect.API.Data;
 namespace SeniorConnect.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240523091946_initialActivitiesTab")]
-    partial class initialActivitiesTab
+    [Migration("20240523100318_initialActivitiesTable")]
+    partial class initialActivitiesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,9 @@ namespace SeniorConnect.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MaxParticipants")
