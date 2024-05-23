@@ -35,26 +35,26 @@ namespace SeniorConnect.API
             { 
                 ActivityId = 1,
                 Title = "Bingo",
-                Catagory = baseListItems[0],
+                //Catagory = baseListItems[0],
                 Organizer = Users[0],
                 Description = "is bingo",
                 Date = DateTime.Now,
                 Place = "Eindhoven",
                 MaxParticipants = 10,
-                Price = 10
+                Awards = "5 euro"
             });
 
             Activitys.Add(new Activity
             {
                 ActivityId = 2,
                 Title = "Zwemmen",
-                Catagory = baseListItems[1],
+                //Catagory = baseListItems[1],
                 Organizer = Users[0],
                 Description = "is zwemmen",
                 Date = DateTime.Now,
                 Place = "Eindhoven",
                 MaxParticipants = 50,
-                Price = 5
+                Awards = "10 euro"
             });
 
             return Activitys;

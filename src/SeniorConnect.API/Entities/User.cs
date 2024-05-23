@@ -30,6 +30,8 @@ namespace SeniorConnect.API.Entities
 
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
+        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+
         public User() { }
     }
 }
