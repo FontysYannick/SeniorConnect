@@ -28,5 +28,8 @@
     <PublishDir>$(OutputPath)publish\SeniorConnect.API\</PublishDir>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="appsettings.json;appsettings.Development.json" />
+  </ItemGroup>
 
 </Project>
