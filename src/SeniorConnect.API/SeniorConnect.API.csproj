@@ -25,10 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
-    <None Remove="appsettings.Development.json" />
+    <None Remove="appsettings.json;appsettings.Development.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -37,10 +36,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="appsettings.json" />
-    <None Include="appsettings.json" />
-  </ItemGroup>
+  
 
 </Project>
