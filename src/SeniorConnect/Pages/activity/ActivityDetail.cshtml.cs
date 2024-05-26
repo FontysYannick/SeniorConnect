@@ -18,6 +18,7 @@ namespace SeniorConnect.Pages.activity
 
         public void OnGet(int Id)
         {
+            int idtest = Id;
             Activitys = data.setActivty();
 
             Activity = Activitys.Where(a => a.ActivityId == Id).FirstOrDefault();

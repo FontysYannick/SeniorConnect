@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SeniorConnect.API.Models.Users;
+using SeniorConnect.Helpers;
 using SeniorConnect.Services;
 using System.Security.Claims;
 
@@ -38,7 +39,7 @@ namespace SeniorConnect.Pages.login
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name , loginResponse.UserName),
+                new Claim(ClaimTypes.Name, loginResponse.UserName),
                 new Claim(ClaimTypes.NameIdentifier, loginResponse.Token.ToString())
             };
 
@@ -55,6 +56,12 @@ namespace SeniorConnect.Pages.login
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties
+                );
+
+            NotificationHelper.SetNotification(
+                    TempData,
+                    "U bent ingelogd.",
+                    "success"
                 );
 
             return RedirectToPage("/index");

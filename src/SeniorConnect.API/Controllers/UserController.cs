@@ -63,7 +63,7 @@ namespace SeniorConnect.API.Controllers
         {
             if (_userService.IsUserEmailExist(request) == true)
             {
-                return BadRequest("Gebruiker al bestaat.");
+                return BadRequest("Het opgegeven e-mailadres is al in gebruik. Probeer een ander e-mailadres");
             }
 
             //TODO: for future after user is created send email to user for verification

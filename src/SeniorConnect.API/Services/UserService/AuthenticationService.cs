@@ -37,6 +37,7 @@ public class AuthenticationService
             {
                 FirstName = userRegisterRequest.FirstName,
                 LastName = userRegisterRequest.LastName,
+                Preposition = userRegisterRequest.Preposition,
                 Email = userRegisterRequest.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,

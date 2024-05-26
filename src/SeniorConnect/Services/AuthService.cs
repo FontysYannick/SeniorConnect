@@ -30,5 +30,12 @@ namespace SeniorConnect.Services
                response = response
            };
         }
+
+        public async Task<HttpResponseMessage> RegisterAsync(UserRegisterRequest userRegisterRequest)
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+
+            return await client.PostAsJsonAsync("api/users/register", userRegisterRequest);
+        }
     }
 }
