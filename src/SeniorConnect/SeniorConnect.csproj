@@ -10,16 +10,20 @@
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
+  </PropertyGroup>
+  
   <ItemGroup>
     <None Remove="appsettings.json;appsettings.Development.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

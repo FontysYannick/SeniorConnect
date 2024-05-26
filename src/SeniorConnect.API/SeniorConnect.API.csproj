@@ -24,6 +24,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PublishDir>$(OutputPath)publish\SeniorConnect.API\</PublishDir>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="appsettings.json;appsettings.Development.json" />
@@ -37,5 +40,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+  
 
 </Project>
