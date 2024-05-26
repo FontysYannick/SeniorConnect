@@ -24,4 +24,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
+    <None Include="appsettings.json" />
+  </ItemGroup>
+
 </Project>
