@@ -28,19 +28,5 @@
     <PublishDir>$(OutputPath)publish\SeniorConnect.API\</PublishDir>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="appsettings.json;appsettings.Development.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  
 
 </Project>
