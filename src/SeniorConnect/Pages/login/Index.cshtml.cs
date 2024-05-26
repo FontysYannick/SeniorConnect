@@ -40,7 +40,7 @@ namespace SeniorConnect.Pages.login
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, loginResponse.UserName),
-                new Claim(ClaimTypes.NameIdentifier, loginResponse.Token.ToString())
+                new Claim(ClaimTypes.NameIdentifier, loginResponse.UserId.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -69,6 +69,10 @@ namespace SeniorConnect.Pages.login
 
         public void OnGet()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                Response.Redirect("/");
+            }
         }
     }
 }

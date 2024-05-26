@@ -20,6 +20,10 @@ namespace SeniorConnect.Pages.signup
 
         public void OnGet()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                Response.Redirect("/");
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()

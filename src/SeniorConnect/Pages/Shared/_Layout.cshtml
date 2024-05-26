@@ -34,9 +34,8 @@
                     <div>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                            <p>@User.Identity.Name</p>
-                            
                             <form asp-controller="Auth" asp-action="Logout" method="post" class="form-inline">
+                                @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-outline-primary">Logout</button>
                             </form>
                         }

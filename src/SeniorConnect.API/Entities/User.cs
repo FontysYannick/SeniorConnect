@@ -34,6 +34,14 @@ namespace SeniorConnect.API.Entities
 
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
 
+        public string? GoogleId { get; set; }
+
         public User() { }
+
+
+        public bool isGoogleAccount()
+        {
+            return this.GoogleId != null;
+        }
     }
 }

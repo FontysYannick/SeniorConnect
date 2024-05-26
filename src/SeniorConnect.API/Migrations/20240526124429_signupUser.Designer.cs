@@ -12,8 +12,8 @@ using SeniorConnect.API.Data;
 namespace SeniorConnect.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240525123453_PrepositionUserName")]
-    partial class PrepositionUserName
+    [Migration("20240526124429_signupUser")]
+    partial class signupUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,9 @@ namespace SeniorConnect.API.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoogleId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")

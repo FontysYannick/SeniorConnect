@@ -5,11 +5,17 @@
 namespace SeniorConnect.API.Migrations
 {
     /// <inheritdoc />
-    public partial class PrepositionUserName : Migration
+    public partial class signupUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "GoogleId",
+                table: "Users",
+                type: "nvarchar(max)",
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "Preposition",
                 table: "Users",
@@ -20,6 +26,10 @@ namespace SeniorConnect.API.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "GoogleId",
+                table: "Users");
+
             migrationBuilder.DropColumn(
                 name: "Preposition",
                 table: "Users");
