@@ -9,6 +9,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
+    <_ContentIncludedByDefault Remove="wwwroot\Help.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

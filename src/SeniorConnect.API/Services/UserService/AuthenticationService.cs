@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SeniorConnect.API.Service.UserService
 {
-public class AuthenticationService
+    public class AuthenticationService
     {
         private readonly DataContext _dataContext;
 
