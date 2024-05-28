@@ -4,11 +4,12 @@ using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Entities;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
+using SeniorConnect.API.Services.UserService.Interface;
 
 
 namespace SeniorConnect.API.Service.UserService
 {
-    public class AuthenticationService
+    public class AuthenticationService: IAuthenticationService
     {
         private readonly DataContext _dataContext;
 

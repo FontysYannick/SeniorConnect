@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Service.UserService;
+using SeniorConnect.API.Services.UserService.Interface;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -11,28 +12,13 @@ namespace SeniorConnect.API.Controllers
     [Route("api/users")]
     public class UserController : Controller
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        private readonly AuthenticationService _authenticationService;
-        public UserController(UserService userService, AuthenticationService authenticationService)
+        private readonly IAuthenticationService _authenticationService;
+        public UserController(IUserService userService, IAuthenticationService authenticationService)
         {
             _userService = userService;
             _authenticationService = authenticationService;
-        }
-
-        [HttpGet]
-        [Route("list")]
-        public ActionResult GetUserList()
-        {
-			try
-			{
-                return Ok("Returns a list of all users");
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
         }
 
         [HttpGet("{user-id}")]
@@ -53,7 +39,6 @@ namespace SeniorConnect.API.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -98,7 +83,6 @@ namespace SeniorConnect.API.Controllers
                 UserName = user.Email
             };
 
-            //TODO: after login create a session to store user keep user logged in
             return Ok(loginResponse);
         }
 
