@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeniorConnect.API.Data;
 
@@ -11,9 +12,11 @@ using SeniorConnect.API.Data;
 namespace SeniorConnect.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240526124429_signupUser")]
+    partial class signupUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,24 +70,6 @@ namespace SeniorConnect.API.Migrations
                     b.HasIndex("OrganizerId");
 
                     b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("SeniorConnect.API.Entities.ActivityUsers", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActivityUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "ActivityId");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("ActivityUsers");
                 });
 
             modelBuilder.Entity("SeniorConnect.API.Entities.User", b =>
@@ -161,35 +146,9 @@ namespace SeniorConnect.API.Migrations
                     b.Navigation("Organizer");
                 });
 
-            modelBuilder.Entity("SeniorConnect.API.Entities.ActivityUsers", b =>
-                {
-                    b.HasOne("SeniorConnect.API.Entities.Activity", "Activity")
-                        .WithMany("ActivityUsers")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SeniorConnect.API.Entities.User", "User")
-                        .WithMany("ActivityUsers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Activity");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SeniorConnect.API.Entities.Activity", b =>
-                {
-                    b.Navigation("ActivityUsers");
-                });
-
             modelBuilder.Entity("SeniorConnect.API.Entities.User", b =>
                 {
                     b.Navigation("Activities");
-
-                    b.Navigation("ActivityUsers");
                 });
 #pragma warning restore 612, 618
         }
