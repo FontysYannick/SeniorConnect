@@ -12,8 +12,8 @@ using SeniorConnect.API.Data;
 namespace SeniorConnect.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240523173142_initialActivityUserTable")]
-    partial class initialActivityUserTable
+    [Migration("20240528174818_initialActivityUser")]
+    partial class initialActivityUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,18 +74,23 @@ namespace SeniorConnect.API.Migrations
 
             modelBuilder.Entity("SeniorConnect.API.Entities.ActivityUsers", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("ActivityUserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActivityUserId"));
 
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ActivityUserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId", "ActivityId");
+                    b.HasKey("ActivityUserId");
 
                     b.HasIndex("ActivityId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ActivityUsers");
                 });
@@ -152,7 +157,7 @@ namespace SeniorConnect.API.Migrations
                     b.HasOne("SeniorConnect.API.Entities.User", "Organizer")
                         .WithMany("Activities")
                         .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Organizer");

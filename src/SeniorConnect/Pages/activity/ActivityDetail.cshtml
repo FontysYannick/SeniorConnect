@@ -14,7 +14,14 @@
                 <p class="card-text">
                     @Model.Activity.ActivityDescription
                 </p>
-                <a class="btn btn-primary" href="#!">Inschrijven</a>
+                @if (User.Identity.Name != null)
+                {
+                    <a class="btn btn-primary" href="#!">Inschrijven</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="/login">Inschrijven</a>
+                }
             </div>
         </div>
     </div>
