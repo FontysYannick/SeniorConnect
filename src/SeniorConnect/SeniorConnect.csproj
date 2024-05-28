@@ -10,6 +10,11 @@
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="appsettings.json; appsettings.*.json" Publish="false" />
+  </ItemGroup>
+
+
   <PropertyGroup>
     <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
   </PropertyGroup>
