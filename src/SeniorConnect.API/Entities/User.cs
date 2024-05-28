@@ -8,6 +8,8 @@ namespace SeniorConnect.API.Entities
 
         public string FirstName { get; set; }
 
+        public string? Preposition { get; set; }
+
         public string LastName { get; set; }
 
         public string Email { get; set; }
@@ -34,6 +36,14 @@ namespace SeniorConnect.API.Entities
 
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
 
+        public string? GoogleId { get; set; }
+
         public User() { }
+
+
+        public bool isGoogleAccount()
+        {
+            return this.GoogleId != null;
+        }
     }
 }

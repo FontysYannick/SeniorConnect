@@ -1,7 +1,7 @@
 ﻿$(document).ready(() => {
 
     toggleShowPassword();
-    const togglePassword = $('.js-toggle-password');
+    const togglePassword = $('.js-toggle-password-icon');
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = $('.needs-validation');
@@ -16,6 +16,23 @@
                 togglePassword.css({ "top": "17px", "left": "89%" });
             }
 
+            var confirmPassword = $('#js-confirm-password');
+            var password = $('#js-password-register');
+
+            if (confirmPassword.length > 0) {
+                if (password.val() !== confirmPassword.val()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    confirmPassword.get(0).setCustomValidity("Passwords do not match");
+                    confirmPassword.addClass('is-invalid');
+                    confirmPassword.parent().find('.invalid-feedback').text('Uw wachtwoord komt niet overeen met elkaar');
+                } else {
+                    confirmPassword.get(0).setCustomValidity("");
+                    confirmPassword.removeClass('is-invalid');
+                }
+            }
+            
+
             $(this).addClass('was-validated');
         });
     });
@@ -26,24 +43,28 @@ function toggleShowPassword() {
     let ICON_PASS_TOGGLE_HIDDE = 'bi-eye-slash';
     let ICON_PASS_TOGGLE_SHOW = 'bi-eye';
 
-    const togglePassword = $('.js-toggle-password');
-    const passwordInput = $('#password');
+    const allTogglePasswordIcon = $('.js-toggle-password-icon');
+    const allInputPassword = $('input[type="password"]');
 
-    passwordInput.attr('type', 'password');
+    allInputPassword.attr('type', 'password');
 
-    togglePassword.on('click', () => {
-        let iconClass = togglePassword.attr('class');
+    allTogglePasswordIcon.off().on('click', function (e) {
+        const targetToggle = $(e.target);
+        const passwordInput = targetToggle.parent('.js-toggle-password').find('input');
+
+        let iconClass = targetToggle.attr('class');
 
         if (passwordInput.attr('type') === 'password') {
             iconClass = iconClass.replace(ICON_PASS_TOGGLE_HIDDE, ICON_PASS_TOGGLE_SHOW)
             passwordInput.attr('type', 'text');
-            togglePassword.attr('class', iconClass);
+            targetToggle.attr('class', iconClass);
 
             return;
         }
 
         iconClass = iconClass.replace(ICON_PASS_TOGGLE_SHOW, ICON_PASS_TOGGLE_HIDDE)
-        togglePassword.attr('class', iconClass);
+
+        targetToggle.attr('class', iconClass);
         passwordInput.attr('type', 'password');
     })
 
