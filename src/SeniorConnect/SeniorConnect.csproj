@@ -6,16 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="appsettings.json; appsettings.*.json" Publish="false" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
-
-
-
 
   <PropertyGroup>
     <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
