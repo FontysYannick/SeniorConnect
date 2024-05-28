@@ -11,11 +11,7 @@
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == 'Release' ">
-      <ExcludeFromPublish>$(ProjectDir)\appsettings.Development.json</ExcludeFromPublish>
-    </Configuration>
-  </PropertyGroup>
+  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   
   <PropertyGroup>
     <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
