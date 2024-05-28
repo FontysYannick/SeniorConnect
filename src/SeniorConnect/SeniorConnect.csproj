@@ -11,9 +11,10 @@
     <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
 
-  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+
   
   <PropertyGroup>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
     <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
   </PropertyGroup>
 
