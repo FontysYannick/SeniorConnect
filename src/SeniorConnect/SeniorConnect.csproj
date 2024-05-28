@@ -12,6 +12,12 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == 'Release' ">
+      <ExcludeFromPublish>$(ProjectDir)\appsettings.Development.json</ExcludeFromPublish>
+    </Configuration>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <PublishDir>$(OutputPath)publish\SeniorConnect\</PublishDir>
   </PropertyGroup>
 
