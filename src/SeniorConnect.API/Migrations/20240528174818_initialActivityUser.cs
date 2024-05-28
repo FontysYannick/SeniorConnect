@@ -5,17 +5,21 @@
 namespace SeniorConnect.API.Migrations
 {
     /// <inheritdoc />
-    public partial class initialActivityUserTable : Migration
+    public partial class initialActivityUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Activities_Users_OrganizerId",
+                table: "Activities");
+
             migrationBuilder.CreateTable(
                 name: "ActivityUsers",
                 columns: table => new
                 {
                     ActivityUserId = table.Column<int>(type: "int", nullable: false)
-                                    .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ActivityId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -40,13 +44,38 @@ namespace SeniorConnect.API.Migrations
                 name: "IX_ActivityUsers_ActivityId",
                 table: "ActivityUsers",
                 column: "ActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActivityUsers_UserId",
+                table: "ActivityUsers",
+                column: "UserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Activities_Users_OrganizerId",
+                table: "Activities",
+                column: "OrganizerId",
+                principalTable: "Users",
+                principalColumn: "UserId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Activities_Users_OrganizerId",
+                table: "Activities");
+
             migrationBuilder.DropTable(
                 name: "ActivityUsers");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Activities_Users_OrganizerId",
+                table: "Activities",
+                column: "OrganizerId",
+                principalTable: "Users",
+                principalColumn: "UserId",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }
