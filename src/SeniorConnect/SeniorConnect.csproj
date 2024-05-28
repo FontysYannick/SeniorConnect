@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
+    <None Include="appsettings.json; appsettings.*.json" Publish="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="appsettings.json; appsettings.*.json" Publish="false" />
+    <ProjectReference Include="..\SeniorConnect.API\SeniorConnect.API.csproj" />
   </ItemGroup>
+
+
 
 
   <PropertyGroup>
