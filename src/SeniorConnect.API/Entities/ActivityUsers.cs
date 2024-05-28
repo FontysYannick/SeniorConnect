@@ -9,5 +9,7 @@
 
         public int ActivityId { get; set; }
         public Activity Activity { get; set; }
+
+        public ActivityUsers() { }
     }
 }

@@ -14,13 +14,14 @@ namespace SeniorConnect.API.Migrations
                 name: "ActivityUsers",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ActivityId = table.Column<int>(type: "int", nullable: false),
                     ActivityUserId = table.Column<int>(type: "int", nullable: false)
+                                    .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ActivityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActivityUsers", x => new { x.UserId, x.ActivityId });
+                    table.PrimaryKey("PK_ActivityUsers", x => x.ActivityUserId);
                     table.ForeignKey(
                         name: "FK_ActivityUsers_Activities_ActivityId",
                         column: x => x.ActivityId,
