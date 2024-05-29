@@ -1,7 +1,6 @@
 ﻿using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
-using System.Diagnostics;
 
 namespace SeniorConnect.API.Services.ActivityService
 {
@@ -14,9 +13,20 @@ namespace SeniorConnect.API.Services.ActivityService
             _dataContext = dataContext;
         }
 
+        public List<Activity> GetActivities()
+        {
+            return _dataContext.Activities.ToList();
+        }
+
+        public Activity GetSingleActivity(int ActivityId)
+        {
+            return _dataContext.Activities.Where(a => a.ActivityId == ActivityId).FirstOrDefault();
+        }
+
+
         public void setActivty(AbstractActivity activity)
         {
-            var newActivty = new SeniorConnect.API.Entities.Activity
+            var newActivty = new Activity
             {
                 Title = activity.Title,
                 OrganizerId = activity.OrganizerId,
