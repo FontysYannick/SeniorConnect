@@ -10,9 +10,9 @@
 
         @foreach (var Activity in Model.Activitys)
         {
-            <div class=" col-md-4 p-3">
+            <div class="col-md-4 p-3">
                 <div class="card" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
-                    <img src="@Activity.Image" class="card-img-top" alt="Img" />
+                    <img src="@Activity.Image" class="card-img-top activity-img" alt="Img" />
                     <div class="card-body">
                         <h5 class="card-title">@Activity.Title</h5>
                         <p class="card-text text-truncate">@Activity.Description</p>

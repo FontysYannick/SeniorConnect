@@ -16,7 +16,7 @@ namespace SeniorConnect.Pages.calendar
         public void OnGet()
         {
             int userId = 1;
-            Activitys = dataContext.ActivityUsers.Where(a => a.UserId == userId).Include(a => a.Activity).Select(a => a.Activity).ToList();
+            Activitys = dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
 
         }
     }

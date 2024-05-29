@@ -14,7 +14,7 @@ namespace SeniorConnect.Pages.activity
 
         public void OnGet()
         {
-            Activitys = dataContext.Activities.ToList();
+            Activitys = dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
         }
     }
 }
