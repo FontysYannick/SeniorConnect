@@ -1,5 +1,5 @@
 trigger:
-- main
+- DucTestBuild
 
 pool: my-personal-computer
 
