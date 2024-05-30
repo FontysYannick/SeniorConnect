@@ -1,0 +1,118 @@
+﻿@page
+@model SeniorConnect.Pages.signup.signupModel
+@{
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-3 p-md-4 p-xl-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-5">
+                            <h3>Account maken</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" class="needs-validation" id="js-login-form" novalidate>
+                    @if (ViewData.ModelState.ErrorCount > 0)
+                    {
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            foreach (var error in modelState.Errors)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    @error.ErrorMessage
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                        }
+                    }
+                    <div class="row gy-3 overflow-hidden">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input asp-for="UserRegisterRequest.FirstName" type="text" class="form-control" name="firstName" id="firstName" placeholder="Voornaam" required>
+                                <label for="firstName" class="form-label">Voornaam</label>
+                                <div class="invalid-feedback">
+                                    Voer een geldig uw voornaam in.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="UserRegisterRequest.Preposition" type="text" class="form-control" name="preposition" id="preposition" placeholder="Voornaam">
+                                <label for="firstName" class="form-label">Tussenvoegsel</label>
+ 
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input asp-for="UserRegisterRequest.LastName" type="text" class="form-control" name="lastName" id="lastName" placeholder="Achternaam" required>
+                                <label for="lastName" class="form-label">Achternaam</label>
+                                <div class="invalid-feedback">
+                                    Voer een geldig uw achternaam in.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input asp-for="UserRegisterRequest.Email" type="email" class="form-control" name="email" id="emailRegister" placeholder="name@example.com" required>
+                                <label for="emailRegister" class="form-label">Email</label>
+                                <div class="invalid-feedback">
+                                    Voer een geldig uw e-mailadres in.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3 position-relative js-toggle-password">
+                                <div class="form-floating w-full">
+                                    <input asp-for="UserRegisterRequest.Password" type="password" class="form-control" name="password" id="js-password-register" placeholder="Password" required minlength="6">
+                                    <label class="form-label">Wachtwoord</label>
+                                    <div class="invalid-feedback">
+                                        Uw wachtwoord moet minst 6 tekens.
+                                    </div>
+                                </div>
+                                <i class="bi bi-eye-slash js-toggle-password-icon position-absolute" style="top:17px; left:91%"></i>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3 position-relative js-toggle-password">
+                                <div class="form-floating w-full">
+                                    <input asp-for="UserRegisterRequest.ConfirmPassword" type="password" class="form-control" name="confirmPassword" id="js-confirm-password" placeholder="Password" required minlength="6">
+                                    <label class="form-label">Wachtwoord herhalen</label>
+                                    <div class="invalid-feedback">
+                                        Uw wachtwoord moet minst 6 tekens.
+                                    </div>
+                                </div>
+                                <i class="bi bi-eye-slash js-toggle-password-icon position-absolute" style="top:17px; left:91%"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="d-grid">
+                            <button class="btn bsb-btn-2xl btn-primary" type="submit">Aanmaken</button>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="d-grid">
+                            <a class="btn-link" href="/login">Ik heb een account</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mt-5 mb-4">Of inloggen met</p>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="btn btn-lg btn-outline-danger">
+                                <i class="bi bi-google"></i>
+                            </a>
+                            <a href="#" class="btn btn-lg btn-outline-primary">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
+using SeniorConnect.API.Models.Activity;
+using SeniorConnect.API.Service.UserService;
+using SeniorConnect.API.Services.ActivityService;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -7,6 +12,13 @@ namespace SeniorConnect.API.Controllers
     [Route("ActivityController")]
     public class ActivityController : Controller
     {
+        private readonly ActivityService _activityHelper;
+
+        public ActivityController(ActivityService activityHelper)
+        {
+            _activityHelper = activityHelper;
+        }
+
         [HttpGet]
         [Route("ActivityList")]
         public ActionResult GetActivityList()
@@ -48,20 +60,21 @@ namespace SeniorConnect.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Activity")]
-        public ActionResult PostActivity([FromBody] Activity activity)
+        [HttpPost("PostActivity")]
+        public async Task<IActionResult> PostActivity([FromBody] AbstractActivity activity)
         {
-            try
-            {
-                long ActivityId = activity.ActivityId;
-                return Ok("Add/Update an activity to the database: " + ActivityId);
-            }
-            catch (Exception)
-            {
+            _activityHelper.setActivty(activity);
 
-                throw;
-            }
+            return Ok("Add/Update an activity to the database: ");
+        }
+
+
+        [HttpPost("AddUserToActivity")]
+        public async Task<IActionResult> AddUserToActivity([FromBody] AbstractUserActivty userActivity)
+        {
+            _activityHelper.addUserToActivty(userActivity);
+
+            return Ok("Add/Update an activity to the database: ");
         }
 
         [HttpDelete]

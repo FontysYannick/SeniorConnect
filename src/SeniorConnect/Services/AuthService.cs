@@ -1,4 +1,6 @@
-﻿using SeniorConnect.API.Models.Users;
+﻿using Azure;
+using SeniorConnect.API.Entities;
+using SeniorConnect.API.Models.Users;
 
 namespace SeniorConnect.Services
 {
@@ -18,17 +20,36 @@ namespace SeniorConnect.Services
 
             if (response.IsSuccessStatusCode == true)
             {
-                LoginResponse newResponse = new LoginResponse
-                {
-                    response = response
-                };
-                
                 return await response.Content.ReadFromJsonAsync<LoginResponse>();
             }
 
            return new LoginResponse { 
                response = response
            };
+        }
+
+        public async Task<HttpResponseMessage> RegisterAsync(UserRegisterRequest userRegisterRequest)
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+
+            return await client.PostAsJsonAsync("api/users/register", userRegisterRequest);
+        }
+
+        public async Task<LoginResponse> LoginWitGoogleAsync(UserLoginGoogleAsyncRequest userLoginGoogleAsyncRequest)
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+
+            var response = await client.PostAsJsonAsync("api/users/login-google", userLoginGoogleAsyncRequest);
+
+            if (response.IsSuccessStatusCode == true)
+            {
+                return await response.Content.ReadFromJsonAsync<LoginResponse>();
+            }
+
+            return new LoginResponse
+            {
+                response = response
+            };
         }
     }
 }

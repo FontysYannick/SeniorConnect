@@ -63,7 +63,7 @@ namespace SeniorConnect.API.Controllers
         {
             if (_userService.IsUserEmailExist(request) == true)
             {
-                return BadRequest("Gebruiker al bestaat.");
+                return BadRequest("Het opgegeven e-mailadres is al in gebruik. Probeer een ander e-mailadres");
             }
 
             //TODO: for future after user is created send email to user for verification
@@ -94,7 +94,7 @@ namespace SeniorConnect.API.Controllers
 
             LoginResponse loginResponse = new LoginResponse
             {
-                Token = user.VerificationToken,
+                UserId = user.UserId.ToString(),
                 UserName = user.Email
             };
 
@@ -141,6 +141,20 @@ namespace SeniorConnect.API.Controllers
             }
 
             return Ok("Uw wachtwoord is gereset.");
+        }
+
+        [HttpPost("login-google")]
+        public async Task<IActionResult> LoginGoogle(UserLoginGoogleAsyncRequest userLoginGoogleAsyncRequest)
+        {
+            var user = await _authenticationService.LoginGoogleAccountSync(userLoginGoogleAsyncRequest);
+
+            LoginResponse loginResponse = new LoginResponse
+            {
+                UserId = user.UserId.ToString(),
+                UserName = user.Email
+            };
+
+            return Ok(loginResponse);
         }
     }
 }

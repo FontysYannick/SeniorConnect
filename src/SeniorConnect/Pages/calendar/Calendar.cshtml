@@ -4,38 +4,40 @@
 }
 
 <h1 class="mb-4">Mijn agenda</h1>
-<div class="card mb-3 w-100">
-    <div class="row g-0">
-        <div class="col-md-3">
-            <img src="https://cdn-efkdob.nitrocdn.com/myhgDcCvqygVBxRpjTaycdopPbcYzKxm/assets/images/optimized/rev-ba2f213/www.riddlevillage.com/wp-content/uploads/Senior-woman-winning-at-the-game-of-bingo-concept-image-for-bingo-prize-ideas-for-seniors-800x533.jpg"
-                 class="w-100 h-100 rounded-start" alt="...">
-        </div>
-        <div class="col-md-9">
-            <div class="card-body">
-                <h5 class="card-title">Bingo voor Senioren</h5>
-                <p class="card-text">Ouderenbingo is een geliefde activiteit onder senioren, waarbij ze samenkomen om nummers af te strepen en gezelligheid te delen. Het spel brengt niet alleen opwinding, maar ook sociale verbinding en therapeutische voordelen, zoals het stimuleren....</p>
-                <div class="border-1 border-top w-100 d-flex">
-                    <div class="d-flex gap-5 mt-3">
-                        <div class="d-flex gap-2 mb-3">
-                            <i class="bi bi-people-fill"></i>
-                            <div>
-                                <p class="mb-0">Deelnemers</p>
-                                <p class="mb-0 w-100 d-block">50 deelnemers</p>
+
+@foreach (var Activity in Model.Activitys)
+{
+    <div class="card mb-3 w-100" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
+        <div class="row g-0">
+            <div class="col-md-3">
+                <img src="@Activity.Image" class="w-100 h-100 rounded-start" alt="..." />
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">@Activity.Title</h5>
+                    <p class="card-text text-truncate">@Activity.Description</p>
+                    <div class="border-top w-100 d-flex">
+                        <div class="d-flex gap-5 mt-3">
+                            <div class="d-flex gap-2 mb-3">
+                                <i class="bi bi-people-fill"></i>
+                                <div>
+                                    <p class="mb-0">Deelnemers</p>
+                                    <p class="mb-0">@Activity.MaxParticipants</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex gap-2 mb-3">
-                            <i class="bi bi-calendar-event"></i>
-                            <div>
-                                <p class="mb-0">Datum/Tijd</p>
-                                <p class="mb-0">January 1, 2024</p>
-                                <p class="mb-0">1:30 PM t/m 3:00 PM</p>
+                            <div class="d-flex gap-2 mb-3">
+                                <i class="bi bi-calendar-event"></i>
+                                <div>
+                                    <p class="mb-0">Datum/Tijd</p>
+                                    <p class="mb-0">@Activity.Date</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <i class="bi bi-geo-alt"></i>
-                            <div>
-                                <p class="mb-0">Plaats</p>
-                                <p class="mb-0">Eindhoven</p>
+                            <div class="d-flex gap-2">
+                                <i class="bi bi-geo-alt"></i>
+                                <div>
+                                    <p class="mb-0">Plaats</p>
+                                    <p class="mb-0">@Activity.Place</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,4 +45,4 @@
             </div>
         </div>
     </div>
-</div>
+}

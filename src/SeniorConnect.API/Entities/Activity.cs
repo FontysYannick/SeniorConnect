@@ -15,6 +15,8 @@
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
+        public ICollection<ActivityUsers> ActivityUsers { get; set; } = new List<ActivityUsers>();
+
         public Activity()
         {
             

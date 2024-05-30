@@ -1,6 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
 using SeniorConnect.Services;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using SeniorConnect.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +21,11 @@ builder.Services.AddHttpClient("SeniorConnectAPI", client =>
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+// Configure DbContext with connection string from appsettings.json
+builder.Services.AddDbContext<DataContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    );
+
 // register services
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddHttpContextAccessor();
@@ -23,11 +34,20 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 
 // setup authentication services for cookie-based authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option => {
-    option.LoginPath = "/login";
-    option.LoginPath = "/logout";
-    option.ExpireTimeSpan = TimeSpan.FromDays(365);
-});
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.LoginPath = "/login";
+        option.LogoutPath = "/logout";
+        option.ExpireTimeSpan = TimeSpan.FromDays(365);
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        googleOptions.CallbackPath = new PathString("/signin-google");
+    });
 
 var app = builder.Build();
 
@@ -39,11 +59,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Enable authentication middleware
 app.UseAuthorization();
 
 app.MapRazorPages();

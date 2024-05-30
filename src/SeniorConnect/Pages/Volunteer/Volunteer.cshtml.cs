@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SeniorConnect.Pages.signup
+namespace SeniorConnect.Pages.Volunteer
 {
-    public class signupModel : PageModel
+    public class VolunteerModel : PageModel
     {
         public void OnGet()
         {

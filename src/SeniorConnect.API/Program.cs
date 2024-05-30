@@ -1,6 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Data;
 using SeniorConnect.API.Service.UserService;
+using SeniorConnect.API.Services.ActivityService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 // Register Service
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<ActivityService>();
 
 // Configure DbContext with connection string from appsettings.json
 builder.Services.AddDbContext<DataContext>(options =>

@@ -34,6 +34,30 @@ namespace SeniorConnect.Helpers
                 ActivityImg = "https://mijnslovenie.com/wp-content/uploads/2018/11/golfist-1024x696.jpg",
             });
 
+            Activitys.Add(new Activity
+            {
+                ActivityId = 4,
+                ActivityName = "Kookworkshop",
+                ActivityDescription = "Een kookworkshop is een uitstekende manier voor volwassenen om nieuwe culinaire vaardigheden te leren en creatief te zijn in de keuken. Onder begeleiding van een ervaren chef-kok leren deelnemers verschillende gerechten bereiden, van voorgerechten tot desserts. Het is niet alleen leerzaam, maar ook een geweldige gelegenheid om samen met anderen te koken, te proeven en te genieten van heerlijke maaltijden. Bovendien kan het koken ontspannend werken en bijdragen aan een gezonde levensstijl door het bevorderen van vers koken met verse ingrediënten.",
+                ActivityImg = "https://www.jannskeuken.nl/uploads/resized/small/4-3/d05ad8f9-3f0f-4867-a0e5-2b9ef455ef70_2.jpg",
+            });
+
+            Activitys.Add(new Activity
+            {
+                ActivityId = 5,
+                ActivityName = "Yoga",
+                ActivityDescription = "Yoga is een eeuwenoude praktijk die fysieke houdingen, ademhalingstechnieken en meditatie combineert om zowel lichaam als geest in balans te brengen. Het is een toegankelijke activiteit voor mensen van alle leeftijden en fitnessniveaus. Door regelmatig aan yoga te doen, kunnen deelnemers hun flexibiliteit, kracht en balans verbeteren, evenals stress verminderen en een gevoel van innerlijke rust en welzijn bevorderen. Yoga kan worden beoefend in groepslessen of individueel, en biedt een waardevolle manier om tijd voor jezelf te nemen en te focussen op persoonlijke gezondheid.",
+                ActivityImg = "https://cdn.vilgain.com/image/article-cover/cover-desktop/jak-vam-joga-zmeni-zivot-8-duvodu-proc-s-jogou-zacit-2.jpeg?v=1592398763",
+            });
+
+            Activitys.Add(new Activity
+            {
+                ActivityId = 6,
+                ActivityName = "Schilderworkshop",
+                ActivityDescription = "Een schilderworkshop biedt volwassenen de kans om hun creatieve kant te ontdekken en uit te drukken. Onder begeleiding van een ervaren kunstenaar leren deelnemers verschillende schildertechnieken en werken ze aan hun eigen kunstwerken. Het is een ontspannende en meditatieve activiteit die helpt bij het verminderen van stress en het bevorderen van mindfulness. Bovendien kunnen deelnemers trots zijn op hun unieke creaties, die ze mee naar huis kunnen nemen als blijvende herinnering aan een inspirerende en leuke ervaring.",
+                ActivityImg = "https://cdn1.emesa-static.com/uploads/Schildercursus-VakantieVeilingen.jpg",
+            });
+
             return Activitys;
         }
     }

@@ -3,11 +3,12 @@ using SeniorConnect.API.Data;
 using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Entities;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace SeniorConnect.API.Service.UserService
 {
-public class AuthenticationService
+    public class AuthenticationService
     {
         private readonly DataContext _dataContext;
 
@@ -37,6 +38,7 @@ public class AuthenticationService
             {
                 FirstName = userRegisterRequest.FirstName,
                 LastName = userRegisterRequest.LastName,
+                Preposition = userRegisterRequest.Preposition,
                 Email = userRegisterRequest.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
@@ -120,6 +122,39 @@ public class AuthenticationService
             await _dataContext.SaveChangesAsync();
 
             return true;
+        }
+
+
+        public async Task<User> LoginGoogleAccountSync(UserLoginGoogleAsyncRequest userLoginGoogleAsyncRequest)
+        {
+            User? userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == userLoginGoogleAsyncRequest.GoogleEmail);
+
+            if (userExist != null)
+            {
+                if (userExist.GoogleId == userLoginGoogleAsyncRequest.GoogleId)
+                {
+                    return userExist;
+                }
+
+                userExist.GoogleId = userLoginGoogleAsyncRequest.GoogleId;
+                await _dataContext.SaveChangesAsync();
+
+                return userExist;
+            }
+
+            var userNew = new User
+            {
+                FirstName = userLoginGoogleAsyncRequest.FirstName,
+                LastName = userLoginGoogleAsyncRequest.LastName,
+                Email = userLoginGoogleAsyncRequest.GoogleEmail,
+                VerificationToken = this.CreateRandomToken(),
+                GoogleId = userLoginGoogleAsyncRequest.GoogleId,
+            };
+
+            _dataContext.Users.Add(userNew);
+            await _dataContext.SaveChangesAsync();
+
+            return userNew;
         }
     }
 }

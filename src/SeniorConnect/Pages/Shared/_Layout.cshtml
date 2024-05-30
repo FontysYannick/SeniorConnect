@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/SeniorConnect.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header>
@@ -27,15 +28,20 @@
                             <a class="nav-link" href="/activity/Activity">Activiteiten</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/activity/AddActivity">Activiteit toevoegen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Volunteer/Volunteer">Vrijwilligers</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/calendar/calendar">Agenda</a>
                         </li>
                     </ul>
                     <div>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                            <p>@User.Identity.Name</p>
-                            
                             <form asp-controller="Auth" asp-action="Logout" method="post" class="form-inline">
+                                @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-outline-primary">Logout</button>
                             </form>
                         }
@@ -74,6 +80,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/login.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            var notification = '@TempData["Notification"]';
+            var notificationType = '@TempData["NotificationType"]';
+            var redirectAfterConfirmLink = '@TempData["RedirectAfterConfirmLink"]';
+            var notificationText = '@TempData["NotificationText"]';
+
+            const sweetAlertConfig = {
+                icon: notificationType,
+                title: notification,
+                text: notificationText,
+                confirmButtonText: 'Oke',
+            }
+
+            if (notification) {
+                const alert = Swal.fire(
+                    sweetAlertConfig
+                );
+
+                if (redirectAfterConfirmLink) {
+                    alert.then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = redirectAfterConfirmLink;
+                        }
+                    })
+                }
+            }
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

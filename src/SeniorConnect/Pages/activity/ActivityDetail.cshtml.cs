@@ -1,26 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SeniorConnect.Helpers;
-using SeniorConnect.Models;
+using Microsoft.EntityFrameworkCore;
+using SeniorConnect.API.Data;
+using SeniorConnect.API.Entities;
 
 namespace SeniorConnect.Pages.activity
 {
-    public class ActivityDetailModel : PageModel
+    public class ActivityDetailModel(DataContext dataContext) : PageModel
     {
-        public List<Activity> Activitys = new();
+        public readonly DataContext dataContext = dataContext;
+
         public Activity Activity = new();
-        SetData data = new SetData();
-
-        public ActivityDetailModel()
-        {
-
-        }
 
         public void OnGet(int Id)
         {
-            Activitys = data.setActivty();
+            Activity = dataContext.Activities.Include(a => a.Organizer).Where(a => a.ActivityId == Id).FirstOrDefault();
+        }
 
-            Activity = Activitys.Where(a => a.ActivityId == Id).FirstOrDefault();
+        public void OnPost()
+        {
+            int.TryParse(Request.Form["activityId"], out int activityid);
+            int userId = 1;
+            //var user = Request.Form["userId"];
+
+            ActivityUsers AU = new()
+            {
+                ActivityId = activityid,
+                UserId = userId
+            };
+
+            dataContext.ActivityUsers.Add(AU);
+            dataContext.SaveChanges();
         }
     }
 }
