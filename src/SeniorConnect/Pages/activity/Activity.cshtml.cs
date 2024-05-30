@@ -1,23 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SeniorConnect.API.Data;
+using SeniorConnect.API.Entities;
 using SeniorConnect.Helpers;
-using SeniorConnect.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SeniorConnect.Pages.activity
 {
-    public class ActivityModel : PageModel
+    public class ActivityModel(DataContext dataContext) : PageModel
     {
-        public List<Activity> Activitys = new();
-        SetData data = new SetData();
+        public readonly DataContext dataContext = dataContext;
 
-        public ActivityModel()
-        {
-        }
+        public List<Activity> Activitys = new();
 
         public void OnGet()
         {
-            Activitys = data.setActivty();
+            Activitys = dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
         }
     }
 }
