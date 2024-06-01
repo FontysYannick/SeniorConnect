@@ -65,6 +65,7 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Services
             dataContext.Users.Add(user);
             await dataContext.SaveChangesAsync();
 
+            //Act
             var userService = new UserService(dataContext);
             var result = userService.IsUserEmailExist(userRequest);
 
