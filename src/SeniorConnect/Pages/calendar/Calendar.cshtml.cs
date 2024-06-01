@@ -1,18 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using SeniorConnect.API.Data;
+using SeniorConnect.API.Entities;
 using SeniorConnect.Helpers;
-using SeniorConnect.Models;
 
 namespace SeniorConnect.Pages.calendar
 {
-    public class CalendarModel : PageModel
+    public class CalendarModel(DataContext dataContext) : PageModel
     {
+        public readonly DataContext dataContext = dataContext;
+
         public List<Activity> Activitys = new();
-        SetData data = new SetData();
 
         public void OnGet()
         {
-            Activitys = data.setActivty();
+            int userId = 1;
+            Activitys = dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
+
         }
     }
 }

@@ -4,6 +4,7 @@ using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
 using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.ActivityService;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -63,6 +64,15 @@ namespace SeniorConnect.API.Controllers
         public async Task<IActionResult> PostActivity([FromBody] AbstractActivity activity)
         {
             _activityHelper.setActivty(activity);
+
+            return Ok("Add/Update an activity to the database: ");
+        }
+
+
+        [HttpPost("AddUserToActivity")]
+        public async Task<IActionResult> AddUserToActivity([FromBody] AbstractUserActivty userActivity)
+        {
+            _activityHelper.addUserToActivty(userActivity);
 
             return Ok("Add/Update an activity to the database: ");
         }
