@@ -4,17 +4,20 @@ using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Entities;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
+using SeniorConnect.API.Services.UserService.Interface;
 
 
 namespace SeniorConnect.API.Service.UserService
 {
-    public class AuthenticationService
+    public class AuthenticationService: IAuthenticationService
     {
         private readonly DataContext _dataContext;
+        private readonly ITokenService _tokenService;
 
-        public AuthenticationService(DataContext dataContext)
+        public AuthenticationService(DataContext dataContext, ITokenService tokenService)
         {
             _dataContext = dataContext;
+            _tokenService = tokenService;
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -26,7 +29,7 @@ namespace SeniorConnect.API.Service.UserService
             }
         }
 
-        public void CreateUser(UserRegisterRequest userRegisterRequest)
+        public async Task CreateUser(UserRegisterRequest userRegisterRequest)
         {
             this.CreatePasswordHash(
                 userRegisterRequest.Password,
@@ -42,24 +45,11 @@ namespace SeniorConnect.API.Service.UserService
                 Email = userRegisterRequest.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                VerificationToken = this.CreateRandomToken()
+                VerificationToken = _tokenService.CreateRandomToken(),
             };
 
             _dataContext.Users.Add(userNew);
-            _dataContext.SaveChangesAsync();
-        }
-
-        public string CreateRandomToken()
-        {
-            string token = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-
-            bool isTokenExist = _dataContext.Users.Any(user => user.PasswordResetToken == token || user.VerificationToken == token);
-            if (isTokenExist == true)
-            {
-                return CreateRandomToken();
-            }
-
-            return token;
+            await _dataContext.SaveChangesAsync();
         }
 
         public bool VerifyPasswordHash(UserLoginRequest userLoginRequest, User user)
@@ -89,13 +79,18 @@ namespace SeniorConnect.API.Service.UserService
 
         public void CreateResetPasswordToken(User user)
         {
-            user.PasswordResetToken = this.CreateRandomToken();
+            user.PasswordResetToken = _tokenService.CreateRandomToken();
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
             _dataContext.SaveChangesAsync();
         }
 
         public async Task<bool> ResetPassword(UserPasswordResetRequest userPasswordResetRequest)
         {
+            if (userPasswordResetRequest.ConfirmPassword != userPasswordResetRequest.Password)
+            {
+                return false;
+            }
+
             User? user = await _dataContext.Users.FirstOrDefaultAsync(u => u.PasswordResetToken == userPasswordResetRequest.Token);
 
             if (user == null)
@@ -147,7 +142,7 @@ namespace SeniorConnect.API.Service.UserService
                 FirstName = userLoginGoogleAsyncRequest.FirstName,
                 LastName = userLoginGoogleAsyncRequest.LastName,
                 Email = userLoginGoogleAsyncRequest.GoogleEmail,
-                VerificationToken = this.CreateRandomToken(),
+                VerificationToken = _tokenService.CreateRandomToken(),
                 GoogleId = userLoginGoogleAsyncRequest.GoogleId,
             };
 

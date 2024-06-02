@@ -40,7 +40,6 @@ namespace SeniorConnect.API.Entities
 
         public User() { }
 
-
         public bool isGoogleAccount()
         {
             return this.GoogleId != null;
