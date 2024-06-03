@@ -31,7 +31,7 @@ namespace SeniorConnect.Controllers.AuthController
             NotificationHelper.SetNotification(
                     TempData,
                     "U bent uitgelogd.",
-                    "success"
+                    NotificationType.success
                 );
             return RedirectToAction("Index", "Home");
         }
@@ -50,7 +50,7 @@ namespace SeniorConnect.Controllers.AuthController
 
             if (!authenticateResult.Succeeded || authenticateResult == null)
             {
-                NotificationHelper.SetNotification(TempData, "Error", "danger", "Inloggen met google account is niet gelukt probeert u later opnieuw of inloggen met een account.");
+                NotificationHelper.SetNotification(TempData, "Error", NotificationType.error, "Inloggen met google account is niet gelukt probeert u later opnieuw of inloggen met een account.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -93,7 +93,7 @@ namespace SeniorConnect.Controllers.AuthController
             NotificationHelper.SetNotification(
                 TempData,
                 "U bent ingelogd.",
-                "success"
+                NotificationType.success
             );
 
             // Redirect to a page after successful login

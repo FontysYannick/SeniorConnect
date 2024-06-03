@@ -22,25 +22,26 @@ namespace SeniorConnect.API.Controllers
         }
 
         [HttpGet("{user-id}")]
-        public ActionResult GetUser()
+        public async Task<IActionResult> GetUser()
         {
-            try
-            {
-                int UserId = -1;
-                string? rawId = Request.RouteValues["UserId"]?.ToString();
-                if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No UserId Found", "No userId was send");
-                if (!int.TryParse(rawId, out UserId))
-                    ModelState.AddModelError("Invald UserId", "Invald userId was send");
-                if (UserId < 0)
-                    ModelState.AddModelError("Invald UserId", "Invald userId was send");
+            int userId = Convert.ToInt32((string)Request.RouteValues["user-id"]);
+            User? user = await _userService.FindUserById(userId);
 
-                return Ok("shows a spesific activity: " + UserId);
-            }
-            catch (Exception)
+            if (user == null)
             {
-                throw;
+                return BadRequest("User not found");
             }
+
+            GetUserInfoResponse userResponse = new GetUserInfoResponse()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                PhoneNumber = user.Phonenumber,
+                LastName = user.LastName,
+                Preposition = user.Preposition
+            };
+
+            return Ok(userResponse);
         }
 
         [HttpPost("register")]
@@ -139,6 +140,20 @@ namespace SeniorConnect.API.Controllers
             };
 
             return Ok(loginResponse);
+        }
+
+        [HttpPost("change-info")]
+        public async Task<IActionResult> ChangeInformation(UserChangeInfoRequest userChangeInfoRequest)
+        {
+            var user = await _userService.FindUserById(userChangeInfoRequest.userId);
+
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            await _userService.ChangeUserInformation(userChangeInfoRequest);
+            return Ok("Informatie is aangepast.");
         }
     }
 }

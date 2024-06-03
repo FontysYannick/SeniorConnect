@@ -119,7 +119,6 @@ namespace SeniorConnect.API.Service.UserService
             return true;
         }
 
-
         public async Task<User> LoginGoogleAccountSync(UserLoginGoogleAsyncRequest userLoginGoogleAsyncRequest)
         {
             User? userExist = await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == userLoginGoogleAsyncRequest.GoogleEmail);
