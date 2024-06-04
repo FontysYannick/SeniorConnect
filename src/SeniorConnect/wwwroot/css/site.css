@@ -1,5 +1,5 @@
 html {
-  font-size: 14px;
+  font-size: 20px !important;
 }
 
 @media (min-width: 768px) {
@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 500px;
 }
 
 .img-card {
@@ -31,4 +31,16 @@ body {
 .activity-img {
     min-height: 280px;
     max-height: 280px;
+}
+
+.logo-nav{
+    font-weight:800
+}
+
+.navbar-fixed-top {
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    transition: top 0.5s;
+    background-color: #f8f9fa;
 }

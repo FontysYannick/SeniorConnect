@@ -4,38 +4,89 @@
     ViewData ["Title"] = "SeniorConnect";
 }
 
-<div class="text-center">
+ @section Slider {
+    <div id="carouselExampleAutoplaying" class="carousel slide w-100 animate__animated animate__fadeInUp" data-bs-ride="carousel" data-bs-interval="8000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://www.eentegeneenzaamheid.nl/wp-content/uploads/2024/01/Scheiding_contact-web.jpg" class="d-block w-100 custom-img-size" alt="...">
+                <div class="overlay">
+                    <div class="carousel-caption-bottom animate__animated animate__fadeInUp">
+                        <h2>Leuke activiteiten</h2>
+                        <p>Ontdek een wereld vol avontuur en plezier met onze speciaal georganiseerde activiteiten voor senioren.</p>
+                        <p> Blijf actief, ontmoet nieuwe mensen en geniet van elke dag!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://www.oranjefonds.nl/sites/default/files/styles/hero/public/2023-03/NL%20Doet%20159.webp?itok=BrRepETt" class="d-block w-100 custom-img-size" alt="...">
+                <div class="overlay">
+                    <div class="carousel-caption-bottom animate__animated animate__fadeInUp">
+                        <h2>Vrijwilligerswerk</h2>
+                        <p>Geef uw tijd en talent een waardevolle bestemming door vrijwilligerswerk te doen.</p>
+                        <p>Maak een verschil in de gemeenschap en beleef de voldoening van het helpen van anderen.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://www.eentegeneenzaamheid.nl/wp-content/uploads/2024/05/Beeld-2mannen-uitsnede.jpg" class="d-block w-100 custom-img-size" alt="...">
+                <div class="overlay">
+                    <div class="carousel-caption-bottom animate__animated animate__fadeInUp">
+                        <h2>Master class</h2>
+                        <p>Deel uw ervaring of leer iets nieuws met onze boeiende masterclasses.</p>
+                        <p>Ontmoet gelijkgestemden en blijf groeien, ongeacht uw leeftijd!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+ }
+
+<div class="text-center animate__animated animate__fadeInUp">
     <h1 class="display-4">Welcome</h1>
     <div class="row">
-        <div class=" col-md-4 p-3"> 
-            <div class="card" onclick="window.location='/activity/Activity'">
+        <div class="col-md-4 p-3">
+            <div class="card h-100 card-hover" onclick="window.location='/activity/Activity'">
                 <img src="https://static.vecteezy.com/ti/gratis-vector/p3/4661065-ouderen-mensen-activiteiten-set-vector.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">Activiteiten</h5>
-                    <p class="card-text text-truncate">Een overzicht van alle activiteiten die gepland zijn.</p>
-                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <h5 class="card-title">Activiteiten</h5>
+                        <p class="card-text">Een overzicht van alle activiteiten die gepland zijn.</p>
+                        <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class=" col-md-4 p-3">
-            <div class="card" onclick="window.location='/Volunteer/Volunteer'">
+        <div class="col-md-4 p-3">
+            <div class="card h-100 card-hover" onclick="window.location='/Volunteer/Volunteer'">
                 <img src="https://elkwelzijn.nl/wp-content/uploads/elementor/thumbs/118087896_3567965756571440_6670835949777602655_o-ovjn03hwmmeg9olm03b5w9iu9d8k3s99c4se0pnttk.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">Vrijwilligerswerk</h5>
-                    <p class="card-text text-truncate">Een overzicht van het vrijwilligerswerk in onze buurt.</p>
-                    <a href="/Volunteer/Volunteer" class="btn btn-primary">Bekijken</a>
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <h5 class="card-title">Vrijwilligerswerk</h5>
+                        <p class="card-text">Een overzicht van het vrijwilligerswerk in onze buurt.</p>
+                        <a href="/Volunteer/Volunteer" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class=" col-md-4 p-3">
-            <div class="card" onclick="window.location='/activity/Activity'">
+        <div class="col-md-4 p-3">
+            <div class="card h-100 card-hover" onclick="window.location='/activity/Activity'">
                 <img src="https://static.vecteezy.com/ti/gratis-vector/p2/10506903-twee-oud-personen-studie-gratis-vector.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
-                    <h5 class="card-title">Masterclass</h5>
-                    <p class="card-text text-truncate">Wil jij je expertise delen en anderen inspireren? Doe mee aan onze masterclass!</p>
-                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <h5 class="card-title">Masterclass</h5>
+                        <p class="card-text">Wil jij je expertise delen en anderen inspireren? Doe mee masterclass!</p>
+                        <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>
