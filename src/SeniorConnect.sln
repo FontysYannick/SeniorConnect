@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeniorConnect", "SeniorConn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeniorConnect.API", "SeniorConnect.API\SeniorConnect.API.csproj", "{F0215E58-0FFE-4A67-B1FB-2F818E372F32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestSeniotConnect", "UnitTestSeniotConnect\UnitTestSeniotConnect.csproj", "{C8F1D172-CD99-4A55-8B9F-9DCC40B889B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestSeniorConnect", "UnitTestSeniotConnect\UnitTestSeniorConnect.csproj", "{C8F1D172-CD99-4A55-8B9F-9DCC40B889B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,6 +4,7 @@ using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
 using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.ActivityService;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -13,9 +14,12 @@ namespace SeniorConnect.API.Controllers
     {
         private readonly ActivityService _activityHelper;
 
-        public ActivityController(ActivityService activityHelper)
+        private readonly DataContext _dataContext;
+
+        public ActivityController(ActivityService activityHelper, DataContext dataContext)
         {
             _activityHelper = activityHelper;
+            this._dataContext = dataContext;
         }
 
         [HttpGet]
@@ -26,7 +30,10 @@ namespace SeniorConnect.API.Controllers
             {
                 Temp temp = new Temp();
                 List<Activity> list = temp.setActivty();
-                return Json(list);
+
+                var activities = _dataContext.Activities.OrderBy(a => a.Date).ToList();
+
+                return Json(activities);
             }
             catch (Exception)
             {
@@ -63,6 +70,15 @@ namespace SeniorConnect.API.Controllers
         public async Task<IActionResult> PostActivity([FromBody] AbstractActivity activity)
         {
             _activityHelper.setActivty(activity);
+
+            return Ok("Add/Update an activity to the database: ");
+        }
+
+
+        [HttpPost("AddUserToActivity")]
+        public async Task<IActionResult> AddUserToActivity([FromBody] AbstractUserActivty userActivity)
+        {
+            _activityHelper.addUserToActivty(userActivity);
 
             return Ok("Add/Update an activity to the database: ");
         }

@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTestSeniotConnect.SeniorConnectAPI
+namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
 {
     public class UserControllerTest
     {

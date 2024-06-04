@@ -8,9 +8,7 @@ namespace SeniorConnect.API.Services.UserService.Interface
     public interface IAuthenticationService
     {
 
-        public void CreateUser(UserRegisterRequest userRegisterRequest);
-
-        public string CreateRandomToken();
+        public Task CreateUser(UserRegisterRequest userRegisterRequest);
 
         public bool VerifyPasswordHash(UserLoginRequest userLoginRequest, User user);
 
