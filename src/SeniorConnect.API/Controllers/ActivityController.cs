@@ -14,9 +14,12 @@ namespace SeniorConnect.API.Controllers
     {
         private readonly ActivityService _activityHelper;
 
-        public ActivityController(ActivityService activityHelper)
+        private readonly DataContext _dataContext;
+
+        public ActivityController(ActivityService activityHelper, DataContext dataContext)
         {
             _activityHelper = activityHelper;
+            this._dataContext = dataContext;
         }
 
         [HttpGet]
@@ -27,7 +30,10 @@ namespace SeniorConnect.API.Controllers
             {
                 Temp temp = new Temp();
                 List<Activity> list = temp.setActivty();
-                return Json(list);
+
+                var activities = _dataContext.Activities.OrderBy(a => a.Date).ToList();
+
+                return Json(activities);
             }
             catch (Exception)
             {
