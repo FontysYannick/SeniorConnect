@@ -2,19 +2,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
+using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using System.Net.Http;
 
 namespace SeniorConnect.Pages.activity
 {
-    public class ActivityModel(DataContext dataContext) : PageModel
+    public class ActivityModel : PageModel
     {
-        public readonly DataContext dataContext = dataContext;
-
         public List<Activity> Activitys = new();
 
-        public void OnGet()
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ActivityModel(IHttpClientFactory httpClientFactory)
         {
-            Activitys = dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
+            _httpClientFactory = httpClientFactory;
+        }
+
+        public async Task OnGet()
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync("/ActivityController/ActivityList");
+            
+            Activitys = await response.Content.ReadFromJsonAsync<List<Activity>>();
         }
     }
 }
