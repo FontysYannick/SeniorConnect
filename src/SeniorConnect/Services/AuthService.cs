@@ -23,9 +23,9 @@ namespace SeniorConnect.Services
                 return await response.Content.ReadFromJsonAsync<LoginResponse>();
             }
 
-           return new LoginResponse { 
-               response = response
-           };
+            return new LoginResponse { 
+                response = response
+            };
         }
 
         public async Task<HttpResponseMessage> RegisterAsync(UserRegisterRequest userRegisterRequest)
@@ -50,6 +50,26 @@ namespace SeniorConnect.Services
             {
                 response = response
             };
+        }
+
+        public async Task<GetUserInfoResponse?> GetUserAsync(int userId) 
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync($"api/users/{userId}");
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                return null;
+            }
+
+            return await response.Content.ReadFromJsonAsync<GetUserInfoResponse>();
+        }
+
+        public async Task<HttpResponseMessage> ChangeUserInfoAsync(UserChangeInfoRequest userChangeInfoRequest)
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+
+            return await client.PostAsJsonAsync("api/users/change-info", userChangeInfoRequest);
         }
     }
 }
