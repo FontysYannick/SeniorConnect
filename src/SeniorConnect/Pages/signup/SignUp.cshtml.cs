@@ -23,6 +23,8 @@ namespace SeniorConnect.Pages.signup
             if (User.Identity?.IsAuthenticated == true)
             {
                 Response.Redirect("/");
+
+                return;
             }
         }
 
@@ -46,7 +48,7 @@ namespace SeniorConnect.Pages.signup
             NotificationHelper.SetNotification(
                     TempData, 
                     message, 
-                    "success", 
+                    NotificationType.success, 
                     "U kunt nu inloggen met u aangemaakte account."
                 );
 

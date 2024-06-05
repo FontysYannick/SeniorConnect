@@ -24,5 +24,28 @@ namespace SeniorConnect.API.Service.UserService
         {
             return await _dataContext.Users.FirstOrDefaultAsync(user => user.Email == userLoginRequest.Email);
         }
+
+        public async Task<User?> FindUserById(int userId)
+        {
+            return await _dataContext.Users.FindAsync(userId);
+        }
+
+        public async Task ChangeUserInformation(UserChangeInfoRequest userChangeInformationRequest)
+        {
+
+            var user  = await FindUserById(userChangeInformationRequest.userId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.FirstName = userChangeInformationRequest.FirstName;
+            user.LastName = userChangeInformationRequest.LastName;
+            user.Preposition = userChangeInformationRequest.Preposition;
+            user.Phonenumber = userChangeInformationRequest.PhoneNumber;
+
+            await _dataContext.SaveChangesAsync();
+        }
     }
 }

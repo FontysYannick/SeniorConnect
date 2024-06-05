@@ -61,7 +61,7 @@ namespace SeniorConnect.Pages.login
             NotificationHelper.SetNotification(
                     TempData,
                     "U bent ingelogd.",
-                    "success"
+                    NotificationType.success
                 );
 
             return RedirectToPage("/index");
@@ -72,6 +72,7 @@ namespace SeniorConnect.Pages.login
             if (User.Identity?.IsAuthenticated == true)
             {
                 Response.Redirect("/");
+                return;
             }
         }
     }
