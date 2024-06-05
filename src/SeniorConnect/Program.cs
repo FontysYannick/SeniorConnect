@@ -16,7 +16,7 @@ builder.Services.AddRazorPages();
 // sets up an HTTP client connect to API
 builder.Services.AddHttpClient("SeniorConnectAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7049/");
+    client.BaseAddress = new Uri("http://localhost:5175/");
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });

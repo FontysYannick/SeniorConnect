@@ -28,9 +28,6 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                Temp temp = new Temp();
-                List<Activity> list = temp.setActivty();
-
                 var activities = _dataContext.Activities.OrderBy(a => a.Date).ToList();
 
                 return Json(activities);
@@ -57,7 +54,9 @@ namespace SeniorConnect.API.Controllers
                 if (ActivityId < 0)
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
 
-                return Ok("shows a spesific activity: " + ActivityId);
+                var activity = _dataContext.Activities.Include(a => a.Organizer).Where(a => a.ActivityId == ActivityId).FirstOrDefault();
+
+                return Json(activity);
             }
             catch (Exception)
             {

@@ -9,14 +9,14 @@ namespace SeniorConnect.Pages.activity
 {
     public class AddActivityModel(DataContext dataContext) : PageModel
     {
-        public readonly DataContext dataContext = dataContext;
+        public readonly DataContext _dataContext = dataContext;
         public AbstractActivity abActivity { get; set; }
 
         public void OnGet()
         {
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
             DateTime.TryParse(Request.Form["Date"], out DateTime dateTime);
             int.TryParse(Request.Form["MaxParticipants"], out int maxPart);
@@ -37,8 +37,10 @@ namespace SeniorConnect.Pages.activity
                 UpdatedAt = DateTime.Now,
             };
 
-            dataContext.Activities.Add(AA);
-            dataContext.SaveChanges();
+            _dataContext.Activities.Add(AA);
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToPage("/index");
         }
     }
 }

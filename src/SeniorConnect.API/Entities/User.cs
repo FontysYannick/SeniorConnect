@@ -32,9 +32,9 @@ namespace SeniorConnect.API.Entities
 
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        public ICollection<ActivityUsers> ActivityUsers { get; set; } = new List<ActivityUsers>();
+        public ICollection<ActivityUsers> ActivityUsers { get; set; } = [];
 
-        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+        public ICollection<Activity>? Activities { get; set; }
 
         public string? GoogleId { get; set; }
 
