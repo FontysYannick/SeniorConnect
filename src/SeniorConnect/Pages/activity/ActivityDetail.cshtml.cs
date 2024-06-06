@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Controllers;
 using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
+using SeniorConnect.API.Models.Users;
+using SeniorConnect.Helpers;
 using System.Net.Http;
+using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
 {
@@ -33,8 +36,7 @@ namespace SeniorConnect.Pages.activity
         public async Task<IActionResult> OnPost()
         {
             int.TryParse(Request.Form["activityId"], out int activityid);
-            int userId = 1;
-            //var user = Request.Form["userId"];
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             ActivityUsers AU = new()
             {
@@ -45,7 +47,15 @@ namespace SeniorConnect.Pages.activity
             _dataContext.ActivityUsers.Add(AU);
             await _dataContext.SaveChangesAsync();
 
-            return RedirectToPage("/index");
+            var name = _dataContext.Activities.Where(a => a.ActivityId == activityid).Select(a => a.Title).FirstOrDefault();
+
+            NotificationHelper.SetNotification(
+                TempData,
+                "U ben ingeschreven voor " + name,
+                NotificationType.success
+            );
+
+            return RedirectToPage("/calendar/Calendar");
         }
     }
 }

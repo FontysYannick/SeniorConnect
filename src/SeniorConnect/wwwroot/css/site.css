@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  /*background-color: gainsboro;*/
 }
 
 .img-card {
@@ -31,4 +32,8 @@ body {
 .activity-img {
     min-height: 280px;
     max-height: 280px;
+}
+
+.form-group {
+    padding-top: 1rem;
 }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
+using SeniorConnect.Helpers;
 using System;
+using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
 {
@@ -18,14 +20,14 @@ namespace SeniorConnect.Pages.activity
 
         public async Task<IActionResult> OnPost()
         {
+            string title = Request.Form["Title"];
             DateTime.TryParse(Request.Form["Date"], out DateTime dateTime);
             int.TryParse(Request.Form["MaxParticipants"], out int maxPart);
-            int userId = 1;
-            //var user = Request.Form["userId"];
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             Activity AA = new()
             {
-                Title = Request.Form["Title"],
+                Title = title,
                 OrganizerId = userId,
                 Description = Request.Form["Description"],
                 Image = Request.Form["Image"],
@@ -40,7 +42,13 @@ namespace SeniorConnect.Pages.activity
             _dataContext.Activities.Add(AA);
             await _dataContext.SaveChangesAsync();
 
-            return RedirectToPage("/index");
+            NotificationHelper.SetNotification(
+                TempData,
+                "De Activiteit " + title + " is aangemaakt" ,
+                NotificationType.success
+            );
+
+            return RedirectToPage("/activity/Activity");
         }
     }
 }

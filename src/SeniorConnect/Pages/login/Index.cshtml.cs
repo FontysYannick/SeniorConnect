@@ -60,7 +60,7 @@ namespace SeniorConnect.Pages.login
 
             NotificationHelper.SetNotification(
                     TempData,
-                    "U bent ingelogd.",
+                    "Welkom " + loginResponse.UserName,
                     NotificationType.success
                 );
 
