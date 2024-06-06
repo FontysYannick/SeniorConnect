@@ -1,48 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Controllers;
-using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
-using SeniorConnect.API.Models.Users;
-using SeniorConnect.Helpers;
+using Newtonsoft.Json;
+using SeniorConnect.Models.Activities;
 using System.Net.Http;
-using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
 {
     public class ActivityDetailModel : PageModel
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly DataContext _dataContext;
-        public Activity Activity = new();
 
-        public ActivityDetailModel(IHttpClientFactory httpClientFactory, DataContext dataContext)
+        public ActivityDto Activity = new();
+
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ActivityDetailModel(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _dataContext = dataContext;
         }
 
         public async Task OnGet(int Id)
-        {
-            Activity = _dataContext.Activities.Include(a => a.Organizer).Where(a => a.ActivityId == Id).FirstOrDefault();
-
-            //var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
-            //var response = await client.GetAsync("/ActivityController/Activity/"+Id);
-
-            //Activity = await response.Content.ReadFromJsonAsync<Activity>();
-        }
-
         public async Task<IActionResult> OnPost()
         {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync("/ActivityController/Activity/1");
             int.TryParse(Request.Form["activityId"], out int activityid);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            ActivityUsers AU = new()
+            if (response.IsSuccessStatusCode)
             {
-                ActivityId = activityid,
-                UserId = userId
-            };
+                var content = await response.Content.ReadAsStringAsync();
+                Activity = JsonConvert.DeserializeObject<ActivityDto>(content);
+            }
+        }
 
             _dataContext.ActivityUsers.Add(AU);
             await _dataContext.SaveChangesAsync();

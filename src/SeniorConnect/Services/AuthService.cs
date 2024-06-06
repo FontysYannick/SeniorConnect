@@ -1,6 +1,4 @@
-﻿using Azure;
-using SeniorConnect.API.Entities;
-using SeniorConnect.API.Models.Users;
+﻿using SeniorConnect.Models.User;
 
 namespace SeniorConnect.Services
 {
@@ -13,29 +11,29 @@ namespace SeniorConnect.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<LoginResponse> LoginAsync(UserLoginRequest userLoginRequest)
+        public async Task<LoginResponseDto> LoginAsync(UserLoginRequestDto userLoginRequest)
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
             var response = await client.PostAsJsonAsync("api/users/login", userLoginRequest);
 
             if (response.IsSuccessStatusCode == true)
             {
-                return await response.Content.ReadFromJsonAsync<LoginResponse>();
+                return await response.Content.ReadFromJsonAsync<LoginResponseDto>();
             }
 
-            return new LoginResponse { 
+            return new LoginResponseDto { 
                 response = response
             };
         }
 
-        public async Task<HttpResponseMessage> RegisterAsync(UserRegisterRequest userRegisterRequest)
+        public async Task<HttpResponseMessage> RegisterAsync(UserRegisterRequestDto userRegisterRequest)
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
 
             return await client.PostAsJsonAsync("api/users/register", userRegisterRequest);
         }
 
-        public async Task<LoginResponse> LoginWitGoogleAsync(UserLoginGoogleAsyncRequest userLoginGoogleAsyncRequest)
+        public async Task<LoginResponseDto> LoginWitGoogleAsync(UserLoginGoogleRequestDto userLoginGoogleAsyncRequest)
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
 
@@ -43,16 +41,16 @@ namespace SeniorConnect.Services
 
             if (response.IsSuccessStatusCode == true)
             {
-                return await response.Content.ReadFromJsonAsync<LoginResponse>();
+                return await response.Content.ReadFromJsonAsync<LoginResponseDto>();
             }
 
-            return new LoginResponse
+            return new LoginResponseDto
             {
                 response = response
             };
         }
 
-        public async Task<GetUserInfoResponse?> GetUserAsync(int userId) 
+        public async Task<UserInfoDto?> GetUserAsync(int userId) 
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
             var response = await client.GetAsync($"api/users/{userId}");
@@ -62,10 +60,10 @@ namespace SeniorConnect.Services
                 return null;
             }
 
-            return await response.Content.ReadFromJsonAsync<GetUserInfoResponse>();
+            return await response.Content.ReadFromJsonAsync<UserInfoDto>();
         }
 
-        public async Task<HttpResponseMessage> ChangeUserInfoAsync(UserChangeInfoRequest userChangeInfoRequest)
+        public async Task<HttpResponseMessage> ChangeUserInfoAsync(UserChangeInfoRequestDto userChangeInfoRequest)
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
 
