@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using SeniorConnect.Models.User;
 using SeniorConnect.Services;
 
 namespace SeniorConnect.Pages.signup
@@ -10,7 +10,7 @@ namespace SeniorConnect.Pages.signup
     {
 
         [BindProperty]
-        public UserRegisterRequest UserRegisterRequest { get; set; }
+        public UserRegisterRequestDto UserRegisterRequest { get; set; }
 
         private readonly AuthService authService;
         public signupModel(AuthService authService)
