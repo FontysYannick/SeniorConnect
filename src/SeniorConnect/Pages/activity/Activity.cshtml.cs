@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using SeniorConnect.Helpers;
 using SeniorConnect.Models.Activities;
 using System.Net.Http;
@@ -20,7 +21,12 @@ namespace SeniorConnect.Pages.activity
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
             var response = await client.GetAsync("/ActivityController/ActivityList");
-            
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Activitys = JsonConvert.DeserializeObject<List<ActivityDto>>(content);
+            }
         }
     }
 }

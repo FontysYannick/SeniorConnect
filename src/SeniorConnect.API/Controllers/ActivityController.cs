@@ -44,7 +44,7 @@ namespace SeniorConnect.API.Controllers
 
         [HttpGet]
         [Route("Activity/{ActivityId}")]
-        public ActionResult GetActivity()
+        public async Task<IActionResult> GetActivity()
         {
             try
             {
@@ -56,8 +56,10 @@ namespace SeniorConnect.API.Controllers
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
                 if (ActivityId < 0)
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                
+                var activity = await _dataContext.Activities.Include(a => a.Organizer).FirstOrDefaultAsync(a => a.ActivityId == ActivityId);
 
-                return Ok("shows a spesific activity: " + ActivityId);
+                return Ok(activity);
             }
             catch (Exception)
             {
