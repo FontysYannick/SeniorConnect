@@ -13,18 +13,11 @@
                     @if (User.Identity.Name != null)
                     {
                         <form method="post" autocomplete="off" id="actiivtyUserForm">
-                            <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
-                            <input type="hidden" id="userId" name="userId" value="@User.Identities.FirstOrDefault().Name" />
                             <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Inschrijven" />
                         </form>
                     }
                     else
                     {
-                        @* test need to delete *@
-                        <form method="post" autocomplete="off" id="actiivtyUserForm">
-                            <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
-                            <input type="submit" class="btn btn-primary btn-lg" title="Inschrijven" />
-                        </form>
                         <a class="btn btn-primary" href="/login">Inloggen</a>
                     }
                 </div>

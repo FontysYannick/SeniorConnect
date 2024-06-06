@@ -26,7 +26,6 @@ namespace SeniorConnect.Pages.activity
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
 
-
             string title = Request.Form["Title"];
             DateTime.TryParse(Request.Form["Date"], out DateTime dateTime); 
             int.TryParse(Request.Form["MaxParticipants"], out int maxPart);

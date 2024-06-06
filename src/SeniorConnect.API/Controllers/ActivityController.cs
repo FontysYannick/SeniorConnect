@@ -82,6 +82,25 @@ namespace SeniorConnect.API.Controllers
             return Ok("Add/Update an activity to the database: ");
         }
 
+
+        [HttpGet("GetUserToActivity/{userId}")]
+        public async Task<IActionResult> GetUserToActivity()
+        {
+            int userId = -1;
+            string? rawId = Request.RouteValues["userId"]?.ToString();
+            if (string.IsNullOrEmpty(rawId))
+                ModelState.AddModelError("No userId Found", "No userId was send");
+            if (!int.TryParse(rawId, out userId))
+                ModelState.AddModelError("Invald userId", "Invald userId was send");
+            if (userId < 0)
+                ModelState.AddModelError("Invald userId", "Invald userId was send");
+
+
+            var Activitys = _dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
+
+            return Json(Activitys);
+        }
+
         [HttpDelete]
         [Route("Activity/{ActivityId}")]
         public ActionResult DeleteActivity()

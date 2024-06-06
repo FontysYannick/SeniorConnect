@@ -10,13 +10,12 @@ namespace SeniorConnect.Pages.activity
     public class ActivityModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly DataContext _dataContext;
 
         public List<ActivityDto> Activitys = new();
+
         public ActivityModel(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _dataContext = dataContext;
         }
 
         public async Task OnGet()
