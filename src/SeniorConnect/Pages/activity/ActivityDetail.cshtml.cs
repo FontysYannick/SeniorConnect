@@ -1,36 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
+using Newtonsoft.Json;
+using SeniorConnect.Models.Activities;
+using System.Net.Http;
 
 namespace SeniorConnect.Pages.activity
 {
-    public class ActivityDetailModel(DataContext dataContext) : PageModel
+    public class ActivityDetailModel : PageModel
     {
-        public readonly DataContext dataContext = dataContext;
 
-        public Activity Activity = new();
+        public ActivityDto Activity = new();
 
-        public void OnGet(int Id)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ActivityDetailModel(IHttpClientFactory httpClientFactory)
         {
-            Activity = dataContext.Activities.Include(a => a.Organizer).Where(a => a.ActivityId == Id).FirstOrDefault();
+            _httpClientFactory = httpClientFactory;
+        }
+
+        public async Task OnGet(int Id)
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync("/ActivityController/Activity/1");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Activity = JsonConvert.DeserializeObject<ActivityDto>(content);
+            }
         }
 
         public void OnPost()
         {
-            int.TryParse(Request.Form["activityId"], out int activityid);
-            int userId = 1;
-            //var user = Request.Form["userId"];
-
-            ActivityUsers AU = new()
-            {
-                ActivityId = activityid,
-                UserId = userId
-            };
-
-            dataContext.ActivityUsers.Add(AU);
-            dataContext.SaveChanges();
         }
     }
 }

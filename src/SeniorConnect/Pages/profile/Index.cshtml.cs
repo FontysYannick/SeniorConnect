@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using SeniorConnect.Models.User;
 using SeniorConnect.Services;
 using System.Security.Claims;
 
@@ -16,7 +16,7 @@ namespace SeniorConnect.Pages.profile
         }
 
         [BindProperty]
-        public GetUserInfoResponse? UserInfoResponse { get; set; }
+        public UserInfoDto? UserInfoResponse { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -50,7 +50,7 @@ namespace SeniorConnect.Pages.profile
 
 
             await _authService.ChangeUserInfoAsync(
-                new UserChangeInfoRequest()
+                new UserChangeInfoRequestDto()
                 {
                     userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
                     FirstName = UserInfoResponse.FirstName,

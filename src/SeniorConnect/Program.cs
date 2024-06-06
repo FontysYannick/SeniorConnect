@@ -1,12 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Options;
 using SeniorConnect.Services;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SeniorConnect.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,11 +14,6 @@ builder.Services.AddHttpClient("SeniorConnectAPI", client =>
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
-
-// Configure DbContext with connection string from appsettings.json
-builder.Services.AddDbContext<DataContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    );
 
 // register services
 builder.Services.AddScoped<AuthService>();

@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Entities;
-using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using SeniorConnect.Models.User;
 using SeniorConnect.Services;
 using System.Security.Claims;
-using System.Security.Principal;
 
 namespace SeniorConnect.Controllers.AuthController
 {
@@ -65,7 +61,7 @@ namespace SeniorConnect.Controllers.AuthController
                 return BadRequest("Unable to retrieve user information from Google.");
             }
 
-            var googleUser = new UserLoginGoogleAsyncRequest()
+            var googleUser = new UserLoginGoogleRequestDto()
             {
                 FirstName = firstNameClaim.Value,
                 LastName = LastNameClaim.Value,
