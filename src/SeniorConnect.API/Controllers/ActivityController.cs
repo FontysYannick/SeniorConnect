@@ -28,7 +28,7 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                var activities = _dataContext.Activities.OrderBy(a => a.Date).ToList();
+                var activities = _dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
 
                 return Json(activities);
             }

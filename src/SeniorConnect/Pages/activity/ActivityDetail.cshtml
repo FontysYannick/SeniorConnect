@@ -7,12 +7,15 @@
 <div class="row">
     <div class="col-lg-9">
         <div class="card mb-4">
+            <a href="#!"><img class="card-img-top" src="@Model.Activity.Image" alt="..." /></a>
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight mb-3">
                     <h2 class="card-title">@Model.Activity.Title</h2>
                     @if (User.Identity.Name != null)
                     {
                         <form method="post" autocomplete="off" id="actiivtyUserForm">
+                            <input type="hidden" id="acitivtyTitle" name="acitivtyTitle" value="@Model.Activity.Title" />
+                            <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
                             <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Inschrijven" />
                         </form>
                     }
@@ -25,7 +28,6 @@
                     @Model.Activity.Description
                 </p>
             </div>
-            <a href="#!"><img class="card-img-top" src="@Model.Activity.Image" alt="..." /></a>
         </div>
     </div>
 

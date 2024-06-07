@@ -35,18 +35,19 @@ namespace SeniorConnect.Pages.activity
         public async Task<IActionResult> OnPost()
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            int.TryParse(Request.Form["activityId"], out int activityid);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             AddActivityUserDTO AA = new() {
                 UserId = userId,
-                ActivityId = Activity.ActivityId
+                ActivityId = activityid
             };
 
             var response = await client.PostAsJsonAsync("/ActivityController/AddUserToActivity", AA);
 
             NotificationHelper.SetNotification(
                 TempData,
-                "U ben ingeschreven voor " + Activity.Title,
+                "U ben ingeschreven voor " + Request.Form["acitivtyTitle"],
                 NotificationType.success
             );
 
