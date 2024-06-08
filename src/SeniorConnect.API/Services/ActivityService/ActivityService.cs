@@ -46,10 +46,10 @@ namespace SeniorConnect.API.Services.ActivityService
         {
             var newUserActivty = new ActivityUsers
             {
-                //UserId = userActivty.UserId,
-                //ActivityId = userActivty.ActivityId,
-                UserId = _dataContext.Users.Where(a => a.UserId == userActivty.UserId).Select(a => a.UserId).FirstOrDefault(),
-                ActivityId = _dataContext.Activities.Where(a => a.ActivityId == userActivty.ActivityId).Select(a => a.ActivityId).FirstOrDefault()
+                UserId = userActivty.UserId,
+                ActivityId = userActivty.ActivityId,
+                //UserId = _dataContext.Users.Where(a => a.UserId == userActivty.UserId).Select(a => a.UserId).FirstOrDefault(),
+                //ActivityId = _dataContext.Activities.Where(a => a.ActivityId == userActivty.ActivityId).Select(a => a.ActivityId).FirstOrDefault()
             };
 
             _dataContext.ActivityUsers.Add(newUserActivty);

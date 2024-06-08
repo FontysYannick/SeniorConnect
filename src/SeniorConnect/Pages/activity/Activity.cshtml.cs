@@ -12,6 +12,7 @@ namespace SeniorConnect.Pages.activity
         private readonly IHttpClientFactory _httpClientFactory;
 
         public List<ActivityDto> Activitys = new();
+
         public ActivityModel(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;

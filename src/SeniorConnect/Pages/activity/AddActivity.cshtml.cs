@@ -26,7 +26,6 @@ namespace SeniorConnect.Pages.activity
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
 
-
             string title = Request.Form["Title"];
             DateTime.TryParse(Request.Form["Date"], out DateTime dateTime); 
             int.TryParse(Request.Form["MaxParticipants"], out int maxPart);
@@ -48,12 +47,6 @@ namespace SeniorConnect.Pages.activity
             NotificationHelper.SetNotification(TempData, "De Activiteit " + title + " is aangemaakt", NotificationType.success); 
             
             return RedirectToPage("/activity/Activity");
-
-            var test = response;
-            //DateTime.TryParse(Request.Form["Date"], out DateTime dateTime);
-            //int.TryParse(Request.Form["MaxParticipants"], out int maxPart);
-            //int userId = 1;
-            //var user = Request.Form["userId"];
         }
     }
 }
