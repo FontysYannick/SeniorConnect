@@ -1,23 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
-using SeniorConnect.Helpers;
+using Newtonsoft.Json;
+using SeniorConnect.Models.Activities;
+using System.Net.Http;
+using System.Security.Claims;
 
 namespace SeniorConnect.Pages.calendar
 {
-    public class CalendarModel(DataContext dataContext) : PageModel
+    public class CalendarModel : PageModel
     {
-        public readonly DataContext dataContext = dataContext;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public List<Activity> Activitys = new();
+        public List<ActivityDto> Activitys = new();
 
-        public void OnGet()
+        public CalendarModel(IHttpClientFactory httpClientFactory)
         {
-            int userId = 1;
-            Activitys = dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
+            _httpClientFactory = httpClientFactory;
+        }
 
+
+        public async Task OnGet()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync("/ActivityController/GetUserToActivity/" + userId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Activitys = JsonConvert.DeserializeObject<List<ActivityDto>>(content);
+            }
         }
     }
 }

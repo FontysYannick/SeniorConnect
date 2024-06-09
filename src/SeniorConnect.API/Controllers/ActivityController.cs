@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
-using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.ActivityService;
-using System.ComponentModel.DataAnnotations;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -28,10 +25,7 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                Temp temp = new Temp();
-                List<Activity> list = temp.setActivty();
-
-                var activities = _dataContext.Activities.OrderBy(a => a.Date).ToList();
+                var activities = _dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
 
                 return Json(activities);
             }
@@ -44,7 +38,7 @@ namespace SeniorConnect.API.Controllers
 
         [HttpGet]
         [Route("Activity/{ActivityId}")]
-        public ActionResult GetActivity()
+        public async Task<IActionResult> GetActivity()
         {
             try
             {
@@ -57,7 +51,9 @@ namespace SeniorConnect.API.Controllers
                 if (ActivityId < 0)
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
 
-                return Ok("shows a spesific activity: " + ActivityId);
+                var activity = await _dataContext.Activities.Include(a => a.Organizer).FirstOrDefaultAsync(a => a.ActivityId == ActivityId);
+
+                return Ok(activity);
             }
             catch (Exception)
             {
@@ -81,6 +77,24 @@ namespace SeniorConnect.API.Controllers
             _activityHelper.addUserToActivty(userActivity);
 
             return Ok("Add/Update an activity to the database: ");
+        }
+
+
+        [HttpGet("GetUserToActivity/{userId}")]
+        public async Task<IActionResult> GetUserToActivity()
+        {
+            int userId = -1;
+            string? rawId = Request.RouteValues["userId"]?.ToString();
+            if (string.IsNullOrEmpty(rawId))
+                ModelState.AddModelError("No userId Found", "No userId was send");
+            if (!int.TryParse(rawId, out userId))
+                ModelState.AddModelError("Invald userId", "Invald userId was send");
+            if (userId < 0)
+                ModelState.AddModelError("Invald userId", "Invald userId was send");
+
+            var Activitys = _dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
+
+            return Json(Activitys);
         }
 
         [HttpDelete]

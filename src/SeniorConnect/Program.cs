@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Localization;
 using SeniorConnect.Services;
+using System.Globalization;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SeniorConnect.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +12,10 @@ builder.Services.AddRazorPages();
 // sets up an HTTP client connect to API
 builder.Services.AddHttpClient("SeniorConnectAPI", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7049/");
+    client.BaseAddress = new Uri("http://localhost:5175/");
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
-
-// Configure DbContext with connection string from appsettings.json
-builder.Services.AddDbContext<DataContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    );
 
 // register services
 builder.Services.AddScoped<AuthService>();
@@ -59,12 +50,24 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication(); // Enable authentication middleware
 app.UseAuthorization();
+
+
+var defaultCulture = new CultureInfo("nl-NL");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(defaultCulture),
+    SupportedCultures = new List<CultureInfo> { defaultCulture },
+    SupportedUICultures = new List<CultureInfo> { defaultCulture }
+};
+
+app.UseRequestLocalization(localizationOptions);
 
 app.MapRazorPages();
 

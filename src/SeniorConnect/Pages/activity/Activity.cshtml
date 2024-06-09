@@ -1,23 +1,24 @@
 ﻿@page
+@using Humanizer
 @model SeniorConnect.Pages.activity.ActivityModel
 @{
     ViewData ["Title"] = "SeniorConnect";
 }
 
-<div class="text-center">
+<div class="mt-5 ">
     <h1 class="display-4">Activiteiten</h1>
     <div class="row">
-
         @foreach (var Activity in Model.Activitys)
         {
             <div class="col-md-4 p-3">
-                <div class="card" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
+                <div class="card card-hover" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
                     <img src="@Activity.Image" class="card-img-top activity-img" alt="Img" />
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title">@Activity.Title</h5>
                         <p class="card-text text-truncate">@Activity.Description</p>
-                        <a href="/activity/ActivityDetail?id=@Activity.ActivityId" class="btn btn-primary">Inschrijven</a>
+                        <a href="/activity/ActivityDetail?id=@Activity.ActivityId" class="btn btn-primary">Meer informatie</a>
                     </div>
+                    <p class="text-muted mx-2 mb-1">Gemaakt: @Activity.CreatedAt.Humanize()</p>
                 </div>
             </div>
         }

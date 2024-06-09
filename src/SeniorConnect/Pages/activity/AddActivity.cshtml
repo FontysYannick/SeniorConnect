@@ -4,55 +4,55 @@
     ViewData["Title"] = "Create Activity";
 }
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-5">
     <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-3 p-md-4 p-xl-5">
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-5">
+                        <div class="mb-2">
                             <h2>Activiteit toevoegen</h2>
                         </div>
                     </div>
                 </div>
                 <form method="post" autocomplete="off">
                     <div class="form-group">
-                        <label asp-for="abActivity.Title" class="control-label">Titel</label>
-                        <input asp-for="abActivity.Title" name="title" class="form-control" />
-                        <span asp-validation-for="abActivity.Title" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Title" class="control-label">Titel</label>
+                        <input asp-for="addActivityRequestDto.Title" name="title" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.Title" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.Description" class="control-label">Descriptie</label>
-                        <textarea asp-for="abActivity.Description" name="Description" class="form-control"></textarea>
-                        <span asp-validation-for="abActivity.Description" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Description" class="control-label">Beschrijving</label>
+                        <textarea asp-for="addActivityRequestDto.Description" name="Description" class="form-control"></textarea>
+                        <span asp-validation-for="addActivityRequestDto.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.Image" class="control-label">Afbeelding</label>
-                        <input asp-for="abActivity.Image" name="Image" class="form-control" />
-                        <span asp-validation-for="abActivity.Image" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Image" class="control-label">Afbeelding</label>
+                        <input asp-for="addActivityRequestDto.Image" name="Image" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.Image" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.Date" class="control-label">Datum & tijd</label>
-                        <input asp-for="abActivity.Date" name="Date" class="form-control" />
-                        <span asp-validation-for="abActivity.Date" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Date" class="control-label">Datum & tijd</label>
+                        <input asp-for="addActivityRequestDto.Date" name="Date" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.Date" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.Place" class="control-label">Plaats</label>
-                        <input asp-for="abActivity.Place" name="Place" class="form-control" />
-                        <span asp-validation-for="abActivity.Place" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Place" class="control-label">Plaats</label>
+                        <input asp-for="addActivityRequestDto.Place" name="Place" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.Place" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.MaxParticipants" class="control-label">Max deelnemers</label>
-                        <input asp-for="abActivity.MaxParticipants" name="MaxParticipants" class="form-control" />
-                        <span asp-validation-for="abActivity.MaxParticipants" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.MaxParticipants" class="control-label">Max deelnemers</label>
+                        <input asp-for="addActivityRequestDto.MaxParticipants" name="MaxParticipants" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.MaxParticipants" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="abActivity.Awards" class="control-label">Prijs</label>
-                        <input asp-for="abActivity.Awards" name="Awards" class="form-control" />
-                        <span asp-validation-for="abActivity.Awards" class="text-danger"></span>
+                        <label asp-for="addActivityRequestDto.Awards" class="control-label">Prijs</label>
+                        <input asp-for="addActivityRequestDto.Awards" name="Awards" class="form-control" />
+                        <span asp-validation-for="addActivityRequestDto.Awards" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input type="submit" value="Aanmaken" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

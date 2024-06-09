@@ -1,5 +1,7 @@
-﻿.custom-img-size {
-    height: 93vh;
+﻿
+/* Slider */
+.custom-img-size {
+    height: 92vh;
     object-fit: cover;
 }
 
@@ -20,24 +22,24 @@
     padding: 10px 20px;
     color: #fff;
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 63px
 }
 
-.carousel-caption-bottom h2 {
-    font-size: 56px;
-    font-weight: 700;
-}
+    .carousel-caption-bottom h2 {
+        font-size: 70px;
+        font-weight: 700;
+    }
 
-.carousel-caption-bottom p{
-    font-size: 24px;
-    font-weight: 500;
-}
+    .carousel-caption-bottom p {
+        font-size: 24px;
+        font-weight: 500;
+    }
 
-.carousel-caption-bottom h2,
-.carousel-caption-bottom p {
-    color: #fff;
-    margin: 0;
-}
+    .carousel-caption-bottom h2,
+    .carousel-caption-bottom p {
+        color: #fff;
+        margin: 0;
+    }
 
 @keyframes moveUpDown {
     0%, 100% {
@@ -60,6 +62,7 @@
     animation: moveUpDown 2s infinite;
 }
 
-#show_categories{
-    padding-top: 200px;
+/* activities card*/
+#show_categories {
+    padding-top: 38px;
 }

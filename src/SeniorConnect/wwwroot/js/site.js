@@ -6,14 +6,13 @@
 
     $(window).scroll(function () {
         var scrollTop = $(this).scrollTop();
-        console.log(scrollTop + ">" + lastScrollTop);
-
-        if (scrollTop > 170) {
+        console.log(scrollTop);
+        if (scrollTop > 100) {
             $navbar.addClass(animationClass).css('position', 'fixed');
         }
         else {
             $navbar.removeClass(animationClass).css('transform');
-            $navbar.removeClass(animationClass).css('position','');
+            $navbar.removeClass(animationClass).css('position', '');
         }
         lastScrollTop = scrollTop;
     });

@@ -14,7 +14,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 // Register Service
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
@@ -25,6 +24,12 @@ builder.Services.AddScoped<ActivityService>();
 builder.Services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
+
+builder.Services.AddControllers()
+    .AddJsonOptions( options => { 
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve; 
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        });
 
 
 var app = builder.Build();

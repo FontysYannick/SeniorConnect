@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using SeniorConnect.Models.User;
 using SeniorConnect.Services;
 using System.Security.Claims;
 
@@ -20,7 +20,7 @@ namespace SeniorConnect.Pages.login
         }
 
         [BindProperty]
-        public UserLoginRequest UserLoginRequest { get; set; }
+        public UserLoginRequestDto UserLoginRequest { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -60,8 +60,8 @@ namespace SeniorConnect.Pages.login
 
             NotificationHelper.SetNotification(
                     TempData,
-                    "U bent ingelogd.",
-                    "success"
+                    "Welkom " + loginResponse.UserName,
+                    NotificationType.success
                 );
 
             return RedirectToPage("/index");
@@ -72,6 +72,7 @@ namespace SeniorConnect.Pages.login
             if (User.Identity?.IsAuthenticated == true)
             {
                 Response.Redirect("/");
+                return;
             }
         }
     }

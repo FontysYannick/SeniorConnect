@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Entities;
-using SeniorConnect.API.Models.Users;
 using SeniorConnect.Helpers;
+using SeniorConnect.Models.User;
 using SeniorConnect.Services;
 using System.Security.Claims;
-using System.Security.Principal;
 
 namespace SeniorConnect.Controllers.AuthController
 {
@@ -22,16 +18,19 @@ namespace SeniorConnect.Controllers.AuthController
             authService = _authService;
         }
 
-        [Route("[action]")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             await HttpContext.SignOutAsync();
             NotificationHelper.SetNotification(
                     TempData,
                     "U bent uitgelogd.",
-                    "success"
+                    NotificationType.success
                 );
             return RedirectToAction("Index", "Home");
         }
@@ -50,7 +49,7 @@ namespace SeniorConnect.Controllers.AuthController
 
             if (!authenticateResult.Succeeded || authenticateResult == null)
             {
-                NotificationHelper.SetNotification(TempData, "Error", "danger", "Inloggen met google account is niet gelukt probeert u later opnieuw of inloggen met een account.");
+                NotificationHelper.SetNotification(TempData, "Error", NotificationType.error, "Inloggen met google account is niet gelukt probeert u later opnieuw of inloggen met een account.");
                 return RedirectToAction("Index", "Home");
             }
 
@@ -65,7 +64,7 @@ namespace SeniorConnect.Controllers.AuthController
                 return BadRequest("Unable to retrieve user information from Google.");
             }
 
-            var googleUser = new UserLoginGoogleAsyncRequest()
+            var googleUser = new UserLoginGoogleRequestDto()
             {
                 FirstName = firstNameClaim.Value,
                 LastName = LastNameClaim.Value,
@@ -92,8 +91,8 @@ namespace SeniorConnect.Controllers.AuthController
 
             NotificationHelper.SetNotification(
                 TempData,
-                "U bent ingelogd.",
-                "success"
+                 "Welkom " + loginResponse.UserName,
+                NotificationType.success
             );
 
             // Redirect to a page after successful login

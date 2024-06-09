@@ -10,15 +10,15 @@
             <div class="carousel-item active">
                 <img src="https://www.everswinkel.de/de-wAssets/img/bilderpool/weblication/wThumbnails/366a7fb62313668gfdb45db2963f3123.jpg" class="d-block w-100 custom-img-size" alt="...">
                 <div class="overlay">
-                    <div class="carousel-caption-bottom animate__animated animate__fadeInUp" style="margin-bottom: 63px">
-                        <h2 style="font-size: 70px">Je ben nooit te oud om te leven</h2>
+                    <div class="carousel-caption-bottom animate__animated animate__fadeInUp">
+                        <h2>Je ben nooit te oud om te leven</h2>
                         <p>Met SeniorConnect ontmoeten, ontspannen, lachen maar ook leren, helpen en oplossen  </p>
                         <p></p>
 
-                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown" href="#show_categories">
+                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown flex flex-column d-inline-block text-decoration-none" href="#show_categories">
                             <i class="bi bi-arrow-down h1"></i>
+                            <p>Ontdek</p>
                         </a>
-                        <p>Ontdek</p>
                     </div>
                 </div>
             </div>
@@ -29,11 +29,10 @@
                         <h2>Leuke activiteiten</h2>
                         <p>Plezier met speciaal georganiseerde activiteiten.</p>
                         <p> Blijf actief, ontmoet nieuwe mensen en geniet van elke dag!</p>
-
-                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown" href="#show_categories">
+                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown flex flex-column d-inline-block text-decoration-none" href="#show_categories">
                             <i class="bi bi-arrow-down h1"></i>
+                        <p>Ontdek</p>
                         </a>
-                        <p>Ontdek meer</p>
                     </div>
                 </div>
             </div>
@@ -43,10 +42,10 @@
                     <div class="carousel-caption-bottom animate__animated animate__fadeInUp">
                         <h2>Vrijwilligerswerk</h2>
                         <p>Maak het verschilt en geef uw tijd en talent een waardevolle bestemming.</p>
-                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown" href="#show_categories">
+                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown flex flex-column d-inline-block text-decoration-none" href="#show_categories">
                             <i class="bi bi-arrow-down h1"></i>
+                            <p>Ontdek</p>
                         </a>
-                        <p>Ontdek meer</p>
                     </div>
                 </div>
             </div>
@@ -57,12 +56,12 @@
                         <h2>Master class</h2>
                         <p>Deel uw ervaring of leer iets nieuws met onze boeiende masterclasses.</p>
                         <p>Ontmoet gelijkgestemden en blijf groeien.</p>
-                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown" href="#show_categories">
+                        <a class="arrow-container link-light animate__animated animate__infinite custom-moveUpDown flex flex-column d-inline-block text-decoration-none" href="#show_categories">
                             <i class="bi bi-arrow-down h1"></i>
+                            <p>Ontdek</p>
                         </a>
-                        <p>Ontdek meer</p>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,42 +76,45 @@
     </div>
  }
 
-
 <div class="text-center animate__animated animate__fadeInUp" id="show_categories">
     <h1 class="display-4">Welcome</h1>
     <div class="row">
         <div class="col-md-4 p-3">
             <div class="card h-100 card-hover" onclick="window.location='/activity/Activity'">
                 <img src="https://static.vecteezy.com/ti/gratis-vector/p3/4661065-ouderen-mensen-activiteiten-set-vector.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Activiteiten</h5>
                     <p class="card-text">Wat doen we zoal</p>
-                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    <div class="mt-auto">
+                        <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 p-3">
             <div class="card h-100 card-hover" onclick="window.location='/Volunteer/Volunteer'">
                 <img src="https://elkwelzijn.nl/wp-content/uploads/elementor/thumbs/118087896_3567965756571440_6670835949777602655_o-ovjn03hwmmeg9olm03b5w9iu9d8k3s99c4se0pnttk.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Vrijwilligerswerk</h5>
                     <p class="card-text">Wat kun je doen in de buurt.</p>
-                    <a href="/Volunteer/Volunteer" class="btn btn-primary">Bekijken</a>
+                    <div class="mt-auto">
+                        <a href="/Volunteer/Volunteer" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 p-3">
             <div class="card h-100 card-hover" onclick="window.location='/activity/Activity'">
                 <img src="https://static.vecteezy.com/ti/gratis-vector/p2/10506903-twee-oud-personen-studie-gratis-vector.jpg" class="card-img-top img-card" alt="Img" />
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Masterclass</h5>
-                    <p class="card-text ">
+                    <p class="card-text">
                         Je expertise delen en anderen inspireren
                         of doe mee aan de masterclass!
                     </p>
-                    <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    <div class="mt-auto">
+                        <a href="/activity/Activity" class="btn btn-primary">Bekijken</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,8 @@
-﻿namespace SeniorConnect.API.Entities
+﻿using SeniorConnect.Models.User;
+
+namespace SeniorConnect.Models.Activities
 {
-    public class Activity
+    public class ActivityDto
     {
         public int ActivityId { get; set; }
         public string Title { get; set; }
@@ -13,14 +15,6 @@
         public string? Awards { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public virtual User Organizer { get; set; }
-
-
-        public ICollection<ActivityUsers> ActivityUsers { get; set; } = [];
-
-        public Activity()
-        {
-            
-        }
+        public UserDto Organizer { get; set; }
     }
 }

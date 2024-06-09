@@ -1,36 +1,57 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
+using Newtonsoft.Json;
+using SeniorConnect.Helpers;
+using SeniorConnect.Models.Activities;
+using System.Net.Http;
+using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
 {
-    public class ActivityDetailModel(DataContext dataContext) : PageModel
+    public class ActivityDetailModel : PageModel
     {
-        public readonly DataContext dataContext = dataContext;
+        public ActivityDto Activity = new();
 
-        public Activity Activity = new();
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public void OnGet(int Id)
+        public ActivityDetailModel(IHttpClientFactory httpClientFactory)
         {
-            Activity = dataContext.Activities.Include(a => a.Organizer).Where(a => a.ActivityId == Id).FirstOrDefault();
+            _httpClientFactory = httpClientFactory;
         }
 
-        public void OnPost()
+        public async Task OnGet(int Id)
         {
-            int.TryParse(Request.Form["activityId"], out int activityid);
-            int userId = 1;
-            //var user = Request.Form["userId"];
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var response = await client.GetAsync("/ActivityController/Activity/" + Id);
 
-            ActivityUsers AU = new()
+            if (response.IsSuccessStatusCode)
             {
-                ActivityId = activityid,
-                UserId = userId
+                var content = await response.Content.ReadAsStringAsync();
+                Activity = JsonConvert.DeserializeObject<ActivityDto>(content);
+            }
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            int.TryParse(Request.Form["activityId"], out int activityid);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            AddActivityUserDTO AA = new() {
+                UserId = userId,
+                ActivityId = activityid
             };
 
-            dataContext.ActivityUsers.Add(AU);
-            dataContext.SaveChanges();
+            var response = await client.PostAsJsonAsync("/ActivityController/AddUserToActivity", AA);
+
+            NotificationHelper.SetNotification(
+                TempData,
+                "U ben ingeschreven voor " + Request.Form["acitivtyTitle"],
+                NotificationType.success
+            );
+
+            return RedirectToPage("/calendar/Calendar");
         }
     }
 }
