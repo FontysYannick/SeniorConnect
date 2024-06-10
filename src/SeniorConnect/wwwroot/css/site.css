@@ -1,25 +1,24 @@
 html {
-  font-size: 14px;
+    font-size: 21px !important;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-  /*background-color: gainsboro;*/
+    background-color: #eff2f1;
 }
 
 .img-card {
@@ -37,3 +36,60 @@ body {
 .form-group {
     padding-top: 1rem;
 }
+
+/*Navbar*/
+.logo-nav {
+    font-weight: 800
+}
+
+.navbar-fixed-top {
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    transition: top 0.5s;
+    background-color: #f8f9fa;
+}
+
+    .navbar-fixed-top .dropdown-toggle::after {
+        display: none;
+    }
+
+    .navbar-fixed-top .dropdown-menu {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+        .navbar-fixed-top .dropdown-menu.show {
+            display: block;
+            opacity: 1;
+        }
+
+@media (max-width: 767px) {
+    .navbar-nav .nav-item {
+        padding: 0.25rem 1.2rem;
+    }
+}
+/*End navbar*/
+
+#help-button {
+    cursor: pointer;
+}
+
+    #help-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+
+/*Card hover effect*/
+.card-hover {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+    .card-hover:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }

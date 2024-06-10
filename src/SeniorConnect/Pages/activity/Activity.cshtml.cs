@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-using SeniorConnect.Helpers;
 using SeniorConnect.Models.Activities;
-using System.Net.Http;
 
 namespace SeniorConnect.Pages.activity
 {

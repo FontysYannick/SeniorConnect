@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Data;
-using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
-using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.ActivityService;
-using System.ComponentModel.DataAnnotations;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -53,7 +50,7 @@ namespace SeniorConnect.API.Controllers
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
                 if (ActivityId < 0)
                     ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
-                
+
                 var activity = await _dataContext.Activities.Include(a => a.Organizer).FirstOrDefaultAsync(a => a.ActivityId == ActivityId);
 
                 return Ok(activity);
@@ -94,7 +91,6 @@ namespace SeniorConnect.API.Controllers
                 ModelState.AddModelError("Invald userId", "Invald userId was send");
             if (userId < 0)
                 ModelState.AddModelError("Invald userId", "Invald userId was send");
-
 
             var Activitys = _dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
 

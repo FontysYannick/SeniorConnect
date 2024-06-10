@@ -1,28 +1,33 @@
 ﻿@page
+@using Humanizer
+@using System.Globalization
 @model SeniorConnect.Pages.activity.ActivityDetailModel
 @{
 }
 
-
-<div class="row">
+<div class="row mt-5">
+    <div class="col-lg-9 d-flex justify-content-between mb-3">
+        <h2 class="card-title text-capitalize">@Model.Activity.Title</h2>
+        @if (User.Identity.Name != null)
+        {
+            <form method="post" autocomplete="off" id="actiivtyUserForm">
+                <input type="hidden" id="acitivtyTitle" name="acitivtyTitle" value="@Model.Activity.Title" />
+                <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
+                <input type="submit" class="btn btn-primary" name="submit" value="Inschrijven" />
+            </form>
+        }
+        else
+        {
+            <a class="btn btn-primary" href="/login">Inloggen</a>
+        }
+    </div>
     <div class="col-lg-9">
         <div class="card mb-4">
-            <a href="#!"><img class="card-img-top" src="@Model.Activity.Image" alt="..." /></a>
+            <img class="card-img-top img-fluid" src="@Model.Activity.Image" alt="ActivityImage" style="width: 100%; height: 550px;" />
+
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight mb-3">
-                    <h2 class="card-title">@Model.Activity.Title</h2>
-                    @if (User.Identity.Name != null)
-                    {
-                        <form method="post" autocomplete="off" id="actiivtyUserForm">
-                            <input type="hidden" id="acitivtyTitle" name="acitivtyTitle" value="@Model.Activity.Title" />
-                            <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
-                            <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Inschrijven" />
-                        </form>
-                    }
-                    else
-                    {
-                        <a class="btn btn-primary" href="/login">Inloggen</a>
-                    }
+                    <p class="text-muted">Gemaakt: @Model.Activity.CreatedAt.Humanize()</p>
                 </div>
                 <p class="card-text">
                     @Model.Activity.Description
@@ -56,7 +61,8 @@
                             <i class="bi bi-calendar-event"></i>
                             <div>
                                 <p class="mb-0">Datum/Tijd</p>
-                                <p class="mb-0">@Model.Activity.Date</p>
+                                <p class="mb-0 text-capitalize">@Model.Activity.Date.ToString("dddd d MMMM yyyy")</p>
+                                <p class="mb-0">Om: @Model.Activity.Date.ToString("HH:mm") uur</p>
                             </div>
                         </div>
                         <div class="d-flex gap-2">

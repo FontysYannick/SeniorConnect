@@ -18,11 +18,14 @@ namespace SeniorConnect.Controllers.AuthController
             authService = _authService;
         }
 
-        [Route("[action]")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             await HttpContext.SignOutAsync();
             NotificationHelper.SetNotification(
                     TempData,
@@ -88,7 +91,7 @@ namespace SeniorConnect.Controllers.AuthController
 
             NotificationHelper.SetNotification(
                 TempData,
-                "U bent ingelogd.",
+                 "Welkom " + loginResponse.UserName,
                 NotificationType.success
             );
 

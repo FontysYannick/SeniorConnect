@@ -13,7 +13,7 @@
             if (!this.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
-                togglePassword.css({ "top": "17px", "left": "89%" });
+                togglePassword.css({ "top": "22px", "left": "83%" });
             }
 
             var confirmPassword = $('#js-confirm-password');
@@ -31,13 +31,13 @@
                     confirmPassword.removeClass('is-invalid');
                 }
             }
-            
+
 
             $(this).addClass('was-validated');
         });
     });
- })
-   
+})
+
 
 function toggleShowPassword() {
     let ICON_PASS_TOGGLE_HIDDE = 'bi-eye-slash';

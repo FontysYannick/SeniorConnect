@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Users;
-using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.UserService.Interface;
 
 namespace SeniorConnect.API.Controllers
@@ -81,7 +78,7 @@ namespace SeniorConnect.API.Controllers
             LoginResponse loginResponse = new LoginResponse
             {
                 UserId = user.UserId.ToString(),
-                UserName = user.Email
+                UserName = user.FirstName + " " + user.LastName
             };
 
             return Ok(loginResponse);
@@ -136,7 +133,7 @@ namespace SeniorConnect.API.Controllers
             LoginResponse loginResponse = new LoginResponse
             {
                 UserId = user.UserId.ToString(),
-                UserName = user.Email
+                UserName = user.FirstName + " " + user.LastName
             };
 
             return Ok(loginResponse);

@@ -1,0 +1,68 @@
+﻿
+/* Slider */
+.custom-img-size {
+    height: 92vh;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.carousel-caption-bottom {
+    width: 100%;
+    padding: 10px 20px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 63px
+}
+
+    .carousel-caption-bottom h2 {
+        font-size: 70px;
+        font-weight: 700;
+    }
+
+    .carousel-caption-bottom p {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .carousel-caption-bottom h2,
+    .carousel-caption-bottom p {
+        color: #fff;
+        margin: 0;
+    }
+
+@keyframes moveUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust height as needed */
+}
+
+.custom-moveUpDown {
+    animation: moveUpDown 2s infinite;
+}
+
+/* activities card*/
+#show_categories {
+    padding-top: 38px;
+}
