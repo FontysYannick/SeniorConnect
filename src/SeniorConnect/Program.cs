@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using SeniorConnect.API.Data;
 using SeniorConnect.Services;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SeniorConnect.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
