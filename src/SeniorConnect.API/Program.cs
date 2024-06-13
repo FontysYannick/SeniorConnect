@@ -2,6 +2,7 @@ global using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Data;
 using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.ActivityService;
+using SeniorConnect.API.Services.ActivityService.Interface;
 using SeniorConnect.API.Services.UserService;
 using SeniorConnect.API.Services.UserService.Interface;
 
@@ -19,6 +20,8 @@ builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
 builder.Services.AddScoped<ITokenService,TokenService>();
 builder.Services.AddScoped<ActivityService>();
+builder.Services.AddControllers();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 
 // Configure DbContext with connection string from appsettings.json
 builder.Services.AddDbContext<DataContext>(options =>
