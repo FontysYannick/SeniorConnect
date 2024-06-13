@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/css/calendar.css" asp-append-version="true" />
 }
 <div class="mt-5">
-    <h1 class="mb-4">Inschrijven activiteiten</h1>
+    <h1 class="mb-4">Mijn activiteiten</h1>
     @foreach (var Activity in Model.Activitys)
     {
         <div class="card mb-3 w-100 card-hover" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
