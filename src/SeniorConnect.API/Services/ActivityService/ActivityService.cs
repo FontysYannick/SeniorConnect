@@ -20,7 +20,7 @@ namespace SeniorConnect.API.Services.ActivityService
 
         public IEnumerable<Activity> GetActivities()
         {
-            return _context.Activities.Where(a => a.Date > DateTime.Now).ToList();
+            return _context.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
         }
 
         public Activity GetSingleActivity(int activityId)
