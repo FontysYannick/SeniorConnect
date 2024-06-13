@@ -6,7 +6,6 @@
 
     $(window).scroll(function () {
         var scrollTop = $(this).scrollTop();
-        console.log(scrollTop);
         if (scrollTop > 100) {
             $navbar.addClass(animationClass).css('position', 'fixed');
         }

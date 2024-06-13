@@ -2,14 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SeniorConnect.Helpers;
 using SeniorConnect.Models.Activities;
-using System;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
 {
     public class AddActivityModel : PageModel
     {
+        [BindProperty]
         public AddActivityRequestDto addActivityRequestDto { get; set; }
 
         private readonly IHttpClientFactory _httpClientFactory;
@@ -18,34 +17,44 @@ namespace SeniorConnect.Pages.activity
         {
             _httpClientFactory = httpClientFactory;
         }
+
         public void OnGet()
         {
+            if (User.Identity?.IsAuthenticated != true)
+            {
+                Response.Redirect("/");
+                return;
+            }
         }
 
         public async Task<IActionResult> OnPost()
         {
+            if (User.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToPage("/");
+            }
+
+            ModelState.ClearValidationState(nameof(addActivityRequestDto));
+            if (!TryValidateModel(addActivityRequestDto, nameof(addActivityRequestDto)))
+            {
+                return Page();
+            }
+
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            string title = Request.Form["Title"];
-            DateTime.TryParse(Request.Form["Date"], out DateTime dateTime); 
-            int.TryParse(Request.Form["MaxParticipants"], out int maxPart);
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)); 
+            addActivityRequestDto.OrganizerId = userId;
 
-            AddActivityRequestDto AA = new() { 
-                Title = title, 
-                OrganizerId = userId, 
-                Description = Request.Form["Description"],
-                Image = Request.Form["Image"], 
-                Date = dateTime, 
-                Place = Request.Form["Place"], 
-                MaxParticipants = maxPart, 
-                Awards = Request.Form["Awards"]
-            };
+            var response = await client.PostAsJsonAsync("/ActivityController/PostActivity", addActivityRequestDto);
 
-            var response = await client.PostAsJsonAsync("/ActivityController/PostActivity",AA );
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError(string.Empty, "Kan activiteit niet maken. Probeer het later opnieuw");
+                return Page();
+            }
 
-            NotificationHelper.SetNotification(TempData, "De Activiteit " + title + " is aangemaakt", NotificationType.success); 
-            
+            NotificationHelper.SetNotification(TempData, $"De Activiteit {addActivityRequestDto.Title} is aangemaakt", NotificationType.success);
+
             return RedirectToPage("/activity/Activity");
         }
     }

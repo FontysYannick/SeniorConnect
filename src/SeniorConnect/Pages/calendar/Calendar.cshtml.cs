@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SeniorConnect.Models.Activities;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace SeniorConnect.Pages.calendar
@@ -19,9 +17,13 @@ namespace SeniorConnect.Pages.calendar
             _httpClientFactory = httpClientFactory;
         }
 
-
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if (User.Identity?.IsAuthenticated != true)
+            {
+                return RedirectToPage("/");
+            }
+
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
@@ -32,6 +34,8 @@ namespace SeniorConnect.Pages.calendar
                 var content = await response.Content.ReadAsStringAsync();
                 Activitys = JsonConvert.DeserializeObject<List<ActivityDto>>(content);
             }
+
+            return Page();
         }
     }
 }
