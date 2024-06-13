@@ -1,30 +1,34 @@
 ﻿using SeniorConnect.API.Data;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Activity;
+using SeniorConnect.API.Services.ActivityService.Interface;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SeniorConnect.API.Services.ActivityService
 {
-    public class ActivityService
+    public class ActivityService : IActivityService
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _context;
 
-        public ActivityService(DataContext dataContext)
+        public ActivityService(DataContext context)
         {
-            _dataContext = dataContext;
+            _context = context;
         }
 
-        public List<Activity> GetActivities()
+        public IEnumerable<Activity> GetActivities()
         {
-            return _dataContext.Activities.ToList();
+            return _context.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
         }
 
-        public Activity GetSingleActivity(int ActivityId)
+        public Activity GetSingleActivity(int activityId)
         {
-            return _dataContext.Activities.Where(a => a.ActivityId == ActivityId).FirstOrDefault();
+            return _context.Activities.Include(a => a.Organizer).FirstOrDefault(a => a.ActivityId == activityId);
         }
 
-
-        public void setActivty(AbstractActivity activity)
+        public void SetActivity(AbstractActivity activity)
         {
             var newActivty = new Activity
             {
@@ -38,22 +42,30 @@ namespace SeniorConnect.API.Services.ActivityService
                 Awards = activity.Awards
             };
 
-            _dataContext.Activities.Add(newActivty);
-            _dataContext.SaveChanges();
+            _context.Activities.Add(newActivty);
+            _context.SaveChanges();
         }
 
-        public void addUserToActivty(AbstractUserActivty userActivty)
+        public void AddUserToActivity(AbstractUserActivty userActivity)
         {
-            var newUserActivty = new ActivityUsers
+            var activityUser = new ActivityUsers
             {
-                UserId = userActivty.UserId,
-                ActivityId = userActivty.ActivityId,
-                //UserId = _dataContext.Users.Where(a => a.UserId == userActivty.UserId).Select(a => a.UserId).FirstOrDefault(),
-                //ActivityId = _dataContext.Activities.Where(a => a.ActivityId == userActivty.ActivityId).Select(a => a.ActivityId).FirstOrDefault()
+                UserId = userActivity.UserId,
+                ActivityId = userActivity.ActivityId
             };
 
-            _dataContext.ActivityUsers.Add(newUserActivty);
-            _dataContext.SaveChanges();
-        }      
+            _context.ActivityUsers.Add(activityUser);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Activity> GetUserToActivity(int userId)
+        {
+            return _context.ActivityUsers
+                        .Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now)
+                        .Include(a => a.Activity)
+                        .Select(a => a.Activity)
+                        .OrderBy(a => a.Date)
+                        .ToList();
+        }
     }
 }

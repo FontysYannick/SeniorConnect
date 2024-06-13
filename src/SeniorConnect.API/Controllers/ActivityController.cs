@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SeniorConnect.API.Data;
+using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Models.Activity;
 using SeniorConnect.API.Services.ActivityService;
+using SeniorConnect.API.Services.ActivityService.Interface;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -9,14 +10,11 @@ namespace SeniorConnect.API.Controllers
     [Route("ActivityController")]
     public class ActivityController : Controller
     {
-        private readonly ActivityService _activityHelper;
+        private readonly IActivityService _activityService;
 
-        private readonly DataContext _dataContext;
-
-        public ActivityController(ActivityService activityHelper, DataContext dataContext)
+        public ActivityController(IActivityService activityService)
         {
-            _activityHelper = activityHelper;
-            this._dataContext = dataContext;
+            _activityService = activityService;
         }
 
         [HttpGet]
@@ -25,13 +23,11 @@ namespace SeniorConnect.API.Controllers
         {
             try
             {
-                var activities = _dataContext.Activities.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date).ToList();
-
+                var activities = _activityService.GetActivities();
                 return Json(activities);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -45,19 +41,18 @@ namespace SeniorConnect.API.Controllers
                 int ActivityId = -1;
                 string? rawId = Request.RouteValues["ActivityId"]?.ToString();
                 if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was send");
+                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was sent");
                 if (!int.TryParse(rawId, out ActivityId))
-                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
                 if (ActivityId < 0)
-                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
 
-                var activity = await _dataContext.Activities.Include(a => a.Organizer).FirstOrDefaultAsync(a => a.ActivityId == ActivityId);
+                var activity = _activityService.GetSingleActivity(ActivityId);
 
                 return Ok(activity);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -65,20 +60,17 @@ namespace SeniorConnect.API.Controllers
         [HttpPost("PostActivity")]
         public async Task<IActionResult> PostActivity([FromBody] AbstractActivity activity)
         {
-            _activityHelper.setActivty(activity);
-
-            return Ok("Add/Update an activity to the database: ");
+            _activityService.SetActivity(activity);
+            return Ok("Add/Update an activity to the database");
         }
-
 
         [HttpPost("AddUserToActivity")]
         public async Task<IActionResult> AddUserToActivity([FromBody] AbstractUserActivty userActivity)
         {
-            _activityHelper.addUserToActivty(userActivity);
+            _activityService.AddUserToActivity(userActivity);
 
-            return Ok("Add/Update an activity to the database: ");
+            return Ok("Add/Update an activity to the database");
         }
-
 
         [HttpGet("GetUserToActivity/{userId}")]
         public async Task<IActionResult> GetUserToActivity()
@@ -86,15 +78,15 @@ namespace SeniorConnect.API.Controllers
             int userId = -1;
             string? rawId = Request.RouteValues["userId"]?.ToString();
             if (string.IsNullOrEmpty(rawId))
-                ModelState.AddModelError("No userId Found", "No userId was send");
+                ModelState.AddModelError("No userId Found", "No userId was sent");
             if (!int.TryParse(rawId, out userId))
-                ModelState.AddModelError("Invald userId", "Invald userId was send");
+                ModelState.AddModelError("Invalid userId", "Invalid userId was sent");
             if (userId < 0)
-                ModelState.AddModelError("Invald userId", "Invald userId was send");
+                ModelState.AddModelError("Invalid userId", "Invalid userId was sent");
 
-            var Activitys = _dataContext.ActivityUsers.Where(a => a.UserId == userId && a.Activity.Date > DateTime.Now).Include(a => a.Activity).Select(a => a.Activity).OrderBy(a => a.Date).ToList();
+            var activities = _activityService.GetUserToActivity(userId);
 
-            return Json(Activitys);
+            return Json(activities);
         }
 
         [HttpDelete]
@@ -106,17 +98,18 @@ namespace SeniorConnect.API.Controllers
                 int ActivityId = -1;
                 string? rawId = Request.RouteValues["ActivityId"]?.ToString();
                 if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was send");
+                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was sent");
                 if (!int.TryParse(rawId, out ActivityId))
-                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
                 if (ActivityId < 0)
-                    ModelState.AddModelError("Invald ActivityId", "Invald ActivityId was send");
+                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
 
-                return Ok("Deletes a spesific activity: " + ActivityId);
+                // Implement the deletion logic here
+
+                return Ok("Deletes a specific activity: " + ActivityId);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
