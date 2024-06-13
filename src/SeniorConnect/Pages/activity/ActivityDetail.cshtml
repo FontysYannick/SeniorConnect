@@ -27,7 +27,7 @@
 
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight mb-3">
-                    <p class="text-muted">Gemaakt: @Model.Activity.CreatedAt.Humanize()</p>
+                    <p class="text-muted">Gemaakt: @Model.Activity.CreatedAt.Humanize(false)</p>
                 </div>
                 <p class="card-text">
                     @Model.Activity.Description
@@ -53,14 +53,14 @@
                         <div class="d-flex gap-2 mb-3">
                             <i class="bi bi-people-fill"></i>
                             <div>
-                                <p class="mb-0">Deelnemers</p>
+                                <p class="mb-0 fw-bold">Deelnemers</p>
                                 <p class="mb-0">@Model.Activity.MaxParticipants</p>
                             </div>
                         </div>
                         <div class="d-flex gap-2 mb-3">
                             <i class="bi bi-calendar-event"></i>
                             <div>
-                                <p class="mb-0">Datum/Tijd</p>
+                                <p class="mb-0 fw-bold">Datum/Tijd</p>
                                 <p class="mb-0 text-capitalize">@Model.Activity.Date.ToString("dddd d MMMM yyyy")</p>
                                 <p class="mb-0">Om: @Model.Activity.Date.ToString("HH:mm") uur</p>
                             </div>
@@ -68,8 +68,9 @@
                         <div class="d-flex gap-2">
                             <i class="bi bi-geo-alt"></i>
                             <div>
-                                <p class="mb-0">Plaats</p>
-                                <p class="mb-0">@Model.Activity.Place</p>
+                                <p class="mb-0 fw-bold">Plaats</p>
+                                <p class="mb-0">@Model.address</p>
+                                <p class="mb-0">@Model.zipCode</p>
                             </div>
                         </div>
                     </div>

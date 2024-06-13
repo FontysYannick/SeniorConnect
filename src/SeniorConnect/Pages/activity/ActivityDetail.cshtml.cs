@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SeniorConnect.Helpers;
 using SeniorConnect.Models.Activities;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace SeniorConnect.Pages.activity
@@ -14,6 +12,10 @@ namespace SeniorConnect.Pages.activity
         public ActivityDto Activity = new();
 
         private readonly IHttpClientFactory _httpClientFactory;
+
+        public string address { get; set; }
+
+        public string zipCode { get; set; }
 
         public ActivityDetailModel(IHttpClientFactory httpClientFactory)
         {
@@ -29,6 +31,17 @@ namespace SeniorConnect.Pages.activity
             {
                 var content = await response.Content.ReadAsStringAsync();
                 Activity = JsonConvert.DeserializeObject<ActivityDto>(content);
+
+                var part = Activity.Place?.Split(", ");
+                if (part?.Length >= 2)
+                {
+                    address = part[0];
+                    zipCode = part[1];
+
+                    return;
+                }
+
+                address = Activity.Place;
             }
         }
 
@@ -38,7 +51,8 @@ namespace SeniorConnect.Pages.activity
             int.TryParse(Request.Form["activityId"], out int activityid);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            AddActivityUserDTO AA = new() {
+            AddActivityUserDTO AA = new()
+            {
                 UserId = userId,
                 ActivityId = activityid
             };

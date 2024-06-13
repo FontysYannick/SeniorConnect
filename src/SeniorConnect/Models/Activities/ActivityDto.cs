@@ -13,8 +13,8 @@ namespace SeniorConnect.Models.Activities
         public string Place { get; set; }
         public int? MaxParticipants { get; set; }
         public string? Awards { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public UserDto Organizer { get; set; }
     }
 }
