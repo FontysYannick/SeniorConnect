@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SeniorConnect.API.Data;
@@ -12,7 +11,6 @@ using SeniorConnect.API.Services.UserService.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,8 +21,8 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 
-// Configure DbContext with connection string from secrets.json
-var sqlConnection = builder.Configuration.GetConnectionString("ConnectionStrings:SeniorConnect:SqlDb");
+// Configure DbContext with connection string from configuration
+var sqlConnection = builder.Configuration.GetConnectionString("SeniorConnectSqlDb");
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(sqlConnection, sqlOptions =>
@@ -40,14 +38,30 @@ builder.Services.AddControllers()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = string.Empty; // Serve the Swagger UI at the app's root
+    });
+
+    // Enable detailed error messages in production
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

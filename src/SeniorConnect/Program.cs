@@ -8,23 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-// sets up an HTTP client connect to API
 builder.Services.AddHttpClient("SeniorConnectAPI", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5175/");
+    client.BaseAddress = new Uri("https://app-seniorconnect-api-web-eastus-dev-001.azurewebsites.net/");
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
-// register services
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddHttpContextAccessor();
-
-
 builder.Services.AddControllersWithViews();
-
-// setup authentication services for cookie-based authentication
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
@@ -46,18 +39,18 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthentication(); // Enable authentication middleware
+app.UseAuthentication();
 app.UseAuthorization();
-
 
 var defaultCulture = new CultureInfo("nl-NL");
 var localizationOptions = new RequestLocalizationOptions
@@ -68,11 +61,7 @@ var localizationOptions = new RequestLocalizationOptions
 };
 
 app.UseRequestLocalization(localizationOptions);
-
 app.MapRazorPages();
-
-
-//default routing configuration for controller
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -12,14 +11,16 @@ namespace SeniorConnect.API.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
 
-            // Configuration from appsettings.json or secrets.json
+            // Specificeer het pad expliciet
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "src", "SeniorConnect.API");
+
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(path)
+                .AddJsonFile("appsettings.SeniorConnect.API.json")
                 .AddUserSecrets<Program>()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = configuration.GetConnectionString("SeniorConnectSqlDb");
 
             optionsBuilder.UseSqlServer(connectionString);
 

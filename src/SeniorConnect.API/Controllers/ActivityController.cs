@@ -1,116 +1,150 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SeniorConnect.API.Models.Activity;
-using SeniorConnect.API.Services.ActivityService;
 using SeniorConnect.API.Services.ActivityService.Interface;
+using System.Threading.Tasks;
 
 namespace SeniorConnect.API.Controllers
 {
     [ApiController]
-    [Route("ActivityController")]
+    [Route("api/[controller]")]
     public class ActivityController : Controller
     {
         private readonly IActivityService _activityService;
+        private readonly ILogger<ActivityController> _logger;
 
-        public ActivityController(IActivityService activityService)
+        public ActivityController(IActivityService activityService, ILogger<ActivityController> logger)
         {
             _activityService = activityService;
+            _logger = logger;
         }
 
-        [HttpGet]
-        [Route("ActivityList")]
-        public ActionResult GetActivityList()
+        [HttpGet("ActivityList")]
+        public IActionResult GetActivityList()
         {
             try
             {
                 var activities = _activityService.GetActivities();
-                return Json(activities);
+                return Ok(activities);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex, "Er is een fout opgetreden bij het ophalen van de activiteitenlijst.");
+                return StatusCode(500, "Er is een fout opgetreden bij het ophalen van de activiteitenlijst.");
             }
         }
 
-        [HttpGet]
-        [Route("Activity/{ActivityId}")]
-        public async Task<IActionResult> GetActivity()
+        [HttpGet("Activity/{ActivityId}")]
+        public async Task<IActionResult> GetActivity(int ActivityId)
         {
             try
             {
-                int ActivityId = -1;
-                string? rawId = Request.RouteValues["ActivityId"]?.ToString();
-                if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was sent");
-                if (!int.TryParse(rawId, out ActivityId))
-                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
-                if (ActivityId < 0)
-                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
+                if (ActivityId <= 0)
+                {
+                    return BadRequest("Invalid ActivityId");
+                }
 
                 var activity = _activityService.GetSingleActivity(ActivityId);
 
+                if (activity == null)
+                {
+                    return NotFound();
+                }
+
                 return Ok(activity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex, "Er is een fout opgetreden bij het ophalen van de activiteit.");
+                return StatusCode(500, "Er is een fout opgetreden bij het ophalen van de activiteit.");
             }
         }
 
         [HttpPost("PostActivity")]
         public async Task<IActionResult> PostActivity([FromBody] AbstractActivity activity)
         {
-            _activityService.SetActivity(activity);
-            return Ok("Add/Update an activity to the database");
+            try
+            {
+                if (activity == null)
+                {
+                    return BadRequest("Activity cannot be null");
+                }
+
+                _activityService.SetActivity(activity);
+                return Ok("Activity added/updated successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Er is een fout opgetreden bij het toevoegen/bijwerken van de activiteit.");
+                return StatusCode(500, "Er is een fout opgetreden bij het toevoegen/bijwerken van de activiteit.");
+            }
         }
 
         [HttpPost("AddUserToActivity")]
         public async Task<IActionResult> AddUserToActivity([FromBody] AbstractUserActivty userActivity)
         {
-            _activityService.AddUserToActivity(userActivity);
+            try
+            {
+                if (userActivity == null)
+                {
+                    return BadRequest("User activity cannot be null");
+                }
 
-            return Ok("Add/Update an activity to the database");
+                _activityService.AddUserToActivity(userActivity);
+                return Ok("User added to activity successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Er is een fout opgetreden bij het toevoegen van de gebruiker aan de activiteit.");
+                return StatusCode(500, "Er is een fout opgetreden bij het toevoegen van de gebruiker aan de activiteit.");
+            }
         }
 
         [HttpGet("GetUserToActivity/{userId}")]
-        public async Task<IActionResult> GetUserToActivity()
-        {
-            int userId = -1;
-            string? rawId = Request.RouteValues["userId"]?.ToString();
-            if (string.IsNullOrEmpty(rawId))
-                ModelState.AddModelError("No userId Found", "No userId was sent");
-            if (!int.TryParse(rawId, out userId))
-                ModelState.AddModelError("Invalid userId", "Invalid userId was sent");
-            if (userId < 0)
-                ModelState.AddModelError("Invalid userId", "Invalid userId was sent");
-
-            var activities = _activityService.GetUserToActivity(userId);
-
-            return Json(activities);
-        }
-
-        [HttpDelete]
-        [Route("Activity/{ActivityId}")]
-        public ActionResult DeleteActivity()
+        public async Task<IActionResult> GetUserToActivity(int userId)
         {
             try
             {
-                int ActivityId = -1;
-                string? rawId = Request.RouteValues["ActivityId"]?.ToString();
-                if (string.IsNullOrEmpty(rawId))
-                    ModelState.AddModelError("No ActivityId Found", "No ActivityId was sent");
-                if (!int.TryParse(rawId, out ActivityId))
-                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
-                if (ActivityId < 0)
-                    ModelState.AddModelError("Invalid ActivityId", "Invalid ActivityId was sent");
+                if (userId <= 0)
+                {
+                    return BadRequest("Invalid userId");
+                }
+
+                var activities = _activityService.GetUserToActivity(userId);
+                return Ok(activities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Er is een fout opgetreden bij het ophalen van de activiteiten van de gebruiker.");
+                return StatusCode(500, "Er is een fout opgetreden bij het ophalen van de activiteiten van de gebruiker.");
+            }
+        }
+
+        [HttpDelete("Activity/{ActivityId}")]
+        public async Task<IActionResult> DeleteActivity(int ActivityId)
+        {
+            try
+            {
+                if (ActivityId <= 0)
+                {
+                    return BadRequest("Invalid ActivityId");
+                }
 
                 // Implement the deletion logic here
+                // Assuming a method DeleteActivity exists in the service
+                bool isDeleted = _activityService.DeleteActivity(ActivityId);
 
-                return Ok("Deletes a specific activity: " + ActivityId);
+                if (!isDeleted)
+                {
+                    return NotFound("Activity not found");
+                }
+
+                return Ok("Activity deleted successfully");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex, "Er is een fout opgetreden bij het verwijderen van de activiteit.");
+                return StatusCode(500, "Er is een fout opgetreden bij het verwijderen van de activiteit.");
             }
         }
     }

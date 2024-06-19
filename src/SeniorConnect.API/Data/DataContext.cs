@@ -24,7 +24,7 @@ namespace SeniorConnect.API.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            // Define relationship between User and Activity
+            // Define relationship between User en Activity
             modelBuilder.Entity<Activity>()
                 .HasOne(a => a.Organizer)
                 .WithMany(u => u.Activities)
