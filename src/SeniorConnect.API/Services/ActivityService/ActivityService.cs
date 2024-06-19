@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore;
 
 namespace SeniorConnect.API.Services.ActivityService
 {

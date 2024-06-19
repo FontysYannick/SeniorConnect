@@ -3,6 +3,7 @@ using SeniorConnect.API.Data;
 using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Services.UserService.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace SeniorConnect.API.Service.UserService
 {

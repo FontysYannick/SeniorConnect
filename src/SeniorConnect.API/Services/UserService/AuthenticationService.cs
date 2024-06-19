@@ -5,6 +5,7 @@ using SeniorConnect.API.Entities;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using SeniorConnect.API.Services.UserService.Interface;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace SeniorConnect.API.Service.UserService
