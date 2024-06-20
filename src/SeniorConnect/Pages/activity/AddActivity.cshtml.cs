@@ -45,7 +45,7 @@ namespace SeniorConnect.Pages.activity
 
             addActivityRequestDto.OrganizerId = userId;
 
-            var response = await client.PostAsJsonAsync("/ActivityController/PostActivity", addActivityRequestDto);
+            var response = await client.PostAsJsonAsync("/api/Activity/PostActivity", addActivityRequestDto);
 
             if (!response.IsSuccessStatusCode)
             {

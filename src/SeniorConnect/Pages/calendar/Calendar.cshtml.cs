@@ -27,7 +27,7 @@ namespace SeniorConnect.Pages.calendar
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
-            var response = await client.GetAsync("/ActivityController/GetUserToActivity/" + userId);
+            var response = await client.GetAsync("/api/Activity/GetUserToActivity/" + userId);
 
             if (response.IsSuccessStatusCode)
             {

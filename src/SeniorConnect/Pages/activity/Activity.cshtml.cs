@@ -18,7 +18,7 @@ namespace SeniorConnect.Pages.activity
         public async Task OnGet()
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
-            var response = await client.GetAsync("/ActivityController/ActivityList");
+            var response = await client.GetAsync("api/Activity/ActivityList");
 
             if (response.IsSuccessStatusCode)
             {
