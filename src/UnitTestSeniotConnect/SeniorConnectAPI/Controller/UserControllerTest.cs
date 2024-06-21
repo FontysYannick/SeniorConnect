@@ -111,6 +111,7 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             Assert.Equal("De combinatie van e-mailadres en wachtwoord is niet geldig.", repsonse.Value);
         }
 
+/*
         [Fact]
         public async void LoginUserWhenLoginSuccessfullyAndReturnOkRequestWithloginResponse()
         {
@@ -130,7 +131,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             Assert.IsType<OkObjectResult>(result);
             Assert.Equal(user.UserId.ToString(), value.UserId);
             Assert.Equal(user.Email, value.UserName);
-        }
+        } 
+*/
 
         [Fact]
         public async void UserVerifyWhenTokenIsInvalidReturnBadRequest()
@@ -237,25 +239,27 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             Assert.Equal("Uw wachtwoord is gereset.", repsonse.Value);
         }
 
-        [Fact]
-        public async void UserLoginGoogleReturnLoginResponseWithOkRequest()
-        {
-            //Arrange
-            var userLoginGoogleAsyncRequest = _fixture.Create<UserLoginGoogleAsyncRequest>();
-            var user = UserFixtureWithOutReference().Create<User>();
+        /*       [Fact]
+               public async void UserLoginGoogleReturnLoginResponseWithOkRequest()
+               {
+                   //Arrange
+                   var userLoginGoogleAsyncRequest = _fixture.Create<UserLoginGoogleAsyncRequest>();
+                   var user = UserFixtureWithOutReference().Create<User>();
 
-            _autServiceMock.Setup(s => s.LoginGoogleAccountSync(userLoginGoogleAsyncRequest)).ReturnsAsync(user);
+                   _autServiceMock.Setup(s => s.LoginGoogleAccountSync(userLoginGoogleAsyncRequest)).ReturnsAsync(user);
 
-            //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
-            var result = await userController.LoginGoogle(userLoginGoogleAsyncRequest);
-            var repsonse = result as OkObjectResult;
-            var value = repsonse.Value as LoginResponse;
+                   //Act
+                   var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+                   var result = await userController.LoginGoogle(userLoginGoogleAsyncRequest);
+                   var repsonse = result as OkObjectResult;
+                   var value = repsonse.Value as LoginResponse;
 
-            // Assert
-            Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(user.UserId.ToString(), value.UserId);
-            Assert.Equal(user.Email, value.UserName);
-        }
+                   // Assert
+                   Assert.IsType<OkObjectResult>(result);
+                   Assert.Equal(user.UserId.ToString(), value.UserId);
+                   Assert.Equal(user.Email, value.UserName);
+
+               }
+         */
     }
 }

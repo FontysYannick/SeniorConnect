@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SeniorConnect.API.Data;
@@ -27,6 +28,14 @@ var sqlConnection = builder.Configuration.GetConnectionString("SeniorConnectSqlD
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(sqlConnection, sqlOptions =>
         sqlOptions.EnableRetryOnFailure()));
+
+/*//allows for uploading files to storage
+var storageConnection = builder.Configuration.GetConnectionString("SeniorConnectStorage");
+builder.Services.AddAzureClients(azureBuilder =>
+{
+    azureBuilder.AddBlobServiceClient(storageConnection);
+});
+*/
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
