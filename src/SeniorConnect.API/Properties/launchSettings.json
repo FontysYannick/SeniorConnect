@@ -28,35 +28,36 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
+    {
+        "Docker": {
+         "commandName": "Docker",
+          "launchBrowser": true,
+          "launchUrl": "swagger",
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "ASPNETCORE_URLS": "http://+:8081"
+          },
+          "publishAllPorts": true,
+          "useSSL": false
+        },
+        "Azure": {
+          "commandName": "Project",
+          "launchBrowser": true,
+          "launchUrl": "swagger",
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Production"
+          },
+          "dotnetRunMessages": true,
+          "applicationUrl": "https://app-seniorconnect-api-web-eastus-dev-001.azurewebsites.net"
+        }
       },
-      "publishAllPorts": true,
-      "useSSL": true
-    },
-    "Azure": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://app-seniorconnect-api-web-eastus-dev-001.azurewebsites.net"
+      "$schema": "http://json.schemastore.org/launchsettings.json",
+      "iisSettings": {
+        "windowsAuthentication": false,
+        "anonymousAuthentication": true,
+        "iisExpress": {
+          "applicationUrl": "http://localhost:12875",
+          "sslPort": 44395
+        }
+      }
     }
-  },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:12875",
-      "sslPort": 44395
-    }
-  }
-}
