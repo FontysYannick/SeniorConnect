@@ -58,7 +58,7 @@ stages:
           curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-02-01&resource=https://management.azure.com/" -s | jq .
         )
       displayName: 'Install Azure CLI, jq, unzip, and Terraform, and Login with Managed Identity'
-      workingDirectory: $(System.DefaultWorkingDirectory)
+      workingDirectory: $(System.DefaultWorkingDirectory)/src/SeniorConnect.API
 
     - script: |
         set -e
@@ -74,7 +74,7 @@ stages:
         terraform init -input=false
         terraform plan -input=false -out=tfplan
         terraform apply -input=false -auto-approve tfplan
-      workingDirectory: $(System.DefaultWorkingDirectory)
+      workingDirectory: $(System.DefaultWorkingDirectory)/src/SeniorConnect.API
       name: 'RunTerraform'
       displayName: 'Run Terraform'
       env:
