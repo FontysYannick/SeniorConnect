@@ -1,0 +1,72 @@
+trigger:
+- Dev-Docker
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+  ARM_SUBSCRIPTION_ID: 'cf6d83c6-2782-4980-89e3-b2ab7d72ce0e'
+  USER_ASSIGNED_CLIENT_ID: 'd9df691c-0961-463e-a6e3-4da3b1538403'  # Your user-assigned managed identity client ID
+
+pool:
+  name: Default  # Ensure this is the pool where your self-hosted agent is registered
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Cemaydemir Docker Hub'
+        repository: 'cemaydemir/seniorconnectapi'
+        command: 'buildAndPush'
+        Dockerfile: 'src/SeniorConnect.API/Dockerfile'
+        tags: |
+          $(tag)
+
+- stage: Provision
+  displayName: 'Terraforming on Azure...'
+  dependsOn: Build
+  jobs:
+  - job: Provision
+    displayName: 'Provisioning Container Instance'
+    steps:
+    - checkout: self
+    - script: |
+        # Install Azure CLI
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        
+        # Install jq and unzip
+        sudo apt-get update
+        sudo apt-get install -y jq unzip
+        
+        # Install Terraform (using a recent stable version, as there is no 2.5.0)
+        wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
+        unzip terraform_1.0.10_linux_amd64.zip
+        sudo mv terraform /usr/local/bin/
+        export PATH=$PATH:/usr/local/bin
+        terraform --version  # Verify the installation
+
+        echo "Attempting to login with user-assigned managed identity"
+        az login --identity --username $(USER_ASSIGNED_CLIENT_ID) || (
+          echo "Failed to login with user-assigned managed identity. Checking environment..." &&
+          curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-02-01&resource=https://management.azure.com/" -s | jq .
+        )
+      displayName: 'Install Azure CLI, jq, unzip, and Terraform, and Login with Managed Identity'
+
+    - script: |
+        set -e
+
+        terraform init -input=false
+        terraform plan -input=false -out=tfplan
+        terraform apply -input=false -auto-approve tfplan
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      name: 'RunTerraform'
+      displayName: 'Run Terraform'
+      env:
+        ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+        TF_VAR_imagebuild: $(tag)
