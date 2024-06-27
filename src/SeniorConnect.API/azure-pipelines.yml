@@ -7,6 +7,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   ARM_SUBSCRIPTION_ID: 'cf6d83c6-2782-4980-89e3-b2ab7d72ce0e'
+  ARM_TENANT_ID: 'c66b6765-b794-4a2b-84ed-845b341c086a'
   USER_ASSIGNED_CLIENT_ID: 'd9df691c-0961-463e-a6e3-4da3b1538403'  # Your user-assigned managed identity client ID
 
 pool:
@@ -44,7 +45,7 @@ stages:
         sudo apt-get update
         sudo apt-get install -y jq unzip
         
-        # Install Terraform (using a recent stable version, as there is no 2.5.0)
+        # Install Terraform (using a recent stable version)
         wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
         unzip terraform_1.0.10_linux_amd64.zip
         sudo mv terraform /usr/local/bin/
@@ -57,9 +58,15 @@ stages:
           curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2021-02-01&resource=https://management.azure.com/" -s | jq .
         )
       displayName: 'Install Azure CLI, jq, unzip, and Terraform, and Login with Managed Identity'
+      workingDirectory: $(System.DefaultWorkingDirectory)
 
     - script: |
         set -e
+
+        export ARM_USE_MSI=true
+        export ARM_SUBSCRIPTION_ID=$(ARM_SUBSCRIPTION_ID)
+        export ARM_TENANT_ID=$(ARM_TENANT_ID)
+        export ARM_CLIENT_ID=$(USER_ASSIGNED_CLIENT_ID)
 
         terraform init -input=false
         terraform plan -input=false -out=tfplan
@@ -69,4 +76,6 @@ stages:
       displayName: 'Run Terraform'
       env:
         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+        ARM_TENANT_ID: $(ARM_TENANT_ID)
+        ARM_CLIENT_ID: $(USER_ASSIGNED_CLIENT_ID)
         TF_VAR_imagebuild: $(tag)
