@@ -22,6 +22,10 @@ terraform {
     }
 }
 
+variable "imagebuild" {
+  type        = string
+  description = "Latest Image Build"
+}
 
 # Reference to existing resource group
 data "azurerm_resource_group" "existing_rg" {
@@ -39,7 +43,7 @@ resource "azurerm_container_group" "tfcg_test" {
 
   container {
     name   = "seniorconnectapi"
-    image  = "cemaydemir/seniorconnectapi"
+    image  = "cemaydemir/seniorconnectapi:${var.imagebuild}"
     cpu    = "1"
     memory = "1"
 
