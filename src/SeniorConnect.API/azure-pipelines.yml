@@ -68,10 +68,13 @@ stages:
         export ARM_TENANT_ID=$(ARM_TENANT_ID)
         export ARM_CLIENT_ID=$(USER_ASSIGNED_CLIENT_ID)
 
+        # Initialize Terraform
+        terraform init -input=false
+
         # Import existing resource into Terraform state
         terraform import azurerm_container_group.tfcg_test /subscriptions/$(ARM_SUBSCRIPTION_ID)/resourceGroups/ouderenplatform-RG/providers/Microsoft.ContainerInstance/containerGroups/seniorconnectapi
 
-        terraform init -input=false
+        # Run Terraform plan and apply
         terraform plan -input=false -out=tfplan
         terraform apply -input=false -auto-approve tfplan
       workingDirectory: $(System.DefaultWorkingDirectory)/src/SeniorConnect.API
