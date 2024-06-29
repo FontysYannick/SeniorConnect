@@ -1,8 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-global using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;

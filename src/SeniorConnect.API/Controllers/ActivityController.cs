@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SeniorConnect.API.Models.Activity;
 using SeniorConnect.API.Services.ActivityService.Interface;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SeniorConnect.API.Controllers
 {
@@ -101,7 +102,7 @@ namespace SeniorConnect.API.Controllers
         }
 
         [HttpGet("GetUserToActivity/{userId}"), Authorize]
-        public async Task<IActionResult> GetUserToActivity()
+        public async Task<IActionResult> GetUserToActivity(int userId)
         {
             try
             {
