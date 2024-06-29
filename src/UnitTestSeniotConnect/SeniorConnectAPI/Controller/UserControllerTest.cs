@@ -19,12 +19,14 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
     {
         private readonly Mock<IUserService> _userServiceMock;
         private readonly Mock<IAuthenticationService> _autServiceMock;
+        private readonly Mock<ITokenService> _tokenServiceMock;
         private Fixture _fixture;
 
         public UserControllerTest()
         {
             _userServiceMock = new Mock<IUserService>();
             _autServiceMock = new Mock<IAuthenticationService>();
+            _tokenServiceMock = new Mock<ITokenService>();
             _fixture = new Fixture();
         }
 
@@ -32,8 +34,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
         {
             var userFixture = new Fixture();
             userFixture.Customize<User>(user => user
-            .Without(u => u.ActivityUsers)
-            .Without(u => u.Activities)
+                .Without(u => u.ActivityUsers)
+                .Without(u => u.Activities)
             );
 
             userFixture.Behaviors.Add(new OmitOnRecursionBehavior());
@@ -49,12 +51,14 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _userServiceMock.Setup(s => s.IsUserEmailExist(userRegisterRequest)).Returns(true);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Register(userRegisterRequest);
             var badRequestResult = result as BadRequestObjectResult;
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal("Het opgegeven e-mailadres is al in gebruik. Probeer een ander e-mailadres", badRequestResult.Value);
+            Assert.Equal("Het opgegeven e-mailadres is al in gebruik. Probeer een ander e-mailadres",
+                badRequestResult.Value);
         }
 
         [Fact]
@@ -65,7 +69,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _userServiceMock.Setup(s => s.IsUserEmailExist(userRegisterRequest)).Returns(false);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Register(userRegisterRequest);
             var response = result as OkObjectResult;
 
@@ -82,7 +87,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _userServiceMock.Setup(s => s.FindUser(userLoginRequest)).ReturnsAsync((User)null);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Login(userLoginRequest);
             var repsonse = result as BadRequestObjectResult;
 
@@ -102,7 +108,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.VerifyPasswordHash(userLoginRequest, user)).Returns(false);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Login(userLoginRequest);
             var repsonse = result as BadRequestObjectResult;
 
@@ -122,7 +129,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.VerifyPasswordHash(userLoginRequest, user)).Returns(true);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Login(userLoginRequest);
             var repsonse = result as OkObjectResult;
             var value = repsonse.Value as LoginResponse;
@@ -140,7 +148,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.VerifyToken(token)).ReturnsAsync(false);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Verify(token);
             var repsonse = result as BadRequestObjectResult;
 
@@ -157,7 +166,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.VerifyToken(token)).ReturnsAsync(true);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Verify(token);
             var repsonse = result as OkObjectResult;
 
@@ -175,7 +185,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _userServiceMock.Setup(s => s.FindUser(It.IsAny<UserLoginRequest>())).ReturnsAsync((User)null);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.ForgotPassword(email);
             var repsonse = result as BadRequestObjectResult;
 
@@ -194,7 +205,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _userServiceMock.Setup(s => s.FindUser(It.IsAny<UserLoginRequest>())).ReturnsAsync(user);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.ForgotPassword(email);
             var repsonse = result as OkObjectResult;
 
@@ -211,7 +223,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.ResetPassword(userPasswordResetRequest)).ReturnsAsync(false);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.ResetPassword(userPasswordResetRequest);
             var repsonse = result as BadRequestObjectResult;
 
@@ -228,7 +241,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.ResetPassword(userPasswordResetRequest)).ReturnsAsync(true);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.ResetPassword(userPasswordResetRequest);
             var repsonse = result as OkObjectResult;
 
@@ -247,7 +261,8 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             _autServiceMock.Setup(s => s.LoginGoogleAccountSync(userLoginGoogleAsyncRequest)).ReturnsAsync(user);
 
             //Act
-            var userController = new UserController(_userServiceMock.Object, _autServiceMock.Object);
+            var userController =
+                new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.LoginGoogle(userLoginGoogleAsyncRequest);
             var repsonse = result as OkObjectResult;
             var value = repsonse.Value as LoginResponse;

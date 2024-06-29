@@ -11,5 +11,6 @@ namespace SeniorConnect.API.Services.ActivityService.Interface
         void SetActivity(AbstractActivity activity);
         void AddUserToActivity(AbstractUserActivty userActivity);
         IEnumerable<Activity> GetUserToActivity(int userId);
+        bool DeleteActivityUser(int userId, int activityId);
     }
 }

@@ -18,5 +18,12 @@ namespace SeniorConnect.Helpers
             tempData["redirectAfterConfirmLink"] = redirectAfterConfirmLink;
             tempData["NotificationText"] = text;
         }
+        
+        public static void SetNotificationSomethingWentWrong(ITempDataDictionary tempData)
+        {
+            tempData["Notification"] = "Er is iets fout gegaan!";
+            tempData["NotificationType"] = NotificationType.error.ToString();
+            tempData["NotificationText"] = "Onze excuses voor het ongemak, probeer het later opnieuw.";
+        }
     }
 }

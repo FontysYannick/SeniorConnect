@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Models.Activity;
 using SeniorConnect.API.Services.ActivityService;
@@ -72,7 +73,7 @@ namespace SeniorConnect.API.Controllers
             return Ok("Add/Update an activity to the database");
         }
 
-        [HttpGet("GetUserToActivity/{userId}")]
+        [HttpGet("GetUserToActivity/{userId}"), Authorize]
         public async Task<IActionResult> GetUserToActivity()
         {
             int userId = -1;
@@ -90,7 +91,7 @@ namespace SeniorConnect.API.Controllers
         }
 
         [HttpDelete]
-        [Route("Activity/{ActivityId}")]
+        [Route("Activity/{ActivityId}"), Authorize]
         public ActionResult DeleteActivity()
         {
             try
@@ -112,6 +113,33 @@ namespace SeniorConnect.API.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpDelete]
+        [Route("DeleteActivityUser/{UserId}/{ActivityId}"), Authorize]
+        public ActionResult DeleteActivityUser()
+        {
+            string? rawUserId = Request.RouteValues["UserId"]?.ToString();
+            string? rawActivityId = Request.RouteValues["ActivityId"]?.ToString();
+
+            if (string.IsNullOrEmpty(rawUserId) || string.IsNullOrEmpty(rawActivityId))
+            {
+                return BadRequest("UserId or ActivityId is null");
+            }
+
+            if (!int.TryParse(rawUserId, out int UserId) || !int.TryParse(rawActivityId, out int ActivityId))
+            {
+                return BadRequest("UserId or ActivityId is not a valid integer");
+            }
+            
+            bool isDeleted = _activityService.DeleteActivityUser(UserId, ActivityId);
+
+            if (isDeleted == false)
+            {
+                return BadRequest("Delete activity user failed");
+            }
+            
+            return Ok("Delete activity user successfully");
         }
     }
 }

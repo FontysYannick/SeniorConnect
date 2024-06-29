@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Users;
 using SeniorConnect.API.Services.UserService.Interface;
@@ -12,13 +13,20 @@ namespace SeniorConnect.API.Controllers
         private readonly IUserService _userService;
 
         private readonly IAuthenticationService _authenticationService;
-        public UserController(IUserService userService, IAuthenticationService authenticationService)
+
+        private readonly ITokenService _tokenService;
+
+        public UserController(
+            IUserService userService,
+            IAuthenticationService authenticationService,
+            ITokenService tokenService)
         {
             _userService = userService;
             _authenticationService = authenticationService;
+            _tokenService = tokenService;
         }
 
-        [HttpGet("{user-id}")]
+        [HttpGet("{user-id}"),Authorize]
         public async Task<IActionResult> GetUser()
         {
             int userId = Convert.ToInt32((string)Request.RouteValues["user-id"]);
@@ -75,13 +83,9 @@ namespace SeniorConnect.API.Controllers
                 return BadRequest("De combinatie van e-mailadres en wachtwoord is niet geldig.");
             }
 
-            LoginResponse loginResponse = new LoginResponse
-            {
-                UserId = user.UserId.ToString(),
-                UserName = user.FirstName + " " + user.LastName
-            };
-
-            return Ok(loginResponse);
+            var jwtToken = _tokenService.CreateJwtTokenForLoginUser(user);
+            
+            return Ok(jwtToken);
         }
 
         [HttpPost("verify")]
@@ -97,7 +101,7 @@ namespace SeniorConnect.API.Controllers
             return Ok("Gebruiker is geverifieerd!");
         }
 
-        [HttpPost("forgot-password")]
+        [HttpPost("forgot-password"), Authorize]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             User? user = await _userService.FindUser(new UserLoginRequest { Email = email });
@@ -112,7 +116,7 @@ namespace SeniorConnect.API.Controllers
             return Ok("Een e-mail reset wachtwoord is verzonden naar uw e-mailadres.");
         }
 
-        [HttpPost("reset-password")]
+        [HttpPost("reset-password"), Authorize]
         public async Task<IActionResult> ResetPassword(UserPasswordResetRequest resetPasswordRequest)
         {
             bool isResetSuccess = await _authenticationService.ResetPassword(resetPasswordRequest);
@@ -130,16 +134,12 @@ namespace SeniorConnect.API.Controllers
         {
             var user = await _authenticationService.LoginGoogleAccountSync(userLoginGoogleAsyncRequest);
 
-            LoginResponse loginResponse = new LoginResponse
-            {
-                UserId = user.UserId.ToString(),
-                UserName = user.FirstName + " " + user.LastName
-            };
+            var jwtToken = _tokenService.CreateJwtTokenForLoginUser(user);
 
-            return Ok(loginResponse);
+            return Ok(jwtToken);
         }
-
-        [HttpPost("change-info")]
+        
+        [HttpPost("change-info"), Authorize]
         public async Task<IActionResult> ChangeInformation(UserChangeInfoRequest userChangeInfoRequest)
         {
             var user = await _userService.FindUserById(userChangeInfoRequest.userId);

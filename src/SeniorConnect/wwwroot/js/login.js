@@ -1,5 +1,4 @@
 ﻿$(document).ready(() => {
-
     toggleShowPassword();
     const togglePassword = $('.js-toggle-password-icon');
 

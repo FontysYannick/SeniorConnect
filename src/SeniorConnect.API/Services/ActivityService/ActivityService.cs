@@ -67,5 +67,20 @@ namespace SeniorConnect.API.Services.ActivityService
                         .OrderBy(a => a.Date)
                         .ToList();
         }
+
+        public bool DeleteActivityUser(int userId, int activityId)
+        {
+            var activityUser =
+                _context.ActivityUsers.FirstOrDefault(a => a.UserId == userId && a.ActivityId == activityId);
+
+            if (activityUser == null)
+            {
+                return false;
+            }
+            
+            _context.ActivityUsers.Remove(activityUser);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

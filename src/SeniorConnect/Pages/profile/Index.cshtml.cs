@@ -10,13 +10,13 @@ namespace SeniorConnect.Pages.profile
     public class IndexModel : PageModel
     {
         private readonly AuthService _authService;
+
         public IndexModel(AuthService authService)
         {
             _authService = authService;
         }
 
-        [BindProperty]
-        public UserInfoDto? UserInfoResponse { get; set; }
+        [BindProperty] public UserInfoDto? UserInfoResponse { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -30,7 +30,7 @@ namespace SeniorConnect.Pages.profile
 
             if (UserInfoResponse == null)
             {
-                NotificationHelper.SetNotification(TempData, "Something went wrong!", NotificationType.error);
+                NotificationHelper.SetNotificationSomethingWentWrong(TempData);
             }
 
             return Page();
@@ -40,7 +40,8 @@ namespace SeniorConnect.Pages.profile
         {
             if (User.Identity?.IsAuthenticated == false)
             {
-                NotificationHelper.SetNotification(TempData, "You must be logged in to view your profile.", NotificationType.info);
+                NotificationHelper.SetNotification(TempData, "You must be logged in to view your profile.",
+                    NotificationType.info);
             }
 
             if (!ModelState.IsValid)
@@ -49,7 +50,7 @@ namespace SeniorConnect.Pages.profile
             }
 
 
-            await _authService.ChangeUserInfoAsync(
+            var response = await _authService.ChangeUserInfoAsync(
                 new UserChangeInfoRequestDto()
                 {
                     userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
@@ -59,6 +60,18 @@ namespace SeniorConnect.Pages.profile
                     PhoneNumber = UserInfoResponse.PhoneNumber
                 }
             );
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                NotificationHelper.SetNotification(
+                    TempData,
+                    "Something went wrong!",
+                    NotificationType.error,
+                    "Our team is working on it. Please try again later."
+                );
+
+                return RedirectToPage();
+            }
 
             NotificationHelper.SetNotification(TempData, "Profile updated!", NotificationType.success);
 

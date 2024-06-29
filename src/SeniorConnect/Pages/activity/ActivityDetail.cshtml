@@ -1,29 +1,25 @@
 ﻿@page
 @using Humanizer
 @using System.Globalization
+@using SeniorConnect.Helpers
 @model SeniorConnect.Pages.activity.ActivityDetailModel
 @{
 }
-
 <div class="row mt-5">
     <div class="col-lg-9 d-flex justify-content-between mb-3">
         <h2 class="card-title text-capitalize">@Model.Activity.Title</h2>
-        @if (User.Identity.Name != null)
+        @if (@Model.IsOwner != true)
         {
-            <form method="post" autocomplete="off" id="actiivtyUserForm">
-                <input type="hidden" id="acitivtyTitle" name="acitivtyTitle" value="@Model.Activity.Title" />
-                <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId" />
-                <input type="submit" class="btn btn-primary" name="submit" value="Inschrijven" />
+            <form method="post" autocomplete="off" id="activtyUserForm">
+                <input type="hidden" id="acitivtyTitle" name="acitivtyTitle" value="@Model.Activity.Title"/>
+                <input type="hidden" id="activityId" name="activityId" value="@Model.Activity.ActivityId"/>
+                <input type="submit" class="btn btn-primary" name="submit" value="Inschrijven"/>
             </form>
-        }
-        else
-        {
-            <a class="btn btn-primary" href="/login">Inloggen</a>
         }
     </div>
     <div class="col-lg-9">
         <div class="card mb-4">
-            <img class="card-img-top img-fluid" src="@Model.Activity.Image" alt="ActivityImage" style="width: 100%; height: 550px;" />
+            <img class="card-img-top img-fluid" src="@Model.Activity.Image" alt="ActivityImage" style="width: 100%; height: 550px;"/>
 
             <div class="card-body">
                 <div class="d-flex justify-content-between bd-highlight mb-3">
@@ -53,7 +49,7 @@
                         <div class="d-flex gap-2 mb-3">
                             <i class="bi bi-people-fill"></i>
                             <div>
-                                <p class="mb-0 fw-bold">Deelnemers</p>
+                                <p class="mb-0 fw-bold">Maximaal deelnemers</p>
                                 <p class="mb-0">@Model.Activity.MaxParticipants</p>
                             </div>
                         </div>
@@ -78,3 +74,36 @@
             </div>
         </div>
     </div>
+</div>
+
+@section CustomJs{
+    <script asp-append-version="true">
+    $(document).ready(() => {
+        const form = $("#activtyUserForm");
+        var isAuthenticated = @Json.Serialize(User.Identity?.IsAuthenticated);
+
+        form.find('input[type="submit"]').on('click', function(event) {
+            if (!isAuthenticated) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Inchrijven voor activiteit',
+                    text: 'Om u voor deze activiteit aan te melden, moet u ingelogd zijn!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0d6efd',
+                    confirmButtonText: 'Nu inloggen'
+                }).then((result) =>{
+                    if (result.isConfirmed) {
+                        document.cookie = `redirectAfterLogin=${window.location.href}; path=/`;
+                        window.location.href = '/Login';
+                    }
+                });
+                
+                return;
+            }
+            
+            form.submit();
+        });
+    });
+</script>
+}

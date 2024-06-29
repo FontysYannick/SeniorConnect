@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -17,6 +18,8 @@ namespace SeniorConnect.Pages.activity
 
         public string zipCode { get; set; }
 
+        public bool IsOwner = false;
+
         public ActivityDetailModel(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
@@ -32,7 +35,16 @@ namespace SeniorConnect.Pages.activity
                 var content = await response.Content.ReadAsStringAsync();
                 Activity = JsonConvert.DeserializeObject<ActivityDto>(content);
 
-                var part = Activity.Place?.Split(", ");
+                if (User.Identity?.IsAuthenticated == false)
+                {
+                    IsOwner = false;
+                }
+                else
+                {
+                    IsOwner = Activity?.Organizer.UserId == int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                }
+                
+                var part = Activity?.Place.Split(", ");
                 if (part?.Length >= 2)
                 {
                     address = part[0];
@@ -48,6 +60,9 @@ namespace SeniorConnect.Pages.activity
         public async Task<IActionResult> OnPost()
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var token = HttpContext.Request.Cookies["JwtToken"];
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             int.TryParse(Request.Form["activityId"], out int activityid);
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -58,6 +73,12 @@ namespace SeniorConnect.Pages.activity
             };
 
             var response = await client.PostAsJsonAsync("/ActivityController/AddUserToActivity", AA);
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                NotificationHelper.SetNotificationSomethingWentWrong(TempData);
+                return Page();
+            }
 
             NotificationHelper.SetNotification(
                 TempData,

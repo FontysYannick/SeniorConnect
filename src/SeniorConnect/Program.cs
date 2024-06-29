@@ -58,7 +58,6 @@ app.UseRouting();
 app.UseAuthentication(); // Enable authentication middleware
 app.UseAuthorization();
 
-
 var defaultCulture = new CultureInfo("nl-NL");
 var localizationOptions = new RequestLocalizationOptions
 {

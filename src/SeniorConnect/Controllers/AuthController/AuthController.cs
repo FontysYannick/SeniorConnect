@@ -25,7 +25,9 @@ namespace SeniorConnect.Controllers.AuthController
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            // Remove the user's cookie jwt token
+            Response.Cookies.Delete("JwtToken");
+            
             await HttpContext.SignOutAsync();
             NotificationHelper.SetNotification(
                     TempData,
@@ -75,20 +77,29 @@ namespace SeniorConnect.Controllers.AuthController
             //sync google acount to datasbase
             var loginResponse = await authService.LoginWitGoogleAsync(googleUser);
 
-            var claims = new List<Claim>
+            if (loginResponse.response?.IsSuccessStatusCode == false)
             {
-                new Claim(ClaimTypes.Name, loginResponse.UserName),
-                new Claim(ClaimTypes.NameIdentifier, loginResponse.UserId.ToString())
-            };
+                NotificationHelper.SetNotificationSomethingWentWrong(TempData);
+                return RedirectToAction("Index", "Home");
+            }
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            // Create new principal with the updated identity
-            var principal = new ClaimsPrincipal(claimsIdentity);
-
-            // Sign in the updated user
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+            var redirectAfterLogin = HttpContext.Request.Cookies["redirectAfterLogin"];
+            
+            if (redirectAfterLogin != null)
+            {
+                Response.Cookies.Delete("redirectAfterLogin");
+                
+                NotificationHelper.SetNotification(
+                    TempData,
+                    "Welkom " + loginResponse.UserName,
+                    NotificationType.success,
+                    "U kunt nu inschrijven voor activiteiten."
+                );
+                
+                return Redirect(redirectAfterLogin);
+            }
+            
+            
             NotificationHelper.SetNotification(
                 TempData,
                  "Welkom " + loginResponse.UserName,

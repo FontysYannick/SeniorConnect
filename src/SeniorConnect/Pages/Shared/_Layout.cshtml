@@ -6,115 +6,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - SeniorConnect</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SeniorConnect.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/SeniorConnect.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"/>
     @RenderSection("CustomStyle", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-fixed-top shadow ">
-            <div class="container-fluid">
-                <a class="navbar-brand logo-nav" href="/">Seniorconnect</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-fixed-top shadow">
+        <div class="container-fluid">
+            <!-- Logo and Toggler for mobile view -->
+            <a class="navbar-brand logo-nav" href="/">Seniorconnect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto mx-5" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item @(Context.Request.Path == "/" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
-                            <a class="nav-link @(Context.Request.Path == "/" ? "text-white" : "")" href="/">Home</a>
-                        </li>
-                        <li class="nav-item @(Context.Request.Path == "/activity/Activity" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
-                            <a class="nav-link @(Context.Request.Path == "/activity/Activity" ? "text-white" : "")" href="/activity/Activity">Activiteiten</a>
-                        </li>
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item @(Context.Request.Path == "/activity/AddActivity" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
-                                <a class="nav-link @(Context.Request.Path == "/activity/AddActivity" ? "text-white" : "")" href="/activity/AddActivity">Activiteit toevoegen</a>
-                            </li>
-                        }
-                        <li class="nav-item @(Context.Request.Path == "/Volunteer/Volunteer" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
-                            <a class="nav-link @(Context.Request.Path == "/Volunteer/Volunteer" ? "text-white" : "")" href="/Volunteer/Volunteer">Vrijwilligers</a>
-                        </li>
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item @(Context.Request.Path == "/calendar/calendar" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
-                                <a class="nav-link @(Context.Request.Path == "/calendar/calendar" ? "text-white" : "")" href="/calendar/calendar">Agenda</a>
-                            </li>
-                        }
-                    </ul>
+            <!-- Navbar Items and User login/dropdown -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <!-- Navbar Items -->
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item @(Context.Request.Path == "/" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
+                        <a class="nav-link @(Context.Request.Path == "/" ? "text-white" : "")" href="/">Home</a>
+                    </li>
+                    <li class="nav-item @(Context.Request.Path == "/activity/Activity" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
+                        <a class="nav-link @(Context.Request.Path == "/activity/Activity" ? "text-white" : "")" href="/activity/Activity">Activiteiten</a>
+                    </li>
+                    <li class="nav-item @(Context.Request.Path == "/Volunteer/Volunteer" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
+                        <a class="nav-link @(Context.Request.Path == "/Volunteer/Volunteer" ? "text-white" : "")" href="/Volunteer/Volunteer">Vrijwilligers</a>
+                    </li>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle text-primary" style="font-size: 1.5rem;"></i>
+                    <li class="nav-item @(Context.Request.Path == "/calendar/calendar" ? "bg-primary bg-opacity-75 rounded-pill animate__animated animate__zoomIn" : "")">
+                        <a class="nav-link @(Context.Request.Path == "/calendar/calendar" ? "text-white" : "")" href="/calendar/calendar">Agenda</a>
+                    </li>
+                    }
+                    @* Add more items if needed *@
+                </ul>
+
+                <!-- User login/dropdown -->
+                <ul class="navbar-nav">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle text-primary" style="font-size: 1.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end animate__animated animate__zoomIn shadow" aria-labelledby="navbarDropdown">
+                            <li class="dropdown-item">
+                                <a href="/profile" class="text-decoration-none">
+                                    @User.Identity.Name
+                                    <p class="text-muted text-capitalize" style="font-size:15px">Profile bekijken</p>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end animate__animated animate__zoomIn shadow" aria-labelledby="navbarDropdown">
-                                    <li class="dropdown-item">
-                                        <a href="/profile" class="text-decoration-none">
-                                            @User.Identity.Name
-                                            <p class="text-muted text-capitalize" style="font-size:15px">profile bekijken</p>
-                                        </a>
-                                    </li>
-                                    <li class="border-top border-3"></li>
-                                    <li>
-                                        <a class="dropdown-item text-primary" href="/Auth/Logout">Logout</a>
-                                    </li>
-                                </ul>
+                            </li>
+                            <li class="border-top border-3"></li>
+                            <li>
+                                <a class="dropdown-item text-primary" href="/Auth/Logout">Logout</a>
                             </li>
                         </ul>
+                    </li>
                     }
                     else
                     {
-                        <a class=" btn btn-outline-primary" href="/login"> Login </a>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="/login">Login</a>
+                    </li>
                     }
-                </div>
+                </ul>
             </div>
-        </nav>
-        @RenderSection("Slider", required: false)
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-        <div class="position-fixed bottom-0 end-0 m-5 m-xl-5 m-sm-2 z-3">
-            <a class="btn btn-warning text-white btn-lg animate__animated animate__headShake animate__infinite animate__repeat-3 animate__delay-3s"
-                id="help-button"
-                href="/help/help">
-                <i class="bi bi-question-circle-fill fw-bold"></i>
-                Help
-            </a>
         </div>
+    </nav>
+    @RenderSection("Slider", required: false)
+</header>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <div class="position-fixed bottom-0 end-0 m-5 m-xl-5 m-sm-2 z-3">
+        <a class="btn btn-warning text-white btn-lg animate__animated animate__headShake animate__infinite animate__repeat-3 animate__delay-3s"
+           id="help-button"
+           href="/help/help">
+            <i class="bi bi-question-circle-fill fw-bold"></i>
+            Help
+        </a>
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-            &copy; 2024 - SeniorConnect - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+</div>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        &copy; 2024 - SeniorConnect - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    @RenderSection("CustomJs", required: false)
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/login.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+@RenderSection("CustomJs", required: false)
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/login.js" asp-append-version="true"></script>
 
-    <script>
+<script>
         $(document).ready(function () {
             var notification = '@TempData["Notification"]';
             var notificationType = '@TempData["NotificationType"]';
@@ -144,6 +146,6 @@
         });
     </script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

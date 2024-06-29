@@ -1,15 +1,16 @@
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SeniorConnect.Helpers;
 using SeniorConnect.Models.Activities;
 using System.Security.Claims;
+using SeniorConnect.Services;
 
 namespace SeniorConnect.Pages.activity
 {
     public class AddActivityModel : PageModel
     {
-        [BindProperty]
-        public AddActivityRequestDto addActivityRequestDto { get; set; }
+        [BindProperty] public AddActivityRequestDto addActivityRequestDto { get; set; }
 
         private readonly IHttpClientFactory _httpClientFactory;
 
@@ -39,10 +40,12 @@ namespace SeniorConnect.Pages.activity
             {
                 return Page();
             }
-
-            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+            var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
+            var token = HttpContext.Request.Cookies["JwtToken"];
+            
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             addActivityRequestDto.OrganizerId = userId;
 
             var response = await client.PostAsJsonAsync("/ActivityController/PostActivity", addActivityRequestDto);
@@ -53,7 +56,8 @@ namespace SeniorConnect.Pages.activity
                 return Page();
             }
 
-            NotificationHelper.SetNotification(TempData, $"De Activiteit {addActivityRequestDto.Title} is aangemaakt", NotificationType.success);
+            NotificationHelper.SetNotification(TempData, $"De Activiteit {addActivityRequestDto.Title} is aangemaakt",
+                NotificationType.success);
 
             return RedirectToPage("/activity/Activity");
         }

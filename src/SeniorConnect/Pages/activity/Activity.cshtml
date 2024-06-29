@@ -2,17 +2,23 @@
 @using Humanizer
 @model SeniorConnect.Pages.activity.ActivityModel
 @{
-    ViewData ["Title"] = "SeniorConnect";
+    ViewData["Title"] = "SeniorConnect";
 }
 
-<div class="mt-5 ">
-    <h1 class="display-4">Activiteiten</h1>
+<div class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mx-2 animate__animated animate__zoomIn">Activiteiten</h1>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+        <a class="btn btn-primary animate__animated animate__zoomIn" href="/activity/AddActivity">Activiteit toevoegen</a>
+        }
+    </div>
     <div class="row">
         @foreach (var Activity in Model.Activitys)
         {
-            <div class="col-md-4 p-3">
+            <div class="col-md-4 p-3 animate__animated animate__zoomIn">
                 <div class="card card-hover" onclick="window.location='/activity/ActivityDetail?id=@Activity.ActivityId'">
-                    <img src="@Activity.Image" class="card-img-top activity-img" alt="Img" />
+                    <img src="@Activity.Image" class="card-img-top activity-img" alt="Img"/>
                     <div class="card-body text-center">
                         <h5 class="card-title">@Activity.Title</h5>
                         <p class="card-text text-truncate">@Activity.Description</p>
