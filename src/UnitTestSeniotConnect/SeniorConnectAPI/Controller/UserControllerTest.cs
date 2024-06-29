@@ -1,17 +1,10 @@
 ﻿using AutoFixture;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SeniorConnect.API.Controllers;
 using SeniorConnect.API.Entities;
 using SeniorConnect.API.Models.Users;
-using SeniorConnect.API.Service.UserService;
 using SeniorConnect.API.Services.UserService.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
 {
@@ -137,7 +130,7 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             // Assert
             Assert.IsType<OkObjectResult>(result);
             Assert.Equal(user.UserId.ToString(), value.UserId);
-            Assert.Equal(user.Email, value.UserName);
+            Assert.Equal(user.FirstName + " " + user.LastName, value.UserName);
         }
 
         [Fact]
@@ -270,7 +263,7 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
             // Assert
             Assert.IsType<OkObjectResult>(result);
             Assert.Equal(user.UserId.ToString(), value.UserId);
-            Assert.Equal(user.Email, value.UserName);
+            Assert.Equal(user.FirstName + " " + user.LastName, value.UserName);
         }
     }
 }
