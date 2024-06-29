@@ -43,7 +43,7 @@ builder.Services.AddAzureClients(azureBuilder =>
 });
 */
 
-var tokenKey = builder.Configuration["AppSettings:Token"]; // Retrieve token key from AppSettings
+var tokenKey = "t9Rs1bGzYwHgHDK/u7i4CLbjSqQo2fG+2o1LyxKvy5SsTcIkGfOMBXWSvsi9CXRgaSxY8Cw5eAwJBMaU0XiqQQ="; // Retrieve token key from AppSettings
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer( options =>
     {
@@ -52,9 +52,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenKey)),
             ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["AppSettings:Issuer"], 
+            ValidIssuer = "Seniorconnect.com", 
             ValidateAudience = true,
-            ValidAudience = builder.Configuration["AppSettings:Audience"],
+            ValidAudience = "Seniorconnect.API.com",
             ValidateLifetime = true,
         };
     }
