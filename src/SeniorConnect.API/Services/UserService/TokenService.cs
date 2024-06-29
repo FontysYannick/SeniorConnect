@@ -45,7 +45,7 @@ namespace SeniorConnect.API.Services.UserService
                 new(JwtRegisteredClaimNames.Name,  $"{user.FirstName} {user.Preposition ?? " "} {user.LastName}")
             };
 
-            var keyBytes = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AppSettings:Token") ?? string.Empty);
+            var keyBytes = Encoding.UTF8.GetBytes("t9Rs1bGzYwHgHDK/u7i4CLbjSqQo2fG+2o1LyxKvy5SsTcIkGfOMBXWSvsi9CXRgaSxY8Cw5eAwJBMaU0XiqQQ=");
             var securityKey = new SymmetricSecurityKey(keyBytes);
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
