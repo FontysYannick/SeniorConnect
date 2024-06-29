@@ -28,7 +28,7 @@ namespace SeniorConnect.Pages.activity
         public async Task OnGet(int Id)
         {
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
-            var response = await client.GetAsync("/ActivityController/Activity/" + Id);
+            var response = await client.GetAsync("api/Activity/Activity/" + Id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -72,7 +72,7 @@ namespace SeniorConnect.Pages.activity
                 ActivityId = activityid
             };
 
-            var response = await client.PostAsJsonAsync("/ActivityController/AddUserToActivity", AA);
+            var response = await client.PostAsJsonAsync("/api/Activity/AddUserToActivity", AA);
 
             if (response.IsSuccessStatusCode == false)
             {

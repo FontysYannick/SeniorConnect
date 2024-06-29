@@ -1,20 +1,18 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
 using SeniorConnect.API.Entities;
 
 namespace SeniorConnect.API.Data
 {
-    public partial class DataContext: DbContext
+    public partial class DataContext : DbContext
     {
         public DataContext() { }
 
-        public DataContext(DbContextOptions<DataContext> options): base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
         public virtual DbSet<User> Users { get; set; }
-
         public virtual DbSet<Activity> Activities { get; set; }
-
         public virtual DbSet<ActivityUsers> ActivityUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,7 +24,7 @@ namespace SeniorConnect.API.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            // Define relationship between User and Activity
+            // Define relationship between User en Activity
             modelBuilder.Entity<Activity>()
                 .HasOne(a => a.Organizer)
                 .WithMany(u => u.Activities)

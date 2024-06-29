@@ -48,7 +48,7 @@ namespace SeniorConnect.Pages.activity
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             addActivityRequestDto.OrganizerId = userId;
 
-            var response = await client.PostAsJsonAsync("/ActivityController/PostActivity", addActivityRequestDto);
+            var response = await client.PostAsJsonAsync("/api/Activity/PostActivity", addActivityRequestDto);
 
             if (!response.IsSuccessStatusCode)
             {

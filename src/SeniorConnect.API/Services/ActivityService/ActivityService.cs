@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore;
 
 namespace SeniorConnect.API.Services.ActivityService
 {
@@ -30,7 +31,7 @@ namespace SeniorConnect.API.Services.ActivityService
 
         public void SetActivity(AbstractActivity activity)
         {
-            var newActivty = new Activity
+            var newActivity = new Activity
             {
                 Title = activity.Title,
                 OrganizerId = activity.OrganizerId,
@@ -42,7 +43,7 @@ namespace SeniorConnect.API.Services.ActivityService
                 Awards = activity.Awards
             };
 
-            _context.Activities.Add(newActivty);
+            _context.Activities.Add(newActivity);
             _context.SaveChanges();
         }
 
@@ -66,6 +67,18 @@ namespace SeniorConnect.API.Services.ActivityService
                         .Select(a => a.Activity)
                         .OrderBy(a => a.Date)
                         .ToList();
+        }
+
+        public bool DeleteActivity(int activityId)
+        {
+            var activity = _context.Activities.FirstOrDefault(a => a.ActivityId == activityId);
+            if (activity != null)
+            {
+                _context.Activities.Remove(activity);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool DeleteActivityUser(int userId, int activityId)
