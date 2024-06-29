@@ -112,7 +112,7 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
         }
 
         [Fact]
-        public async void LoginUserWhenLoginSuccessfullyAndReturnOkRequestWithloginResponse()
+        public async void LoginUserWhenLoginSuccessfullyAndReturnOkRequestWithJwtToken()
         {
             //Arrange
             var userLoginRequest = _fixture.Create<UserLoginRequest>();
@@ -120,17 +120,16 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
 
             _userServiceMock.Setup(s => s.FindUser(userLoginRequest)).ReturnsAsync(user);
             _autServiceMock.Setup(s => s.VerifyPasswordHash(userLoginRequest, user)).Returns(true);
-
+            _tokenServiceMock.Setup(s => s.CreateJwtTokenForLoginUser(user)).Returns("JWTToken");
             //Act
             var userController =
                 new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.Login(userLoginRequest);
             var repsonse = result as OkObjectResult;
-            var value = repsonse.Value as LoginResponse;
+            var value = repsonse.Value as string;
             // Assert
             Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(user.UserId.ToString(), value.UserId);
-            Assert.Equal(user.FirstName + " " + user.LastName, value.UserName);
+            Assert.Equal("JWTToken", value);
         }
 
         [Fact]
@@ -245,25 +244,25 @@ namespace UnitTestSeniorConnect.SeniorConnectAPI.Controller
         }
 
         [Fact]
-        public async void UserLoginGoogleReturnLoginResponseWithOkRequest()
+        public async void UserLoginGoogleReturnJwtTokenWithOkRequest()
         {
             //Arrange
             var userLoginGoogleAsyncRequest = _fixture.Create<UserLoginGoogleAsyncRequest>();
             var user = UserFixtureWithOutReference().Create<User>();
 
             _autServiceMock.Setup(s => s.LoginGoogleAccountSync(userLoginGoogleAsyncRequest)).ReturnsAsync(user);
-
+            _tokenServiceMock.Setup(s => s.CreateJwtTokenForLoginUser(user)).Returns("JWTToken");
+            
             //Act
             var userController =
                 new UserController(_userServiceMock.Object, _autServiceMock.Object, _tokenServiceMock.Object);
             var result = await userController.LoginGoogle(userLoginGoogleAsyncRequest);
             var repsonse = result as OkObjectResult;
-            var value = repsonse.Value as LoginResponse;
+            var value = repsonse.Value as string;
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(user.UserId.ToString(), value.UserId);
-            Assert.Equal(user.FirstName + " " + user.LastName, value.UserName);
+            Assert.Equal(value, "JWTToken");
         }
     }
 }
