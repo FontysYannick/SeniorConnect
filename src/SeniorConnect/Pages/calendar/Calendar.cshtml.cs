@@ -34,7 +34,7 @@ namespace SeniorConnect.Pages.calendar
             var token = HttpContext.Request.Cookies["JwtToken"];
             
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await client.GetAsync("/ActivityController/GetUserToActivity/" + userId);
+            var response = await client.GetAsync("/api/Activity/GetUserToActivity/" + userId);
 
             if (response.IsSuccessStatusCode)
             {
@@ -57,7 +57,7 @@ namespace SeniorConnect.Pages.calendar
             var client = _httpClientFactory.CreateClient("SeniorConnectAPI");
             var token = HttpContext.Request.Cookies["JwtToken"];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await client.DeleteAsync($"/ActivityController/DeleteActivityUser/{userId}/{ActivityId}" );
+            var response = await client.DeleteAsync($"/api/Activity/DeleteActivityUser/{userId}/{ActivityId}" );
 
             if (response.IsSuccessStatusCode == false)
             {
