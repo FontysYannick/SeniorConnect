@@ -20,20 +20,6 @@ stages:
   - job: Build
     displayName: Build
     steps:
-    - script: |
-        if ! command -v docker &> /dev/null
-        then
-          echo "Docker could not be found, installing Docker..."
-          curl -fsSL https://get.docker.com -o get-docker.sh
-          sh get-docker.sh
-          sudo usermod -aG docker $(whoami)
-          newgrp docker
-        else
-          echo "Docker is already installed"
-        fi
-        docker --version
-      displayName: 'Check and Install Docker'
-
     - task: Docker@2
       inputs:
         containerRegistry: 'Cemaydemir Docker Hub'
